@@ -48,7 +48,7 @@ Ignored Tokens
 
 Productions
  /* listedecfonc*/
- programme =   affectation expr;
+ programme = optdecvar  instr   ;
 
  optdecvar = {decvar_e} decvar_e optdecvar | {rien};
 
@@ -56,16 +56,24 @@ Productions
  decvar =  typeentier nom pointvirgule;
  dectab =  typeentier nom crocheto expr crochetf pointvirgule;
 
- /*instr =*/
- /*bloc = accoladeo instr accoladef;*/
 
- affectation = {rien} | {affect} affect affectation ;
- affect = nom egal nombre pointvirgule;
+ instr = {affectation} affectation | {bloc} bloc|  {tantque} instrtantque | {si} instrsi |{retour} instrretour ;
 
-  expr = {part1} expr ou expr2      |{part2} expr2;
-  expr2= {part1} expr2 et expr3    | {part2} expr3;
-  expr3= {part1} expr3 egal expr4  | {part2} expr3 inf expr4   | {part3} expr4;
-  expr4= {part1} expr4 plus expr5  | {part2} expr4 moins expr5 | {part3} expr5;
-  expr5= {part1} expr5 multi expr6 | {part2} expr5 div expr6   | {part3} expr6;
-  expr6= {part1} non expr7         | {part2} expr7;
+ instrtantque = tantque expr faire bloc;
+
+ instrretour = retour expr pointvirgule;
+
+ instrsi = {sisinon} si expr alors bloc instrsinon | {si} si expr alors bloc;
+ instrsinon = sinon bloc;
+
+ bloc = accoladeo instr accoladef;
+
+ affectation = {rien} | {affect} nom egal expr pointvirgule affectation ;
+
+  expr = {ou} expr ou expr2        | {expr2} expr2;
+  expr2= {et} expr2 et expr3       | {expr3} expr3;
+  expr3= {egal} expr3 egal expr4   | {inf} expr3 inf expr4     | {expr4} expr4;
+  expr4= {plus} expr4 plus expr5   | {moins} expr4 moins expr5 | {expr5} expr5;
+  expr5= {multi} expr5 multi expr6 | {div} expr5 div expr6     | {expr6} expr6;
+  expr6= {non} non expr7           | {part2} expr7;
   expr7= {part1} parentheseo expr parenthesef | {parti2} nom | {part3} nombre| {part4} nom crocheto  nombre crochetf; /*|fonction ;*/
