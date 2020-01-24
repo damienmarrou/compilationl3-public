@@ -1,17 +1,15 @@
 Package sc;
 
 
-
-
 Helpers
  lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+ entier = ['0'..'9'];
 
 Tokens
 
  nom = lettre;
 
  typeentier = 'entier ';
- entier = ['0'..'9'];
 
  plus   = '+';
  moins  = '-';
@@ -39,20 +37,19 @@ Tokens
 
  fonction = 'fonction';
  commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
-
+ nombre = entier+;
 
 Ignored Tokens
  espaces, commentaire;
 
 Productions
  /* listedecfonc */
- programme = {optdecvar} optdecvar | {affectation} affectation |{rien}  ;
+ programme = optdecvar affectation;
 
  nomvar = {nom} nom nomvar | {rien};
 
- optdecvar = {decvar} decvar ;
+ optdecvar = {decvar} decvar+ | {rien};
  decvar =  typeentier nomvar pointvirgule;
 
- affectation = {affect} affect;
- affect = nomvar egal number pointvirgule;
- number = entier | {number} entier number;
+ affectation = {affect} affect+ | {rien};
+ affect = nomvar egal nombre pointvirgule;
