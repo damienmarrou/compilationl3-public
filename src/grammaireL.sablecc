@@ -8,10 +8,10 @@ Helpers
 
 Tokens
 
- nom = lettre+;
+ nom = lettre;
 
  typeentier = 'entier ';
- entier = ['0'..'9']+;
+ entier = ['0'..'9'];
 
  plus   = '+';
  moins  = '-';
@@ -23,19 +23,19 @@ Tokens
  ou     = '|';
  non    = '!';
 
- accoladeo = '{';
- accoladef = '}';
- parentheseo = '(';
- parenthesef = ')';
+ accoladeo    = '{';
+ accoladef    = '}';
+ parentheseo  = '(';
+ parenthesef  = ')';
  pointvirgule = ';';
- espaces = (' ' | 13 | 10)+;
+ espaces      = (' ' | 13 | 10)+;
 
- si = 'si';
- alors = 'alors';
- sinon = 'sinon';
- retour = 'retour';
+ si      = 'si';
+ alors   = 'alors';
+ sinon   = 'sinon';
+ retour  = 'retour';
  tantque = 'tantque';
- faire = 'faire';
+ faire   = 'faire';
 
  fonction = 'fonction';
  commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
@@ -46,9 +46,13 @@ Ignored Tokens
 
 Productions
  /* listedecfonc */
- programme = optdecvar  ;
- optdecvar = decvar*;
- decvar = typeentier nom pointvirgule;
- /*affectation = nom egal number | nom egal nom;*/
- number = {number} entier number | {entier} entier;
+ programme = {optdecvar} optdecvar | {affectation} affectation |{rien}  ;
 
+ nomvar = {nom} nom nomvar | {rien};
+
+ optdecvar = {decvar} decvar ;
+ decvar =  typeentier nomvar pointvirgule;
+
+ affectation = {affect} affect;
+ affect = nomvar egal number pointvirgule;
+ number = entier | {number} entier number;

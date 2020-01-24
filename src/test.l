@@ -1,2 +1,2 @@
-entier a;
-entier b;
+entier az;
+entier bb;
