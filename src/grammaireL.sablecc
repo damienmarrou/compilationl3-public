@@ -47,8 +47,8 @@ Ignored Tokens
  espaces, commentaire;
 
 Productions
- /* listedecfonc */
- programme = optdecvar affectation expr;
+ /* listedecfonc*/
+ programme =   affectation expr;
 
  optdecvar = {decvar_e} decvar_e optdecvar | {rien};
 
@@ -59,7 +59,7 @@ Productions
  /*instr =*/
  /*bloc = accoladeo instr accoladef;*/
 
- affectation = {affect} affect affectation | {rien};
+ affectation = {rien} | {affect} affect affectation ;
  affect = nom egal nombre pointvirgule;
 
   expr = {part1} expr ou expr2      |{part2} expr2;
