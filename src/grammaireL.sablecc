@@ -27,6 +27,7 @@ Tokens
  parentheseo  = '(';
  parenthesef  = ')';
  pointvirgule = ';';
+ virgule = ',';
  espaces      = (' ' | 13 | 10)+;
 
  si      = 'si';
@@ -48,13 +49,17 @@ Ignored Tokens
 
 Productions
  /* listedecfonc*/
- programme = optdecvar  instr   ;
+ programme =  deffonction   ;
 
- optdecvar = {decvar_e} decvar_e optdecvar | {rien};
+ optdecvar = {decvar_e} decvar_e | {listarg} decvar_e virgule optdecvar | {rien};
 
  decvar_e = {decvar} decvar | {dectab} dectab;
  decvar =  typeentier nom pointvirgule;
  dectab =  typeentier nom crocheto expr crochetf pointvirgule;
+
+
+
+ deffonction = nom parentheseo optdecvar parenthesef bloc;
 
 
  instr = {affectation} affectation | {bloc} bloc|  {tantque} instrtantque | {si} instrsi |{retour} instrretour ;
