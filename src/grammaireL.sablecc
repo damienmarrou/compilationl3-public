@@ -7,7 +7,6 @@ Helpers
 
 Tokens
 
- nom = lettre;
 
  typeentier = 'entier ';
 
@@ -21,6 +20,8 @@ Tokens
  ou     = '|';
  non    = '!';
 
+ crocheto     = '[';
+ crochetf     = ']';
  accoladeo    = '{';
  accoladef    = '}';
  parentheseo  = '(';
@@ -37,19 +38,34 @@ Tokens
 
  fonction = 'fonction';
  commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
+
  nombre = entier+;
+ nom = lettre+;
+
 
 Ignored Tokens
  espaces, commentaire;
 
 Productions
  /* listedecfonc */
- programme = optdecvar affectation;
+ programme = optdecvar affectation expr;
 
- nomvar = {nom} nom nomvar | {rien};
+ optdecvar = {decvar_e} decvar_e optdecvar | {rien};
 
- optdecvar = {decvar} decvar+ | {rien};
- decvar =  typeentier nomvar pointvirgule;
+ decvar_e = {decvar} decvar | {dectab} dectab;
+ decvar =  typeentier nom pointvirgule;
+ dectab =  typeentier nom crocheto expr crochetf pointvirgule;
 
- affectation = {affect} affect+ | {rien};
- affect = nomvar egal nombre pointvirgule;
+ /*instr =*/
+ /*bloc = accoladeo instr accoladef;*/
+
+ affectation = {affect} affect affectation | {rien};
+ affect = nom egal nombre pointvirgule;
+
+  expr = {part1} expr ou expr2      |{part2} expr2;
+  expr2= {part1} expr2 et expr3    | {part2} expr3;
+  expr3= {part1} expr3 egal expr4  | {part2} expr3 inf expr4   | {part3} expr4;
+  expr4= {part1} expr4 plus expr5  | {part2} expr4 moins expr5 | {part3} expr5;
+  expr5= {part1} expr5 multi expr6 | {part2} expr5 div expr6   | {part3} expr6;
+  expr6= {part1} non expr7         | {part2} expr7;
+  expr7= {part1} parentheseo expr parenthesef | {parti2} nom | {part3} nombre| {part4} nom crocheto  nombre crochetf; /*|fonction ;*/
