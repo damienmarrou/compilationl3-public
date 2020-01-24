@@ -1,0 +1,2 @@
+entier a;
+entier b;
