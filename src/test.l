@@ -1,9 +1,10 @@
 procedur(entier a, entier b,)
 {
-retour(a + b);
-}
+   a = lire();
+    retour lire();;
 
+}
 main()
 {
-ecrire(procedur(1, 2));
+    ecrire(c);
 }
