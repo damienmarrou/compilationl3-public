@@ -51,7 +51,7 @@ Ignored Tokens
 
 Productions
     /* listedecfonc*/
-    programme =  optdecvar deffonction* ;
+    programme = deffonction*  ;
 
     nomvar = {nom} nom nomvar | {lettre} nom;
 
@@ -62,12 +62,13 @@ Productions
 
     deffonction    =  nomvar parentheseo deffonctionarg parenthesef  optdecvar bloc;
     deffonctionarg = {deffonctionarg} fonctionarg virgule deffonctionarg |{rien};
-    fonctionarg    = {entier} ent | {tab} tab;
+    fonctionarg    = {entier} ent | {tab} tab | {appel} fonctionappel ;
     ent = typeentier nomvar;
     tab = typeentier nomvar crocheto expr crochetf;
 
-    listinstr = {list} instr ;
-    instr     = {affectation} affectation | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |{retour} instrretour | {ecrire} fonctionecrire;
+    listinstr = {list} instr listinstr |{rien} ;
+    instr     = {affectation} affectationbloc | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
+    {retour} instrretour | {ecrire} fonctionecrire;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
@@ -77,7 +78,7 @@ Productions
     bloc = accoladeo listinstr accoladef;
 
     affectation = {rien} | {affect} nomvar egal expr pointvirgule affectation ;
-
+    affectationbloc = nomvar egal expr pointvirgule;
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
     expr3= {egal}  expr3 egal expr4  | {inf}   expr3 inf   expr4     | {expr4} expr4;
@@ -85,6 +86,9 @@ Productions
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part2} expr7;
     expr7= {part1} parentheseo expr parenthesef  | {parti2} nomvar   | {part3} nombre|
-           {part4} nom crocheto  nombre crochetf | deffonction       |{rien};
+           {part4} nom crocheto  nombre crochetf | deffonction       | {appel} fonctionappel |{rien};
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
+
+    fonctionappel = {appelavecpv}nomvar parentheseo listargappel parenthesef pointvirgule |{appelsanspv} nomvar parentheseo listargappel parenthesef;
+    listargappel = {liste}nomvar virgule listargappel|{rien};

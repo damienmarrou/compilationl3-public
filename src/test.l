@@ -1,8 +1,9 @@
-entier a;
+procedur(entier a, entier b,)
+{
+retour(a + b);
+}
+
 main()
 {
-a = 100;}
-tantque a  faire{
-ecrire(a);
-a = a - 1;
+ecrire(procedur(1, 2));
 }
