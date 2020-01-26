@@ -62,20 +62,21 @@ Productions
     dectab    =  typeentier nomvar crocheto expr crochetf pointvirgule;
 
     deffonction    =  nomvar parentheseo deffonctionarg parenthesef  optdecvar bloc;
-    deffonctionarg = {deffonctionarg} fonctionarg virgule deffonctionarg |{rien};
+    deffonctionarg = {simple} fonctionarg | {multiple} fonctionarg args |{rien};
+    args = virgule deffonctionarg;
     fonctionarg    = {entier} ent | {tab} tab ;//| {appel} fonctionappel ;
     ent = typeentier nomvar;
     tab = typeentier nomvar crocheto expr crochetf;
 
     listinstr = {list} instr listinstr |{rien} ;
     instr     = {affectation} affectationbloc | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-    {retour} instrretour | {ecrire} fonctionecrire;
+    {retour} instrretour | {ecrire} fonctionecrire |{vide} instrvide;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
     instrsi      = {sisinon} si expr alors bloc instrsinon | {si} si expr alors bloc;
     instrsinon   = sinon bloc;
-
+    instrvide    = pointvirgule;
     bloc = accoladeo listinstr accoladef;
 
     affectation = {rien} | {affect} nomvar egal expr pointvirgule affectation;
@@ -94,4 +95,4 @@ Productions
    /* fonctionappel = {appelavecpv}nomvar parentheseo listargappel parenthesef pointvirgule |{appelsanspv} nomvar parentheseo listargappel parenthesef;
     listargappel = {liste}nomvar virgule listargappel|{rien};*/
 
-    fonctionlire = lire parentheseo parenthesef pointvirgule;
+    fonctionlire = {simple}lire parentheseo parenthesef;

@@ -1,10 +1,11 @@
-procedur(entier a, entier b,)
+procedur(entier a, entier b)
+entier c;
 {
    a = lire();
-    retour lire();;
-
+   a = 12;
+   ecrire(a);
 }
-main()
+main(entier a[12])
 {
     ecrire(c);
 }
