@@ -1,4 +1,4 @@
-procedur(entier a, entier b)
+procedur(entier a, entier b,)
 entier c;
 {
    a = lire();

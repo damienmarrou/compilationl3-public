@@ -62,9 +62,10 @@ Productions
     dectab    =  typeentier nomvar crocheto expr crochetf pointvirgule;
 
     deffonction    =  nomvar parentheseo deffonctionarg parenthesef  optdecvar bloc;
-    deffonctionarg = {simple} fonctionarg | {multiple} fonctionarg args |{rien};
+    deffonctionarg = {simple} fonctionargsimple | {multiple} fonctionarg args ;
     args = virgule deffonctionarg;
     fonctionarg    = {entier} ent | {tab} tab ;//| {appel} fonctionappel ;
+    fonctionargsimple    = {entier} ent | {tab} tab |{rien} ;//| {appel} fonctionappel ;
     ent = typeentier nomvar;
     tab = typeentier nomvar crocheto expr crochetf;
 
