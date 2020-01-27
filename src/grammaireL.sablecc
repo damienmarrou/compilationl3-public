@@ -67,24 +67,9 @@ Productions
     fctdecvar = {multiple} varsimple varmultiple*|{rien};
     fctvarmultiple = virgule varsimple ;//fctvarmultiple|{rien};
 
-   /* optdecvar = {simple} decvar_epv |{multiple}  decvarmul optdecvar | {rien};
-    decvarmul = virgule decvar_e;
-    decvar_e = {decvar} decvar | {dectab} dectab;
-    decvar = typeentier nom;
-    dectab = typeentier nom crocheto expr crochetf;
-    decvar_epv  = {decvar} decvarpv | {dectab} dectabpv;
-    decvarpv    =  typeentier nom pointvirgule;
-    dectabpv    =  typeentier nom crocheto expr crochetf pointvirgule;
-*/
+
     deffonction    =  nom parentheseo fctdecvar parenthesef  decvar bloc;
 
-
-    /*deffonctionarg = {simple} fonctionargsimple | {multiple} fonctionarg args deffonctionarg;
-    args = virgule fonctionarg;
-    fonctionarg    = {entier} ent | {tab} tab ;//| {appel} fonctionappel ;
-    fonctionargsimple    = {entier} ent | {tab} tab |{rien} | {appel} fonctionappel ;
-    ent = typeentier nom;
-    tab = typeentier nom crocheto expr crochetf;*/
 
     listinstr = {list} instr listinstr |{rien} ;
     instr     = {affectation} affectationbloc | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
