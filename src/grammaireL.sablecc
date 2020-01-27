@@ -3,8 +3,9 @@ Package sc;
 Helpers
     lettre = [['a' .. 'z'] + ['A' .. 'Z']];
     entier = ['0'..'9'];
-    premierelette = [['a' .. 'z'] + ['A' .. 'Z']] + '_' + '$';
-    autreslettres = [['a' .. 'z'] + ['A' .. 'Z']] + '_' + '$' + ['0'..'9'];
+    premierelettre = ['a' .. 'z'] | ['A' .. 'Z'] | '_' |'$';
+    autreslettres = ['a' .. 'z'] | ['A' .. 'Z'] | '_' | '$' | ['0'..'9'];
+
 Tokens
 //Type de variable
     typeentier = 'entier ';
@@ -44,30 +45,44 @@ Tokens
     fonction = 'fonction';
     commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 
+    nom = premierelettre+ autreslettres*;
     nombre = entier+;
-    nom = lettre;
 
 Ignored Tokens
     espaces, commentaire;
 
 Productions
     /* listedecfonc*/
-    programme = deffonction*  ;
+    programme = decvar deffonction*  ;
 
-    nomvar = {nom} nom nomvar | {lettre} nom;
+    //nomvar = {nom} nom nomvar | {lettre} nom;
 
-    optdecvar = {decvar_e} decvar_e optdecvar | {rien};
-    decvar_e  = {decvar} decvar | {dectab} dectab;
-    decvar    =  typeentier nomvar pointvirgule;
-    dectab    =  typeentier nomvar crocheto expr crochetf pointvirgule;
 
-    deffonction    =  nomvar parentheseo deffonctionarg parenthesef  optdecvar bloc;
-    deffonctionarg = {simple} fonctionargsimple | {multiple} fonctionarg args ;
-    args = virgule deffonctionarg;
+    decvar = {multiple} varsimple varmultiple* pointvirgule|{rien};
+    varsimple = {entier} varent |{tab} vartab;
+        varent = typeentier nom;
+        vartab = typeentier nom crocheto expr crochetf;
+    varmultiple = virgule varsimple ;//varmultiple|{rien};
+
+    fctdecvar = {multiple} varsimple varmultiple*|{rien};
+    fctvarmultiple = virgule varsimple ;//fctvarmultiple|{rien};
+
+   /* optdecvar = {simple} decvar_epv |{multiple}  decvarmul optdecvar | {rien};
+    decvarmul = virgule decvar_e;
+    decvar_e = {decvar} decvar | {dectab} dectab;
+    decvar = typeentier nom;
+    dectab = typeentier nom crocheto expr crochetf;
+    decvar_epv  = {decvar} decvarpv | {dectab} dectabpv;
+    decvarpv    =  typeentier nom pointvirgule;
+    dectabpv    =  typeentier nom crocheto expr crochetf pointvirgule;
+*/
+    deffonction    =  nom parentheseo fctdecvar parenthesef  decvar bloc;
+    /*deffonctionarg = {simple} fonctionargsimple | {multiple} fonctionarg args deffonctionarg;
+    args = virgule fonctionarg;
     fonctionarg    = {entier} ent | {tab} tab ;//| {appel} fonctionappel ;
     fonctionargsimple    = {entier} ent | {tab} tab |{rien} ;//| {appel} fonctionappel ;
-    ent = typeentier nomvar;
-    tab = typeentier nomvar crocheto expr crochetf;
+    ent = typeentier nom;
+    tab = typeentier nom crocheto expr crochetf;*/
 
     listinstr = {list} instr listinstr |{rien} ;
     instr     = {affectation} affectationbloc | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
@@ -80,20 +95,20 @@ Productions
     instrvide    = pointvirgule;
     bloc = accoladeo listinstr accoladef;
 
-    affectation = {rien} | {affect} nomvar egal expr pointvirgule affectation;
-    affectationbloc = nomvar egal expr pointvirgule;
+    affectation = {rien} | {affect} nom egal expr pointvirgule affectation;
+    affectationbloc = nom egal expr pointvirgule;
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
     expr3= {egal}  expr3 egal expr4  | {inf}   expr3 inf   expr4     | {expr4} expr4;
     expr4= {plus}  expr4 plus expr5  | {moins} expr4 moins expr5     | {expr5} expr5;
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part2} expr7;
-    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nom} nomvar   | {part3} nombre| {lire} fonctionlire |
+    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {part3} nombre| {lire} fonctionlire |
            {tab} nom crocheto  nombre crochetf | {fonction} deffonction       /*| {appel} fonctionappel */|{rien};
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
-   /* fonctionappel = {appelavecpv}nomvar parentheseo listargappel parenthesef pointvirgule |{appelsanspv} nomvar parentheseo listargappel parenthesef;
-    listargappel = {liste}nomvar virgule listargappel|{rien};*/
+   /* fonctionappel = {appelavecpv}nom parentheseo listargappel parenthesef pointvirgule |{appelsanspv} nom parentheseo listargappel parenthesef;
+    listargappel = {liste}nom virgule listargappel|{rien};*/
 
     fonctionlire = {simple}lire parentheseo parenthesef;
