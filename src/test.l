@@ -1,4 +1,4 @@
-f(d,2)
+f()
 f(entier a, entier b, entier c, entier d)
     entier c, entier k;
 {
