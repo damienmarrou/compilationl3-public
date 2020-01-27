@@ -53,7 +53,7 @@ Ignored Tokens
 
 Productions
     /* listedecfonc*/
-    programme = decvar deffonction*  ;
+    programme = fonctionappel; //deffonction*  ;
 
     //nomvar = {nom} nom nomvar | {lettre} nom;
 
@@ -77,10 +77,12 @@ Productions
     dectabpv    =  typeentier nom crocheto expr crochetf pointvirgule;
 */
     deffonction    =  nom parentheseo fctdecvar parenthesef  decvar bloc;
+
+
     /*deffonctionarg = {simple} fonctionargsimple | {multiple} fonctionarg args deffonctionarg;
     args = virgule fonctionarg;
     fonctionarg    = {entier} ent | {tab} tab ;//| {appel} fonctionappel ;
-    fonctionargsimple    = {entier} ent | {tab} tab |{rien} ;//| {appel} fonctionappel ;
+    fonctionargsimple    = {entier} ent | {tab} tab |{rien} | {appel} fonctionappel ;
     ent = typeentier nom;
     tab = typeentier nom crocheto expr crochetf;*/
 
@@ -103,12 +105,14 @@ Productions
     expr4= {plus}  expr4 plus expr5  | {moins} expr4 moins expr5     | {expr5} expr5;
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part2} expr7;
-    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {part3} nombre| {lire} fonctionlire |
-           {tab} nom crocheto  nombre crochetf | {fonction} deffonction       /*| {appel} fonctionappel */|{rien};
+    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre| {lire} fonctionlire |
+           {tab} nom crocheto  nombre crochetf | {fonction} deffonction |{rien};//| {appel} fonctionappel;
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
-   /* fonctionappel = {appelavecpv}nom parentheseo listargappel parenthesef pointvirgule |{appelsanspv} nom parentheseo listargappel parenthesef;
-    listargappel = {liste}nom virgule listargappel|{rien};*/
+    fonctionappel = nom  parentheseo appelexpr parenthesef;
+    appelexpr = expr listeexpr*;
+    listeexpr = virgule expr;
+
 
     fonctionlire = {simple}lire parentheseo parenthesef;
