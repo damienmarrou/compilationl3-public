@@ -23,8 +23,12 @@ public interface Analysis extends Switch
     void caseAMultipleFctdecvar(AMultipleFctdecvar node);
     void caseAFctvarmultiple(AFctvarmultiple node);
     void caseARienFctvarmultiple(ARienFctvarmultiple node);
+    void caseAFoncDeffonction2(AFoncDeffonction2 node);
+    void caseARienDeffonction2(ARienDeffonction2 node);
     void caseAArgsDeffonction(AArgsDeffonction node);
     void caseASansargDeffonction(ASansargDeffonction node);
+    void caseARienDecvar2(ARienDecvar2 node);
+    void caseAVarDecvar2(AVarDecvar2 node);
     void caseAListListinstr(AListListinstr node);
     void caseARienListinstr(ARienListinstr node);
     void caseAAffectationInstr(AAffectationInstr node);

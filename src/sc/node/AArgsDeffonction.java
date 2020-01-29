@@ -2,7 +2,6 @@
 
 package sc.node;
 
-import java.util.*;
 import sc.analysis.*;
 
 @SuppressWarnings("nls")
@@ -12,7 +11,7 @@ public final class AArgsDeffonction extends PDeffonction
     private TParentheseo _parentheseo_;
     private PFctdecvar _fctdecvar_;
     private TParenthesef _parenthesef_;
-    private final LinkedList<PDecvar> _decvar_ = new LinkedList<PDecvar>();
+    private PDecvar2 _decvar2_;
     private PBloc _bloc_;
 
     public AArgsDeffonction()
@@ -25,7 +24,7 @@ public final class AArgsDeffonction extends PDeffonction
         @SuppressWarnings("hiding") TParentheseo _parentheseo_,
         @SuppressWarnings("hiding") PFctdecvar _fctdecvar_,
         @SuppressWarnings("hiding") TParenthesef _parenthesef_,
-        @SuppressWarnings("hiding") List<?> _decvar_,
+        @SuppressWarnings("hiding") PDecvar2 _decvar2_,
         @SuppressWarnings("hiding") PBloc _bloc_)
     {
         // Constructor
@@ -37,7 +36,7 @@ public final class AArgsDeffonction extends PDeffonction
 
         setParenthesef(_parenthesef_);
 
-        setDecvar(_decvar_);
+        setDecvar2(_decvar2_);
 
         setBloc(_bloc_);
 
@@ -51,7 +50,7 @@ public final class AArgsDeffonction extends PDeffonction
             cloneNode(this._parentheseo_),
             cloneNode(this._fctdecvar_),
             cloneNode(this._parenthesef_),
-            cloneList(this._decvar_),
+            cloneNode(this._decvar2_),
             cloneNode(this._bloc_));
     }
 
@@ -161,30 +160,29 @@ public final class AArgsDeffonction extends PDeffonction
         this._parenthesef_ = node;
     }
 
-    public LinkedList<PDecvar> getDecvar()
+    public PDecvar2 getDecvar2()
     {
-        return this._decvar_;
+        return this._decvar2_;
     }
 
-    public void setDecvar(List<?> list)
+    public void setDecvar2(PDecvar2 node)
     {
-        for(PDecvar e : this._decvar_)
+        if(this._decvar2_ != null)
         {
-            e.parent(null);
+            this._decvar2_.parent(null);
         }
-        this._decvar_.clear();
 
-        for(Object obj_e : list)
+        if(node != null)
         {
-            PDecvar e = (PDecvar) obj_e;
-            if(e.parent() != null)
+            if(node.parent() != null)
             {
-                e.parent().removeChild(e);
+                node.parent().removeChild(node);
             }
 
-            e.parent(this);
-            this._decvar_.add(e);
+            node.parent(this);
         }
+
+        this._decvar2_ = node;
     }
 
     public PBloc getBloc()
@@ -220,7 +218,7 @@ public final class AArgsDeffonction extends PDeffonction
             + toString(this._parentheseo_)
             + toString(this._fctdecvar_)
             + toString(this._parenthesef_)
-            + toString(this._decvar_)
+            + toString(this._decvar2_)
             + toString(this._bloc_);
     }
 
@@ -252,8 +250,9 @@ public final class AArgsDeffonction extends PDeffonction
             return;
         }
 
-        if(this._decvar_.remove(child))
+        if(this._decvar2_ == child)
         {
+            this._decvar2_ = null;
             return;
         }
 
@@ -294,22 +293,10 @@ public final class AArgsDeffonction extends PDeffonction
             return;
         }
 
-        for(ListIterator<PDecvar> i = this._decvar_.listIterator(); i.hasNext();)
+        if(this._decvar2_ == oldChild)
         {
-            if(i.next() == oldChild)
-            {
-                if(newChild != null)
-                {
-                    i.set((PDecvar) newChild);
-                    newChild.parent(this);
-                    oldChild.parent(null);
-                    return;
-                }
-
-                i.remove();
-                oldChild.parent(null);
-                return;
-            }
+            setDecvar2((PDecvar2) newChild);
+            return;
         }
 
         if(this._bloc_ == oldChild)

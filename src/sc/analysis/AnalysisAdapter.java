@@ -141,6 +141,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAFoncDeffonction2(AFoncDeffonction2 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARienDeffonction2(ARienDeffonction2 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAArgsDeffonction(AArgsDeffonction node)
     {
         defaultCase(node);
@@ -148,6 +160,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseASansargDeffonction(ASansargDeffonction node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARienDecvar2(ARienDecvar2 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVarDecvar2(AVarDecvar2 node)
     {
         defaultCase(node);
     }

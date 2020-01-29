@@ -50,19 +50,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAProgramme(AProgramme node)
     {
         inAProgramme(node);
+        if(node.getDecvar2() != null)
         {
-            List<PDecvar> copy = new ArrayList<PDecvar>(node.getDecvar());
-            for(PDecvar e : copy)
-            {
-                e.apply(this);
-            }
+            node.getDecvar2().apply(this);
         }
+        if(node.getDeffonction2() != null)
         {
-            List<PDeffonction> copy = new ArrayList<PDeffonction>(node.getDeffonction());
-            for(PDeffonction e : copy)
-            {
-                e.apply(this);
-            }
+            node.getDeffonction2().apply(this);
         }
         outAProgramme(node);
     }
@@ -317,6 +311,48 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outARienFctvarmultiple(node);
     }
 
+    public void inAFoncDeffonction2(AFoncDeffonction2 node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFoncDeffonction2(AFoncDeffonction2 node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFoncDeffonction2(AFoncDeffonction2 node)
+    {
+        inAFoncDeffonction2(node);
+        if(node.getDeffonction() != null)
+        {
+            node.getDeffonction().apply(this);
+        }
+        if(node.getDeffonction2() != null)
+        {
+            node.getDeffonction2().apply(this);
+        }
+        outAFoncDeffonction2(node);
+    }
+
+    public void inARienDeffonction2(ARienDeffonction2 node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARienDeffonction2(ARienDeffonction2 node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARienDeffonction2(ARienDeffonction2 node)
+    {
+        inARienDeffonction2(node);
+        outARienDeffonction2(node);
+    }
+
     public void inAArgsDeffonction(AArgsDeffonction node)
     {
         defaultIn(node);
@@ -347,12 +383,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getParenthesef().apply(this);
         }
+        if(node.getDecvar2() != null)
         {
-            List<PDecvar> copy = new ArrayList<PDecvar>(node.getDecvar());
-            for(PDecvar e : copy)
-            {
-                e.apply(this);
-            }
+            node.getDecvar2().apply(this);
         }
         if(node.getBloc() != null)
         {
@@ -387,18 +420,53 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getParenthesef().apply(this);
         }
+        if(node.getDecvar2() != null)
         {
-            List<PDecvar> copy = new ArrayList<PDecvar>(node.getDecvar());
-            for(PDecvar e : copy)
-            {
-                e.apply(this);
-            }
+            node.getDecvar2().apply(this);
         }
         if(node.getBloc() != null)
         {
             node.getBloc().apply(this);
         }
         outASansargDeffonction(node);
+    }
+
+    public void inARienDecvar2(ARienDecvar2 node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARienDecvar2(ARienDecvar2 node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARienDecvar2(ARienDecvar2 node)
+    {
+        inARienDecvar2(node);
+        outARienDecvar2(node);
+    }
+
+    public void inAVarDecvar2(AVarDecvar2 node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVarDecvar2(AVarDecvar2 node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVarDecvar2(AVarDecvar2 node)
+    {
+        inAVarDecvar2(node);
+        if(node.getDecvar() != null)
+        {
+            node.getDecvar().apply(this);
+        }
+        outAVarDecvar2(node);
     }
 
     public void inAListListinstr(AListListinstr node)

@@ -2,14 +2,13 @@
 
 package sc.node;
 
-import java.util.*;
 import sc.analysis.*;
 
 @SuppressWarnings("nls")
 public final class AProgramme extends PProgramme
 {
-    private final LinkedList<PDecvar> _decvar_ = new LinkedList<PDecvar>();
-    private final LinkedList<PDeffonction> _deffonction_ = new LinkedList<PDeffonction>();
+    private PDecvar2 _decvar2_;
+    private PDeffonction2 _deffonction2_;
 
     public AProgramme()
     {
@@ -17,13 +16,13 @@ public final class AProgramme extends PProgramme
     }
 
     public AProgramme(
-        @SuppressWarnings("hiding") List<?> _decvar_,
-        @SuppressWarnings("hiding") List<?> _deffonction_)
+        @SuppressWarnings("hiding") PDecvar2 _decvar2_,
+        @SuppressWarnings("hiding") PDeffonction2 _deffonction2_)
     {
         // Constructor
-        setDecvar(_decvar_);
+        setDecvar2(_decvar2_);
 
-        setDeffonction(_deffonction_);
+        setDeffonction2(_deffonction2_);
 
     }
 
@@ -31,8 +30,8 @@ public final class AProgramme extends PProgramme
     public Object clone()
     {
         return new AProgramme(
-            cloneList(this._decvar_),
-            cloneList(this._deffonction_));
+            cloneNode(this._decvar2_),
+            cloneNode(this._deffonction2_));
     }
 
     @Override
@@ -41,77 +40,77 @@ public final class AProgramme extends PProgramme
         ((Analysis) sw).caseAProgramme(this);
     }
 
-    public LinkedList<PDecvar> getDecvar()
+    public PDecvar2 getDecvar2()
     {
-        return this._decvar_;
+        return this._decvar2_;
     }
 
-    public void setDecvar(List<?> list)
+    public void setDecvar2(PDecvar2 node)
     {
-        for(PDecvar e : this._decvar_)
+        if(this._decvar2_ != null)
         {
-            e.parent(null);
+            this._decvar2_.parent(null);
         }
-        this._decvar_.clear();
 
-        for(Object obj_e : list)
+        if(node != null)
         {
-            PDecvar e = (PDecvar) obj_e;
-            if(e.parent() != null)
+            if(node.parent() != null)
             {
-                e.parent().removeChild(e);
+                node.parent().removeChild(node);
             }
 
-            e.parent(this);
-            this._decvar_.add(e);
+            node.parent(this);
         }
+
+        this._decvar2_ = node;
     }
 
-    public LinkedList<PDeffonction> getDeffonction()
+    public PDeffonction2 getDeffonction2()
     {
-        return this._deffonction_;
+        return this._deffonction2_;
     }
 
-    public void setDeffonction(List<?> list)
+    public void setDeffonction2(PDeffonction2 node)
     {
-        for(PDeffonction e : this._deffonction_)
+        if(this._deffonction2_ != null)
         {
-            e.parent(null);
+            this._deffonction2_.parent(null);
         }
-        this._deffonction_.clear();
 
-        for(Object obj_e : list)
+        if(node != null)
         {
-            PDeffonction e = (PDeffonction) obj_e;
-            if(e.parent() != null)
+            if(node.parent() != null)
             {
-                e.parent().removeChild(e);
+                node.parent().removeChild(node);
             }
 
-            e.parent(this);
-            this._deffonction_.add(e);
+            node.parent(this);
         }
+
+        this._deffonction2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._decvar_)
-            + toString(this._deffonction_);
+            + toString(this._decvar2_)
+            + toString(this._deffonction2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._decvar_.remove(child))
+        if(this._decvar2_ == child)
         {
+            this._decvar2_ = null;
             return;
         }
 
-        if(this._deffonction_.remove(child))
+        if(this._deffonction2_ == child)
         {
+            this._deffonction2_ = null;
             return;
         }
 
@@ -122,40 +121,16 @@ public final class AProgramme extends PProgramme
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        for(ListIterator<PDecvar> i = this._decvar_.listIterator(); i.hasNext();)
+        if(this._decvar2_ == oldChild)
         {
-            if(i.next() == oldChild)
-            {
-                if(newChild != null)
-                {
-                    i.set((PDecvar) newChild);
-                    newChild.parent(this);
-                    oldChild.parent(null);
-                    return;
-                }
-
-                i.remove();
-                oldChild.parent(null);
-                return;
-            }
+            setDecvar2((PDecvar2) newChild);
+            return;
         }
 
-        for(ListIterator<PDeffonction> i = this._deffonction_.listIterator(); i.hasNext();)
+        if(this._deffonction2_ == oldChild)
         {
-            if(i.next() == oldChild)
-            {
-                if(newChild != null)
-                {
-                    i.set((PDeffonction) newChild);
-                    newChild.parent(this);
-                    oldChild.parent(null);
-                    return;
-                }
-
-                i.remove();
-                oldChild.parent(null);
-                return;
-            }
+            setDeffonction2((PDeffonction2) newChild);
+            return;
         }
 
         throw new RuntimeException("Not a child.");
