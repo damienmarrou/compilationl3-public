@@ -45,8 +45,8 @@ Tokens
     fonction = 'fonction';
     commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 
-    nom = premierelettre+ autreslettres*;
     nombre = entier+;
+    nom = premierelettre+ autreslettres*;
 
 Ignored Tokens
     espaces, commentaire;
@@ -66,9 +66,8 @@ Productions
 
     deffonction    =  {args}nom parentheseo fctdecvar parenthesef  decvar* bloc |{sansarg} nom parentheseo  parenthesef  decvar* bloc ;
 
-
     listinstr = {list} instr listinstr |{rien} ;
-    instr     = {affectation} affectation | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
+    instr     = {affectation} affect | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
     {retour} instrretour | {ecrire} fonctionecrire |{vide} instrvide;
 
     instrtantque = tantque expr faire bloc;
@@ -78,9 +77,11 @@ Productions
     instrvide    = pointvirgule;
     bloc = accoladeo listinstr accoladef;
 
-    affectation = {affect} nom egal expr pointvirgule affectation | {tab} nom crocheto expr1 crochetf egal expr pointvirgule affectation|{rien};
-    expr1 = expr;
+    /*affectation = {affect} nom egal expr pointvirgule instr | {tab} nom crocheto expr1 crochetf egal expr pointvirgule instr;
+        expr1 = expr;*/
 
+    affect = variable egal expr pointvirgule;
+    variable = {simple} nom| {tab} nom crocheto expr crochetf;
 
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
@@ -89,13 +90,12 @@ Productions
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part2} expr7;
     expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre| {lire} fonctionlire |
-           {tab} nom crocheto  nombre crochetf | {fonction} deffonction |{rien}| {appel} fonctionappel;
+           {tab} nom crocheto  nombre crochetf | {fonction} deffonction | {appel} fonctionappel;
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
     fonctionappel = nom  parentheseo appelexpr parenthesef;
     appelexpr = expr listeexpr;
     listeexpr = virgule expr;
-
 
     fonctionlire = {simple}lire parentheseo parenthesef;
