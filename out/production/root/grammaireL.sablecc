@@ -53,7 +53,8 @@ Ignored Tokens
 
 Productions
     /* listedecfonc*/
-    programme = decvar* deffonction*  ;
+    programme = decvar2 deffonction2;
+
 
     decvar = {multiple} varsimple varmultiple pointvirgule;
     varsimple = {entier} varent |{tab} vartab;
@@ -64,11 +65,12 @@ Productions
     fctdecvar = {multiple} varsimple varmultiple;
     fctvarmultiple = virgule varsimple fctvarmultiple|{rien};
 
-    deffonction    =  {args}nom parentheseo fctdecvar parenthesef  decvar* bloc |{sansarg} nom parentheseo  parenthesef  decvar* bloc ;
-
+    deffonction2 = {fonc} deffonction deffonction2|{rien};
+    deffonction    =  {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
+    decvar2 = {rien}|{var} decvar;
     listinstr = {list} instr listinstr |{rien} ;
     instr     = {affectation} affect | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-    {retour} instrretour | {ecrire} fonctionecrire ;//|{vide} instrvide;
+    {retour} instrretour | {ecrire} fonctionecrire ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
@@ -76,9 +78,6 @@ Productions
     instrsinon   = sinon bloc;
     //instrvide    = pointvirgule;
     bloc = accoladeo listinstr accoladef;
-
-    /*affectation = {affect} nom egal expr pointvirgule instr | {tab} nom crocheto expr1 crochetf egal expr pointvirgule instr;
-        expr1 = expr;*/
 
     affect = variable egal expr pointvirgule;
     variable = {simple} nom| {tab} nom crocheto expr crochetf;
