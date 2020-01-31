@@ -7,16 +7,6 @@ public class Sc2sa extends DepthFirstAdapter {
         private SaNode returnValue;
 
         @Override
-        public void inStart(Start node) {
-                super.inStart(node);
-        }//non
-
-        @Override
-        public void outStart(Start node) {
-                super.outStart(node);
-        }//non
-
-        @Override
         public void defaultIn(Node node) {
                 super.defaultIn(node);
         }//non
@@ -26,35 +16,24 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.defaultOut(node);
         }//non
 
-        @Override
-        public void caseStart(Start node) {
-                super.caseStart(node);
+        SaNode apply(Switchable sw) {
+                sw.apply(this);
+                return returnValue;
         }
 
         @Override
-        public void inAProgramme(AProgramme node) {
-                super.inAProgramme(node);
-        }//non
-
-        @Override
-        public void outAProgramme(AProgramme node) {
-                super.outAProgramme(node);
-        }//non
+        public void caseStart(Start node) {
+                super.caseStart(node);
+                apply(node.getPProgramme());
+        }
 
         @Override
         public void caseAProgramme(AProgramme node) {
                 super.caseAProgramme(node);
+                SaDec variable = (SaDec) node.getDecvar2();
+                SaDec fonctions = (SaDec) node.getDeffonction2();
+                this.returnValue = new SaProg(variable,fonctions);
         }
-
-        @Override
-        public void inAMultipleDecvar(AMultipleDecvar node) {
-                super.inAMultipleDecvar(node);
-        }//non
-
-        @Override
-        public void outAMultipleDecvar(AMultipleDecvar node) {
-                super.outAMultipleDecvar(node);
-        }//non
 
         @Override
         public void caseAMultipleDecvar(AMultipleDecvar node) {
@@ -62,44 +41,16 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void inAEntierVarsimple(AEntierVarsimple node) {
-                super.inAEntierVarsimple(node);
-        }//non
-
-        @Override
-        public void outAEntierVarsimple(AEntierVarsimple node) {
-                super.outAEntierVarsimple(node);
-        }//non
-
-        @Override
         public void caseAEntierVarsimple(AEntierVarsimple node) {
                 super.caseAEntierVarsimple(node);
         }
 
-        @Override
-        public void inATabVarsimple(ATabVarsimple node) {
-                super.inATabVarsimple(node);
-        }//non
-
-        @Override
-        public void outATabVarsimple(ATabVarsimple node) {
-                super.outATabVarsimple(node);
-        }//non
 
         @Override
         public void caseATabVarsimple(ATabVarsimple node) {
                 super.caseATabVarsimple(node);
         }
 
-        @Override
-        public void inAVarent(AVarent node) {
-                super.inAVarent(node);
-        }//non
-
-        @Override
-        public void outAVarent(AVarent node) {
-                super.outAVarent(node);
-        }//non
 
         @Override
         public void caseAVarent(AVarent node) {
@@ -107,89 +58,37 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void inAVartab(AVartab node) {
-                super.inAVartab(node);
-        }//non
-
-        @Override
-        public void outAVartab(AVartab node) {
-                super.outAVartab(node);
-        }//non
-
-        @Override
         public void caseAVartab(AVartab node) {
                 super.caseAVartab(node);
         }
-
-        @Override
-        public void inAVarmultiple(AVarmultiple node) {
-                super.inAVarmultiple(node);
-        }//non
-
-        @Override
-        public void outAVarmultiple(AVarmultiple node) {
-                super.outAVarmultiple(node);
-        }//non
 
         @Override
         public void caseAVarmultiple(AVarmultiple node) {
                 super.caseAVarmultiple(node);
         }
 
-        @Override
-        public void inARienVarmultiple(ARienVarmultiple node) {
-                super.inARienVarmultiple(node);
-        }//non
 
-        @Override
-        public void outARienVarmultiple(ARienVarmultiple node) {
-                super.outARienVarmultiple(node);
-        }//non
 
         @Override
         public void caseARienVarmultiple(ARienVarmultiple node) {
                 super.caseARienVarmultiple(node);
         }
 
-        @Override
-        public void inAMultipleFctdecvar(AMultipleFctdecvar node) {
-                super.inAMultipleFctdecvar(node);
-        }//non
 
-        @Override
-        public void outAMultipleFctdecvar(AMultipleFctdecvar node) {
-                super.outAMultipleFctdecvar(node);
-        }//non
 
         @Override
         public void caseAMultipleFctdecvar(AMultipleFctdecvar node) {
                 super.caseAMultipleFctdecvar(node);
         }
 
-        @Override
-        public void inAFctvarmultiple(AFctvarmultiple node) {
-                super.inAFctvarmultiple(node);
-        }//non
 
-        @Override
-        public void outAFctvarmultiple(AFctvarmultiple node) {
-                super.outAFctvarmultiple(node);
-        }//non
 
         @Override
         public void caseAFctvarmultiple(AFctvarmultiple node) {
                 super.caseAFctvarmultiple(node);
         }
 
-        @Override
-        public void inARienFctvarmultiple(ARienFctvarmultiple node) {
-                super.inARienFctvarmultiple(node);
-        }//non
 
-        @Override
-        public void outARienFctvarmultiple(ARienFctvarmultiple node) {
-                super.outARienFctvarmultiple(node);
-        }//non
 
         @Override
         public void caseARienFctvarmultiple(ARienFctvarmultiple node) {
@@ -197,29 +96,9 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void inAFoncDeffonction2(AFoncDeffonction2 node) {
-                super.inAFoncDeffonction2(node);
-        }//non
-
-        @Override
-        public void outAFoncDeffonction2(AFoncDeffonction2 node) {
-                super.outAFoncDeffonction2(node);
-        }//non
-
-        @Override
         public void caseAFoncDeffonction2(AFoncDeffonction2 node) {
                 super.caseAFoncDeffonction2(node);
         }
-
-        @Override
-        public void inARienDeffonction2(ARienDeffonction2 node) {
-                super.inARienDeffonction2(node);
-        }//non
-
-        @Override
-        public void outARienDeffonction2(ARienDeffonction2 node) {
-                super.outARienDeffonction2(node);
-        }//non
 
         @Override
         public void caseARienDeffonction2(ARienDeffonction2 node) {
@@ -227,45 +106,16 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void inAArgsDeffonction(AArgsDeffonction node) {
-                super.inAArgsDeffonction(node);
-        }//non
-
-        @Override
-        public void outAArgsDeffonction(AArgsDeffonction node) {
-                super.outAArgsDeffonction(node);
-        }//non
-
-        @Override
         public void caseAArgsDeffonction(AArgsDeffonction node) {
                 super.caseAArgsDeffonction(node);
         }
 
-        @Override
-        public void inASansargDeffonction(ASansargDeffonction node) {
-                super.inASansargDeffonction(node);
-        }//non
-
-        @Override
-        public void outASansargDeffonction(ASansargDeffonction node) {
-                super.outASansargDeffonction(node);
-        }//non
 
         @Override
         public void caseASansargDeffonction(ASansargDeffonction node) {
                 super.caseASansargDeffonction(node);
         }
 
-
-        @Override
-        public void inAListListinstr(AListListinstr node) {
-                super.inAListListinstr(node);
-        }//non
-
-        @Override
-        public void outAListListinstr(AListListinstr node) {
-                super.outAListListinstr(node);
-        }//non
 
         @Override
         public void caseAListListinstr(AListListinstr node) {
