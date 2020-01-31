@@ -12,23 +12,23 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void defaultIn(Node node) { //Marche
+        public void defaultIn(Node node) { //Marche 100%
                 super.defaultIn(node);
         }
 
         @Override
-        public void defaultOut(Node node) { //Marche
+        public void defaultOut(Node node) { //Marche 100%
                 super.defaultOut(node);
         }
 
         @Override
-        public void caseStart(Start node) { //Marche
+        public void caseStart(Start node) { //Marche 100%
                 super.caseStart(node);
                 apply(node.getPProgramme());
         }
 
         @Override
-        public void caseAProgramme(AProgramme node) { //Marche
+        public void caseAProgramme(AProgramme node) { //Marche 100%
                 super.caseAProgramme(node);
                 SaLDec variable = (SaLDec) apply(node.getDecvar2());
                 SaLDec fonctions = (SaLDec) apply(node.getDeffonction2());
@@ -44,21 +44,21 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void caseAEntierVarsimple(AEntierVarsimple node) { //Marche
+        public void caseAEntierVarsimple(AEntierVarsimple node) { //Marche 100%
                 super.caseAEntierVarsimple(node);
                 apply(node.getVarent());
         }
 
 
         @Override
-        public void caseATabVarsimple(ATabVarsimple node) { //Marche
+        public void caseATabVarsimple(ATabVarsimple node) { //Marche 100%
                 super.caseATabVarsimple(node);
                 apply(node.getVartab());
         }
 
 
         @Override
-        public void caseAVarent(AVarent node) {
+        public void caseAVarent(AVarent node) { //Marche 100%
                 super.caseAVarent(node);
                 apply(node.getNom());
         }
@@ -72,9 +72,8 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAVarmultiple(AVarmultiple node) {
                 super.caseAVarmultiple(node);
+                apply(node.getVarmultiple());
         }
-
-
 
         @Override
         public void caseARienVarmultiple(ARienVarmultiple node) {
@@ -348,9 +347,9 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void caseALireExpr7(ALireExpr7 node) {
+        public void caseALireExpr7(ALireExpr7 node) { //Marche 100%
                 super.caseALireExpr7(node);
-                apply(node.getFonctionlire());
+                this.returnValue = new SaExpLire();
         }
 
         @Override
@@ -359,29 +358,42 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
+        //TODO ?
         public void caseAFonctionExpr7(AFonctionExpr7 node) {
                 super.caseAFonctionExpr7(node);
         }
 
         @Override
-        public void caseAAppelExpr7(AAppelExpr7 node) {
+        public void caseAAppelExpr7(AAppelExpr7 node) { //Marche 100%
                 super.caseAAppelExpr7(node);
+                node.getFonctionappel().apply(this);
+                SaAppel op1 = (SaAppel) this.returnValue;
+                this.returnValue = new SaExpAppel(op1);
         }
 
         @Override
-        public void caseAFonctionecrire(AFonctionecrire node) {
+        public void caseAFonctionecrire(AFonctionecrire node) { //Marche 100%
                 super.caseAFonctionecrire(node);
-
+                node.getEcrire().apply(this);
+                SaExp op1 = (SaExp) this.returnValue;
+                this.returnValue = new SaInstEcriture(op1);
         }
 
         @Override
-        public void caseAFonctionappel(AFonctionappel node) {
+        public void caseAFonctionappel(AFonctionappel node) { //Marche 100%
                 super.caseAFonctionappel(node);
+                String nom =node.getNom().getText();
+                node.getAppelexpr().apply(this);
+                SaLExp op1 = (SaLExp) this.returnValue;
+                this.returnValue = new SaAppel(nom,op1);
         }
 
         @Override
-        public void caseAAppelexpr(AAppelexpr node) {
+        public void caseAAppelexpr(AAppelexpr node) { //Marche 100%
                 super.caseAAppelexpr(node);
+                node.getExpr().apply(this);
+                SaAppel op1 = (SaAppel) this.returnValue;
+                this.returnValue = new SaExpAppel(op1);
         }
 
         @Override
@@ -395,9 +407,10 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
 
-        @Override
-        public void caseAFonctionlire(AFonctionlire node) {
+        /*@Override
+        //TODO : Pourquoi on a ça ?
+        public void caseAFonctionlire(AFonctionlire node) { //Marche
                 super.caseAFonctionlire(node);
                 apply(node.getLire());
-        }
+        }*/
 }
