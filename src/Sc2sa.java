@@ -6,7 +6,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
         private SaNode returnValue;
 
-        SaNode apply(Switchable sw) {
+        private SaNode apply(Switchable sw) {
                 sw.apply(this);
                 return returnValue;
         }
@@ -78,6 +78,7 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseARienVarmultiple(ARienVarmultiple node) {
                 super.caseARienVarmultiple(node);
+
         }
 
 
@@ -97,7 +98,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
 
         @Override
-        public void caseARienFctvarmultiple(ARienFctvarmultiple node) {
+        public void caseARienFctvarmultiple(ARienFctvarmultiple node) {//pas sur mais normalement c'est bon
                 super.caseARienFctvarmultiple(node);
         }
 
@@ -107,7 +108,7 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void caseARienDeffonction2(ARienDeffonction2 node) {
+        public void caseARienDeffonction2(ARienDeffonction2 node) {//normalement c'est bon
                 super.caseARienDeffonction2(node);
         }
 
@@ -124,10 +125,11 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAListListinstr(AListListinstr node) {
                 super.caseAListListinstr(node);
+
         }
 
         @Override
-        public void caseARienListinstr(ARienListinstr node) {
+        public void caseARienListinstr(ARienListinstr node) {//pas sur
                 super.caseARienListinstr(node);
         }
 
@@ -197,8 +199,9 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void caseASimpleVariable(ASimpleVariable node) {
+        public void caseASimpleVariable(ASimpleVariable node) {//vraiment pas sur
                 super.caseASimpleVariable(node);
+                apply(node.getNom());
         }
 
         @Override
@@ -332,18 +335,21 @@ public class Sc2sa extends DepthFirstAdapter {
         }*/
 
         @Override
-        public void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node) {
+        public void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node) {//pas sur
                 super.caseAExprentreparenthesesExpr7(node);
+                this.returnValue = (SaNode) node.getExpr();
         }
 
         @Override
-        public void caseANomvarExpr7(ANomvarExpr7 node) {
+        public void caseANomvarExpr7(ANomvarExpr7 node) {//pas sur
                 super.caseANomvarExpr7(node);
+                apply(node.getNom());
         }
 
         @Override
-        public void caseANombreExpr7(ANombreExpr7 node) {
+        public void caseANombreExpr7(ANombreExpr7 node) {//pas sur
                 super.caseANombreExpr7(node);
+                apply(node.getNombre());
         }
 
         @Override
@@ -359,8 +365,9 @@ public class Sc2sa extends DepthFirstAdapter {
 
         @Override
         //TODO ?
-        public void caseAFonctionExpr7(AFonctionExpr7 node) {
+        public void caseAFonctionExpr7(AFonctionExpr7 node) {//pas sur
                 super.caseAFonctionExpr7(node);
+                apply(node.getDeffonction());
         }
 
         @Override
@@ -406,11 +413,15 @@ public class Sc2sa extends DepthFirstAdapter {
                 this.returnValue = new SaLExp(op1,op2);
         }
 
-
-        /*@Override
-        //TODO : Pourquoi on a ça ?
-        public void caseAFonctionlire(AFonctionlire node) { //Marche
-                super.caseAFonctionlire(node);
+        @Override
+        public void caseAVideFonctionlire(AVideFonctionlire node) {//pas sur
+                super.caseAVideFonctionlire(node);
                 apply(node.getLire());
-        }*/
+        }
+
+        @Override
+        public void caseASimpleFonctionlire(ASimpleFonctionlire node) {//pas sur
+                super.caseASimpleFonctionlire(node);
+                apply(node.getExpr());
+        }
 }
