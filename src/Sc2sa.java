@@ -259,35 +259,6 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.caseASansargDeffonction(node);
         }
 
-        @Override
-        public void inARienDecvar2(ARienDecvar2 node) {
-                super.inARienDecvar2(node);
-        }//non
-
-        @Override
-        public void outARienDecvar2(ARienDecvar2 node) {
-                super.outARienDecvar2(node);
-        }//non
-
-        @Override
-        public void caseARienDecvar2(ARienDecvar2 node) {
-                super.caseARienDecvar2(node);
-        }
-
-        @Override
-        public void inAVarDecvar2(AVarDecvar2 node) {
-                super.inAVarDecvar2(node);
-        }//non
-
-        @Override
-        public void outAVarDecvar2(AVarDecvar2 node) {
-                super.outAVarDecvar2(node);
-        }//non
-
-        @Override
-        public void caseAVarDecvar2(AVarDecvar2 node) {
-                super.caseAVarDecvar2(node);
-        }
 
         @Override
         public void inAListListinstr(AListListinstr node) {
@@ -684,6 +655,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAMoinsExpr4(AMoinsExpr4 node) {
                 super.caseAMoinsExpr4(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr4().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr5().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpSub(op1,op2);
         }
 
         @Override
