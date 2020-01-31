@@ -670,7 +670,7 @@ public class Sc2sa extends DepthFirstAdapter {
                 op1 = (SaExp) this.returnValue;
                 node.getExpr5().apply(this);
                 op2 = (SaExp) this.returnValue;
-                this.returnValue = new SaExpAdd(op1,op2);
+                this.returnValue = new SaExpAdd(op1,op2);//TODO vérif
         }
 
         @Override
