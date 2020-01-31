@@ -68,7 +68,7 @@ Productions
     deffonction2 = {fonc} deffonction deffonction2|{rien};
     deffonction  = {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
     decvar2      = {rien}|{var} decvar;
-    listinstr    = {list} instr listinstr |{rien} ;
+    listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
                    {retour} instrretour   | {ecrire} fonctionecrire ;
 
