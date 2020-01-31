@@ -72,7 +72,7 @@ public interface Analysis extends Switch
     void caseAFonctionappel(AFonctionappel node);
     void caseAAppelexpr(AAppelexpr node);
     void caseAListeexpr(AListeexpr node);
-    void caseASimpleFonctionlire(ASimpleFonctionlire node);
+    void caseAFonctionlire(AFonctionlire node);
 
     void caseTTypeentier(TTypeentier node);
     void caseTPlus(TPlus node);

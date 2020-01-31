@@ -943,17 +943,17 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void inASimpleFonctionlire(ASimpleFonctionlire node) {
-                super.inASimpleFonctionlire(node);
-        }//non
+        public void inAFonctionlire(AFonctionlire node) {//non
+                super.inAFonctionlire(node);
+        }
 
         @Override
-        public void outASimpleFonctionlire(ASimpleFonctionlire node) {
-                super.outASimpleFonctionlire(node);
-        }//non
+        public void outAFonctionlire(AFonctionlire node) {//non
+                super.outAFonctionlire(node);
+        }
 
         @Override
-        public void caseASimpleFonctionlire(ASimpleFonctionlire node) {
-                super.caseASimpleFonctionlire(node);
+        public void caseAFonctionlire(AFonctionlire node) {
+                super.caseAFonctionlire(node);
         }
 }

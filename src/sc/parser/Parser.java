@@ -558,7 +558,7 @@ public class Parser
                 push(goTo(30), list, false);
             }
             break;
-            case 60: /* reduce ASimpleFonctionlire */
+            case 60: /* reduce AFonctionlire */
             {
                 ArrayList<Object> list = new60();
                 push(goTo(31), list, false);
@@ -1983,7 +1983,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new60() /* reduce ASimpleFonctionlire */
+    ArrayList<Object> new60() /* reduce AFonctionlire */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -2000,7 +2000,7 @@ public class Parser
         tparentheseoNode3 = (TParentheseo)nodeArrayList2.get(0);
         tparenthesefNode4 = (TParenthesef)nodeArrayList3.get(0);
 
-        pfonctionlireNode1 = new ASimpleFonctionlire(tlireNode2, tparentheseoNode3, tparenthesefNode4);
+        pfonctionlireNode1 = new AFonctionlire(tlireNode2, tparentheseoNode3, tparenthesefNode4);
         }
 	nodeList.add(pfonctionlireNode1);
         return nodeList;

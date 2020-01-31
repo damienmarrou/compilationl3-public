@@ -1580,20 +1580,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAListeexpr(node);
     }
 
-    public void inASimpleFonctionlire(ASimpleFonctionlire node)
+    public void inAFonctionlire(AFonctionlire node)
     {
         defaultIn(node);
     }
 
-    public void outASimpleFonctionlire(ASimpleFonctionlire node)
+    public void outAFonctionlire(AFonctionlire node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseASimpleFonctionlire(ASimpleFonctionlire node)
+    public void caseAFonctionlire(AFonctionlire node)
     {
-        inASimpleFonctionlire(node);
+        inAFonctionlire(node);
         if(node.getLire() != null)
         {
             node.getLire().apply(this);
@@ -1606,6 +1606,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getParenthesef().apply(this);
         }
-        outASimpleFonctionlire(node);
+        outAFonctionlire(node);
     }
 }
