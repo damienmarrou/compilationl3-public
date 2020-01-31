@@ -70,15 +70,14 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        public void caseAVarmultiple(AVarmultiple node) {
+        public void caseAVarmultiple(AVarmultiple node) {//pas sur
                 super.caseAVarmultiple(node);
                 apply(node.getVarmultiple());
         }
 
         @Override
-        public void caseARienVarmultiple(ARienVarmultiple node) {
+        public void caseARienVarmultiple(ARienVarmultiple node) {//pas sur
                 super.caseARienVarmultiple(node);
-
         }
 
 
@@ -105,6 +104,11 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAFoncDeffonction2(AFoncDeffonction2 node) {
                 super.caseAFoncDeffonction2(node);
+                node.getDeffonction().apply(this);
+                SaDec exp = (SaDec) this.returnValue;
+                node.getDeffonction2().apply(this);
+                SaDec exp1 = (SaDec) this.returnValue;
+               //todo : a finir
         }
 
         @Override
@@ -151,16 +155,23 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseASiInstr(ASiInstr node) {
                 super.caseASiInstr(node);
+
         }
 
         @Override
-        public void caseARetourInstr(ARetourInstr node) {
+        public void caseARetourInstr(ARetourInstr node) { //pas sur
                 super.caseARetourInstr(node);
+                node.getInstrretour().apply(this);
+                SaExp expr = (SaExp) this.returnValue;
+                this.returnValue = new SaInstRetour(expr);
         }
 
         @Override
-        public void caseAEcrireInstr(AEcrireInstr node) {
+        public void caseAEcrireInstr(AEcrireInstr node) {//pas sur
                 super.caseAEcrireInstr(node);
+                node.getFonctionecrire().apply(this);
+                SaExp expr = (SaExp) this.returnValue;
+                this.returnValue = new SaInstEcriture(expr);
         }
 
         @Override
@@ -328,11 +339,11 @@ public class Sc2sa extends DepthFirstAdapter {
                 apply(node.getNon());
         }
 
-        /*@Override
-        public void caseAPart2Expr7(APart2Expr6 node) {
-                super.caseAPart2Expr7(node);
+        @Override
+        public void caseAPart7Expr6(APart7Expr6 node) {//pas sur
+                super.caseAPart7Expr6(node);
                 apply(node.getExpr7());
-        }*/
+        }
 
         @Override
         public void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node) {//pas sur
@@ -364,8 +375,8 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
         @Override
-        //TODO ?
-        public void caseAFonctionExpr7(AFonctionExpr7 node) {//pas sur
+        //TODO ? alors oui c'est à TODO
+        public void caseAFonctionExpr7(AFonctionExpr7 node) {
                 super.caseAFonctionExpr7(node);
                 apply(node.getDeffonction());
         }
