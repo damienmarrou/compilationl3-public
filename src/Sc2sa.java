@@ -585,6 +585,14 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAEgalExpr3(AEgalExpr3 node) {
                 super.caseAEgalExpr3(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr3().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr4().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpEqual(op1,op2);
+
         }
 
         @Override
@@ -600,6 +608,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAInfExpr3(AInfExpr3 node) {
                 super.caseAInfExpr3(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr3().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr4().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpInf(op1,op2);
         }
 
         @Override
