@@ -1,7 +1,4 @@
-import sa.SaExp;
-import sa.SaExpAdd;
-import sa.SaExpSub;
-import sa.SaNode;
+import sa.*;
 import sc.analysis.DepthFirstAdapter;
 import sc.node.*;
 
@@ -692,6 +689,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAMultiExpr5(AMultiExpr5 node) {
                 super.caseAMultiExpr5(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr5().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr6().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpMult(op1,op2);
         }
 
         @Override
@@ -707,6 +711,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseADivExpr5(ADivExpr5 node) {
                 super.caseADivExpr5(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr5().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr6().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpDiv(op1,op2);
         }
 
         @Override
