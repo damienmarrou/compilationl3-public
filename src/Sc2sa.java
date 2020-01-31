@@ -49,13 +49,11 @@ public class Sc2sa extends DepthFirstAdapter {
                 apply(node.getVarent());
         }
 
-
         @Override
         public void caseATabVarsimple(ATabVarsimple node) { //Marche 100%
                 super.caseATabVarsimple(node);
                 apply(node.getVartab());
         }
-
 
         @Override
         public void caseAVarent(AVarent node) { //Marche 100%
@@ -80,21 +78,15 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.caseARienVarmultiple(node);
         }
 
-
-
         @Override
         public void caseAMultipleFctdecvar(AMultipleFctdecvar node) {
                 super.caseAMultipleFctdecvar(node);
         }
 
-
-
         @Override
         public void caseAFctvarmultiple(AFctvarmultiple node) {
                 super.caseAFctvarmultiple(node);
         }
-
-
 
         @Override
         public void caseARienFctvarmultiple(ARienFctvarmultiple node) {//pas sur mais normalement c'est bon
