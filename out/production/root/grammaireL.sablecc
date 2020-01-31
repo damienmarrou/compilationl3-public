@@ -4,7 +4,7 @@ Helpers
     lettre = [['a' .. 'z'] + ['A' .. 'Z']];
     entier = ['0'..'9'];
     premierelettre = ['a' .. 'z'] | ['A' .. 'Z'] | '_' |'$';
-    autreslettres = ['a' .. 'z'] | ['A' .. 'Z'] | '_' | '$' | ['0'..'9'];
+    autreslettres  = ['a' .. 'z'] | ['A' .. 'Z'] | '_' | '$' | ['0'..'9'];
 
 Tokens
 //Type de variable
@@ -29,7 +29,7 @@ Tokens
     parentheseo  = '(';
     parenthesef  = ')';
     pointvirgule = ';';
-    virgule = ',';
+    virgule      = ',';
     espaces      = (' ' | 13 | 10)+;
 
 //symbole de fonction
@@ -46,7 +46,7 @@ Tokens
     commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 
     nombre = entier+;
-    nom = premierelettre+ autreslettres*;
+    nom    = premierelettre+ autreslettres*;
 
 Ignored Tokens
     espaces, commentaire;
@@ -56,31 +56,30 @@ Productions
     programme = decvar2 deffonction2;
 
 
-    decvar = {multiple} varsimple varmultiple pointvirgule;
-    varsimple = {entier} varent |{tab} vartab;
-        varent = typeentier nom;
-        vartab = typeentier nom crocheto expr crochetf;
+    decvar      = {multiple} varsimple varmultiple pointvirgule;
+    varsimple   = {entier} varent |{tab} vartab;
+        varent  = typeentier nom;
+        vartab  = typeentier nom crocheto expr crochetf;
     varmultiple = virgule varsimple varmultiple|{rien};
 
-    fctdecvar = {multiple} varsimple varmultiple;
+    fctdecvar      = {multiple} varsimple varmultiple;
     fctvarmultiple = virgule varsimple fctvarmultiple|{rien};
 
     deffonction2 = {fonc} deffonction deffonction2|{rien};
-    deffonction    =  {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
-    decvar2 = {rien}|{var} decvar;
-    listinstr = {list} instr listinstr |{rien} ;
-    instr     = {affectation} affect | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-    {retour} instrretour | {ecrire} fonctionecrire ;
+    deffonction  = {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
+    decvar2      = {rien}|{var} decvar;
+    listinstr    = {list} instr listinstr |{rien} ;
+    instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
+                   {retour} instrretour   | {ecrire} fonctionecrire ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
     instrsi      = {sisinon} si expr alors bloc instrsinon | {si} si expr alors bloc;
     instrsinon   = sinon bloc;
-    //instrvide    = pointvirgule;
-    bloc = accoladeo listinstr accoladef;
+    bloc         = accoladeo listinstr accoladef;
 
-    affect = variable egal expr pointvirgule;
-    variable = {simple} nom| {tab} nom crocheto expr crochetf;
+    affect   = variable egal expr pointvirgule;
+    variable = {simple} nom | {tab} nom crocheto expr crochetf;
 
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
@@ -94,7 +93,7 @@ Productions
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
     fonctionappel = nom  parentheseo appelexpr parenthesef;
-    appelexpr = expr listeexpr;
-    listeexpr = virgule expr;
+    appelexpr     = expr listeexpr;
+    listeexpr     = virgule expr;
 
-    fonctionlire = {simple}lire parentheseo parenthesef;
+    fonctionlire  = lire parentheseo parenthesef;

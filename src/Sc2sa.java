@@ -17,7 +17,6 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void outStart(Start node) {
                 super.outStart(node);
-
         }//non
 
         @Override
@@ -951,6 +950,7 @@ public class Sc2sa extends DepthFirstAdapter {
         public void outAFonctionlire(AFonctionlire node) {//non
                 super.outAFonctionlire(node);
         }
+
 
         @Override
         public void caseAFonctionlire(AFonctionlire node) {
