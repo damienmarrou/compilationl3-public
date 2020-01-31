@@ -30,9 +30,9 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAProgramme(AProgramme node) {
                 super.caseAProgramme(node);
-                SaDec variable = (SaDec) node.getDecvar2();
-                SaDec fonctions = (SaDec) node.getDeffonction2();
-                //this.returnValue = new SaProg(variable,fonctions);
+                SaLDec variable = (SaLDec) apply(node.getDecvar2());
+                SaLDec fonctions = (SaLDec) apply(node.getDeffonction2());
+                this.returnValue = new SaProg(variable,fonctions);
         }
 
         @Override
@@ -45,10 +45,12 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.caseAEntierVarsimple(node);
         }
 
+
         @Override
         public void caseATabVarsimple(ATabVarsimple node) {
                 super.caseATabVarsimple(node);
         }
+
 
         @Override
         public void caseAVarent(AVarent node) {
@@ -65,20 +67,28 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.caseAVarmultiple(node);
         }
 
+
+
         @Override
         public void caseARienVarmultiple(ARienVarmultiple node) {
                 super.caseARienVarmultiple(node);
         }
+
+
 
         @Override
         public void caseAMultipleFctdecvar(AMultipleFctdecvar node) {
                 super.caseAMultipleFctdecvar(node);
         }
 
+
+
         @Override
         public void caseAFctvarmultiple(AFctvarmultiple node) {
                 super.caseAFctvarmultiple(node);
         }
+
+
 
         @Override
         public void caseARienFctvarmultiple(ARienFctvarmultiple node) {
@@ -163,7 +173,6 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseASiInstrsi(ASiInstrsi node) {
                 super.caseASiInstrsi(node);
-
         }
 
         @Override
@@ -214,12 +223,10 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAEgalExpr3(AEgalExpr3 node) {
                 super.caseAEgalExpr3(node);
-                SaExp op1 = null;
-                SaExp op2 = null;
                 node.getExpr3().apply(this);
-                op1 = (SaExp) this.returnValue;
+                SaExp op1 = (SaExp) this.returnValue;
                 node.getExpr4().apply(this);
-                op2 = (SaExp) this.returnValue;
+                SaExp op2 = (SaExp) this.returnValue;
                 this.returnValue = new SaExpEqual(op1,op2);
 
         }
