@@ -11,11 +11,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void inStart(Start node) {
                 super.inStart(node);
+
         }
 
         @Override
         public void outStart(Start node) {
                 super.outStart(node);
+
         }
 
         @Override
@@ -651,6 +653,7 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void inAPlusExpr4(APlusExpr4 node) {
                 super.inAPlusExpr4(node);
+
         }
 
         @Override
@@ -661,6 +664,13 @@ public class Sc2sa extends DepthFirstAdapter {
         @Override
         public void caseAPlusExpr4(APlusExpr4 node) {
                 super.caseAPlusExpr4(node);
+                SaExp op1 = null;
+                SaExp op2 = null;
+                node.getExpr4().apply(this);
+                op1 = (SaExp) this.returnValue;
+                node.getExpr5().apply(this);
+                op2 = (SaExp) this.returnValue;
+                this.returnValue = new SaExpAdd(op1,op2);
         }
 
         @Override
