@@ -304,10 +304,6 @@ public class Sc2sa extends DepthFirstAdapter {
                 super.caseANonExpr6(node);
         }
 
-        @Override
-        public void caseAPart2Expr6(APart2Expr6 node) {
-                super.caseAPart2Expr6(node);
-        }
 
         @Override
         public void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node) {
@@ -365,8 +361,4 @@ public class Sc2sa extends DepthFirstAdapter {
         }
 
 
-        @Override
-        public void caseAFonctionlire(AFonctionlire node) {
-                super.caseAFonctionlire(node);
-        }
 }

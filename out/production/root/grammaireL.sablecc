@@ -68,9 +68,9 @@ Productions
     deffonction2 = {fonc} deffonction deffonction2|{rien};
     deffonction  = {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
     decvar2      = {rien}|{var} decvar;
-    listinstr    = {list} instr listinstr |{rien} ;
+    listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-                   {retour} instrretour   | {ecrire} fonctionecrire ;
+                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
@@ -86,7 +86,7 @@ Productions
     expr3= {egal}  expr3 egal expr4  | {inf}   expr3 inf   expr4     | {expr4} expr4;
     expr4= {plus}  expr4 plus expr5  | {moins} expr4 moins expr5     | {expr5} expr5;
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
-    expr6= {non}   non   expr7       | {part2} expr7;
+    expr6= {non}   non   expr7       | {part7} expr7;
     expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre| {lire} fonctionlire |
            {tab} nom crocheto  nombre crochetf | {fonction} deffonction | {appel} fonctionappel;
 
@@ -96,4 +96,4 @@ Productions
     appelexpr     = expr listeexpr;
     listeexpr     = virgule expr;
 
-    fonctionlire  = lire parentheseo parenthesef;
+    fonctionlire  = {simple} lire parentheseo expr parenthesef |{vide}lire parentheseo  parenthesef ;

@@ -37,6 +37,7 @@ public interface Analysis extends Switch
     void caseASiInstr(ASiInstr node);
     void caseARetourInstr(ARetourInstr node);
     void caseAEcrireInstr(AEcrireInstr node);
+    void caseALireInstr(ALireInstr node);
     void caseAInstrtantque(AInstrtantque node);
     void caseAInstrretour(AInstrretour node);
     void caseASisinonInstrsi(ASisinonInstrsi node);
@@ -60,7 +61,7 @@ public interface Analysis extends Switch
     void caseADivExpr5(ADivExpr5 node);
     void caseAExpr6Expr5(AExpr6Expr5 node);
     void caseANonExpr6(ANonExpr6 node);
-    void caseAPart2Expr6(APart2Expr6 node);
+    void caseAPart7Expr6(APart7Expr6 node);
     void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node);
     void caseANomvarExpr7(ANomvarExpr7 node);
     void caseANombreExpr7(ANombreExpr7 node);
@@ -72,7 +73,8 @@ public interface Analysis extends Switch
     void caseAFonctionappel(AFonctionappel node);
     void caseAAppelexpr(AAppelexpr node);
     void caseAListeexpr(AListeexpr node);
-    void caseAFonctionlire(AFonctionlire node);
+    void caseASimpleFonctionlire(ASimpleFonctionlire node);
+    void caseAVideFonctionlire(AVideFonctionlire node);
 
     void caseTTypeentier(TTypeentier node);
     void caseTPlus(TPlus node);

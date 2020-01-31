@@ -7,6 +7,9 @@ f(entier a, entier b, entier c, entier d)
 main()
     entier d;
 {
-    d = f(d, 2=1);
+    lire(a);
+    retour a;
+    retour b;
+    d= f(d, 2=1);
     ecrire(d + 1);
 }

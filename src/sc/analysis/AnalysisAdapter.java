@@ -225,6 +225,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseALireInstr(ALireInstr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAInstrtantque(AInstrtantque node)
     {
         defaultCase(node);
@@ -363,7 +369,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAPart2Expr6(APart2Expr6 node)
+    public void caseAPart7Expr6(APart7Expr6 node)
     {
         defaultCase(node);
     }
@@ -435,7 +441,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFonctionlire(AFonctionlire node)
+    public void caseASimpleFonctionlire(ASimpleFonctionlire node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVideFonctionlire(AVideFonctionlire node)
     {
         defaultCase(node);
     }
