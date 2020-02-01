@@ -6,6 +6,10 @@ public class Sc2sa extends DepthFirstAdapter {
 
     private SaNode returnValue;
 
+    public SaNode getRoot() {
+        return returnValue;
+    }
+
     private SaNode apply(Switchable sw) {
         sw.apply(this);
         return returnValue;
