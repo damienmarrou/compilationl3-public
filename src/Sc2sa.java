@@ -82,27 +82,30 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseARienVarmultiple(ARienVarmultiple node) {//OK
         this.returnValue = null;
     }
-/*
+
     @Override
     public void caseAMultipleFctdecvar(AMultipleFctdecvar node) { //pas sur
-        //super.caseAMultipleFctdecvar(node);
+        SaDec varSimple = (SaDec) apply(node.getVarsimple());
+        SaLDec var = (SaLDec) apply(node.getVarmultiple());
+        this.returnValue= new SaLDec(varSimple,var);
     }
 
     @Override
     public void caseAFctvarmultiple(AFctvarmultiple node) {//pas sur
-        //super.caseAFctvarmultiple(node);
+        SaDec varSimple = (SaDec) apply(node.getVarsimple());
+        this.returnValue = new SaDecVar(varSimple.getNom());
     }
-*/
+
     @Override
     public void caseARienFctvarmultiple(ARienFctvarmultiple node) {//OK
         this.returnValue=null;
     }
 
     @Override
-    public void caseAFoncDeffonction2(AFoncDeffonction2 node) {//OK
-        SaDecVar tete = (SaDecVar) apply(node.getDeffonction());
-        SaLDec queue = (SaLDec) apply(node.getDeffonction2());
-        this.returnValue = new SaLDec(tete, queue);
+    public void caseAFoncDeffonction2(AFoncDeffonction2 node) {//todo vérif bien car vraiment pas sur
+        SaDecFonc tete = (SaDecFonc)apply(node.getDeffonction());
+        SaDecFonc queue = (SaDecFonc) apply(node.getDeffonction2());
+        this.returnValue = new SaDecFonc(tete.getNom(),tete.getParametres(),queue.getVariable(),tete.getCorps());
     }
 
 
@@ -110,149 +113,127 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseARienDeffonction2(ARienDeffonction2 node) {//OK
         this.returnValue=null;
     }
-/*
+
     @Override
     public void caseAArgsDeffonction(AArgsDeffonction node) { //Marche
-        //super.caseAArgsDeffonction(node);
         String nom = node.getNom().getText();
-        node.getFctdecvar().apply(this);
-        SaLDec parametre = (SaLDec) this.returnValue;
-        node.getDecvar2().apply(this);
-        SaLDec variables = (SaLDec) this.returnValue;
-        node.getBloc().apply(this);
-        SaInst bloc = (SaInst) this.returnValue;
+        SaLDec parametre = (SaLDec) apply(node.getFctdecvar());
+        SaLDec variables = (SaLDec) apply(node.getDecvar2());
+        SaInst bloc = (SaInst) apply(node.getBloc());
         this.returnValue = new SaDecFonc(nom, parametre,variables,bloc);
     }
 
     @Override
-    public void caseASansargDeffonction(ASansargDeffonction node) { //Marche peut-être
-        //super.caseASansargDeffonction(node);
+    public void caseASansargDeffonction(ASansargDeffonction node) { //Marche
         String nom = node.getNom().getText();
-        node.getDecvar2().apply(this);
-        SaLDec variables = (SaLDec) this.returnValue;
-        node.getBloc().apply(this);
-        SaInst bloc = (SaInst) this.returnValue;
-        this.returnValue = new SaDecFonc(nom, null,variables,bloc);
+        SaLDec variables = (SaLDec) apply(node.getDecvar2());
+        SaInst bloc = (SaInst) apply(node.getBloc());
+        this.returnValue = new SaDecFonc(nom, new SaLDec(null,null),variables,bloc);
     }
-/*
+
     @Override
-    public void caseAListListinstr(AListListinstr node) { //Marche
-        //super.caseAListListinstr(node);
-        node.getInstr().apply(this);
-        SaInst instr = (SaInst) this.returnValue;
-        node.getListinstr().apply(this);
-        SaLInst listInstr = (SaLInst) this.returnValue;
-        this.returnValue = new SaLInst(instr, listInstr);
+    public void caseAListListinstr(AListListinstr node) {
+        SaLInst tete = (SaLInst) apply(node.getInstr());
+        SaLInst queue = (SaLInst) apply(node.getListinstr());
+        this.returnValue = new SaLInst(tete.getTete(),queue);
 
     }
-*/
+
     @Override
     public void caseARienListinstr(ARienListinstr node) {
         this.returnValue = null;
     }
-/*
+
     @Override
-    public void caseAAffectationInstr(AAffectationInstr node) { //normalement ok        pas du tout
-        //super.caseAAffectationInstr(node);
+    public void caseAAffectationInstr(AAffectationInstr node) {
         apply(node.getAffect());
     }
 
     @Override
-    public void caseABlocInstr(ABlocInstr node) { //Normalement Marche      pas du tout
-        //super.caseABlocInstr(node);
+    public void caseABlocInstr(ABlocInstr node) {
         apply(node.getBloc());
     }
 
     @Override
-    public void caseATantqueInstr(ATantqueInstr node) { //pas sur
-        //super.caseATantqueInstr(node);
+    public void caseATantqueInstr(ATantqueInstr node) {
         apply(node.getInstrtantque());
+
     }
 
     @Override
-    public void caseASiInstr(ASiInstr node) { //pas sur
-        //super.caseASiInstr(node);
+    public void caseASiInstr(ASiInstr node) {
         apply(node.getInstrsi());
     }
 
     @Override
-    public void caseARetourInstr(ARetourInstr node) { //pas sur
-        //super.caseARetourInstr(node);
-        node.getInstrretour().apply(this);
-        SaExp expr = (SaExp) this.returnValue;
-        this.returnValue = new SaInstRetour(expr);
+    public void caseARetourInstr(ARetourInstr node) {
+        apply(node.getInstrretour());
     }
 
     @Override
-    public void caseAEcrireInstr(AEcrireInstr node) {//pas sur
-        //super.caseAEcrireInstr(node);
-        node.getFonctionecrire().apply(this);
-        SaExp expr = (SaExp) this.returnValue;
-        this.returnValue = new SaInstEcriture(expr);
+    public void caseAEcrireInstr(AEcrireInstr node) {
+        apply(node.getFonctionecrire());
     }
-*/
+
     @Override
     public void caseARienDecvar2(ARienDecvar2 node) {
         this.returnValue = null;
     }
-/*
+
     @Override
     public void caseAVarDecvar2(AVarDecvar2 node) {
-        super.caseAVarDecvar2(node);
+        apply(node.getDecvar());
     }
 
     @Override
     public void caseALireInstr(ALireInstr node) {
-        super.caseALireInstr(node);
+        apply(node.getFonctionlire());
     }
 
     @Override
-    public void caseAInstrtantque(AInstrtantque node) { //Marche
-        //super.caseAInstrtantque(node);
-        node.getExpr().apply(this);
-        SaExp expTest = (SaExp) this.returnValue;
-        node.getFaire().apply(this);
-        SaInst faire = (SaInst) this.returnValue;
-        this.returnValue = new SaInstTantQue(expTest, faire);
+    public void caseAInstrtantque(AInstrtantque node) {
+        SaExp expTest = (SaExp) apply(node.getExpr());
+        SaLInst faire = (SaLInst) apply(node.getFaire());
+        this.returnValue = new SaInstTantQue(expTest, faire.getTete());
     }
 
     @Override
-    public void caseAInstrretour(AInstrretour node) { //Marche 100%
-        //super.caseAInstrretour(node);
-        apply(node.getExpr());
+    public void caseAInstrretour(AInstrretour node) {
+        SaExp inst = (SaExp) apply(node.getExpr());
+        this.returnValue = new SaInstRetour(inst);
     }
 
     @Override
-    public void caseASisinonInstrsi(ASisinonInstrsi node) { //REVOIR
-        //super.caseASisinonInstrsi(node);
-        node.getSi().apply(this);
-        SaExp expTest = (SaExp) this.returnValue;
-        node.getAlors().apply(this);
-        SaInst alors = (SaInst) this.returnValue;
-        node.getInstrsinon().apply(this);
-        SaInst sinon = (SaInst) this.returnValue;
+    public void caseASisinonInstrsi(ASisinonInstrsi node) {
+        SaExp expTest = (SaExp) apply(node.getExpr());
+        SaInst alors = (SaInst) apply(node.getAlors());
+        SaInst sinon = (SaInst) apply(node.getSi());
         this.returnValue = new SaInstSi(expTest, alors, sinon);
     }
 
     @Override
     public void caseASiInstrsi(ASiInstrsi node) { //Pas sur de l'avoir
-        //super.caseASiInstrsi(node);
+
+        SaExp exp = (SaExp) apply(node.getExpr());
+        SaInst alors = (SaInst) apply(node.getAlors());
+        SaInst sinon = (SaInst) apply(node.getSi());
+        this.returnValue = new SaInstSi(exp, alors, sinon);
     }
 
     @Override
     public void caseAInstrsinon(AInstrsinon node) { //Pas sur de l'avoir
-        //super.caseAInstrsinon(node);
+        SaInst saInst = (SaInst) apply(node.getSinon());
+        SaLInst saInst1 = (SaLInst) apply(node.getBloc());
+        this.returnValue = new SaInstBloc(new SaLInst(saInst,saInst1));
     }
 
     @Override
     public void caseABloc(ABloc node) { //Marche 100%
-        //super.caseABloc(node);
         apply(node.getListinstr());
     }
 
     @Override
     public void caseAAffect(AAffect node) { //Marche 100%
-        //super.caseAAffect(node);
         node.getVariable().apply(this);
         SaVar op1 = (SaVar) this.returnValue;
         node.getExpr().apply(this);
@@ -262,50 +243,45 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleVariable(ASimpleVariable node) {//Censé marcher
-        //super.caseASimpleVariable(node);
         String nom = node.getNom().getText();
         this.returnValue = new SaVarSimple(nom);
     }
 
     @Override
     public void caseATabVariable(ATabVariable node) { //Pas sur
-        //super.caseATabVariable(node);
         String nom = node.getNom().getText();
         node.getExpr().apply(this);
         SaExp exp = (SaExp) this.returnValue;
         this.returnValue = new SaVarIndicee(nom, exp);
 
     }
-*/
+
     @Override
     public void caseAOuExpr(AOuExpr node) { //Marche 100%
         SaExp op1 = (SaExp) apply(node.getExpr());
         SaExp op2 = (SaExp) apply(node.getExpr2());
         this.returnValue = new SaExpOr(op1, op2);
     }
-/*
+
     @Override
     public void caseAExpr2Expr(AExpr2Expr node) { //Marche 100%
-        //super.caseAExpr2Expr(node);
         apply(node.getExpr2());
     }
-*/
+
     @Override
     public void caseAEtExpr2(AEtExpr2 node) { //Marche 100%
         SaExp op1 = (SaExp) apply(node.getExpr2());
         SaExp op2 = (SaExp)apply(node.getExpr3());
         this.returnValue = new SaExpAnd(op1, op2);
-
     }
 
 
-/*
+
     @Override
     public void caseAExpr3Expr2(AExpr3Expr2 node) { //Marche 100%
-        //super.caseAExpr3Expr2(node);
         apply(node.getExpr3());
     }
-*/
+
     @Override
     public void caseAEgalExpr3(AEgalExpr3 node) { //Marche 100%
         SaExp op1 = (SaExp) apply(node.getExpr3());
@@ -320,10 +296,9 @@ public class Sc2sa extends DepthFirstAdapter {
         SaExp op2 = (SaExp) apply(node.getExpr4());
         this.returnValue = new SaExpInf(op1, op2);
     }
-/*
+
     @Override
-    public void caseAExpr4Expr3(AExpr4Expr3 node) { //Marche 100%
-        //super.caseAExpr4Expr3(node);
+    public void caseAExpr4Expr3(AExpr4Expr3 node) {
         apply(node.getExpr4());
     }
 
@@ -343,8 +318,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAExpr5Expr4(AExpr5Expr4 node) { //todo à vérifier
-        SaExp exp = (SaExp) apply(node.getExpr5());
-        this.returnValue = new SaLExp(exp,null);
+       apply(node.getExpr5());
     }
 
     @Override
@@ -363,8 +337,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAExpr6Expr5(AExpr6Expr5 node) { //todo à vérifier
-        SaExp exp = (SaExp) apply(node.getExpr6());
-        this.returnValue = new SaLExp(exp,null);
+        apply(node.getExpr6());
+
     }
 
     @Override
@@ -381,8 +355,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node) {//todo à vérifier
-        SaExp exp = (SaExp) apply(node.getExpr());
-        this.returnValue = new SaLExp(exp,null);
+        apply(node.getExpr());
     }
 
     @Override
@@ -399,14 +372,12 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseALireExpr7(ALireExpr7 node) { //todo à vérifier
-       // SaExpLire lire = (SaExpLire) apply(node.getFonctionlire());
-        this.returnValue = new SaExpLire();
+        apply(node.getFonctionlire());
     }
-/*
+
     @Override
     public void caseATabExpr7(ATabExpr7 node) { //Marche normalement
-        node.getNombre().apply(this);
-        SaExp op1 = (SaExp) this.returnValue;
+        SaExp op1 = (SaExp) apply(node.getNombre());
         String nom = node.getNom().getText();
         this.returnValue = new SaVarIndicee(nom, op1);
     }
@@ -418,50 +389,45 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAppelExpr7(AAppelExpr7 node) { //Marche 100%
-        node.getFonctionappel().apply(this);
-        SaAppel op1 = (SaAppel) this.returnValue;
+        SaAppel op1 = (SaAppel) apply(node.getFonctionappel());
         this.returnValue = new SaExpAppel(op1);
     }
 
     @Override
     public void caseAFonctionecrire(AFonctionecrire node) { //Marche 100%
-        node.getEcrire().apply(this);
-        SaExp op1 = (SaExp) this.returnValue;
+        SaExp op1 = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstEcriture(op1);
     }
 
     @Override
     public void caseAFonctionappel(AFonctionappel node) { //Marche 100%
         String nom = node.getNom().getText();
-        node.getAppelexpr().apply(this);
-        SaLExp op1 = (SaLExp) this.returnValue;
+        SaLExp op1 = (SaLExp) apply(node.getAppelexpr());
         this.returnValue = new SaAppel(nom, op1);
     }
 
     @Override
-    public void caseAAppelexpr(AAppelexpr node) { //Marche 100%
-        node.getExpr().apply(this);
-        SaAppel op1 = (SaAppel) this.returnValue;
+    public void caseAAppelexpr(AAppelexpr node) {
+        SaAppel op1 = (SaAppel) apply(node.getExpr());
         this.returnValue = new SaExpAppel(op1);
     }
 
     @Override
-    public void caseAListeexpr(AListeexpr node) { //Marche 100%
-        node.getVirgule().apply(this);
-        SaExp op1 = (SaExp) this.returnValue;
-        node.getExpr().apply(this);
-        SaLExp op2 = (SaLExp) this.returnValue;
-        this.returnValue = new SaLExp(op1, op2);
+    public void caseAListeexpr(AListeexpr node) {
+        SaLExp op1 = (SaLExp)apply(node.getExpr());
+        this.returnValue = new SaLExp(op1.getTete(),op1.getQueue());
     }
-*/
+
     @Override
     public void caseAVideFonctionlire(AVideFonctionlire node) {//todo à vérifier + le todo d'en dessous
-       // this.returnValue = null;
+       apply(node.getLire());
     }
 
     @Override
     public void caseASimpleFonctionlire(ASimpleFonctionlire node) {
         //SaExp exp = (SaExp) apply(node.getExpr());//TODO à finir et modifier la grammaire pour plus de logique
+
+        this.returnValue = new SaExpLire();
 
     }
 
