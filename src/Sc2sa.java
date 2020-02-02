@@ -347,8 +347,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAPart7Expr6(APart7Expr6 node) {
-        SaExp exp = (SaExp) apply(node.getExpr7());
-        this.returnValue = new SaLExp(exp,null);
+        SaLExp exp = (SaLExp) apply(node.getExpr7());
+        this.returnValue = new SaLExp(exp.getTete(),null);
     }
 
     @Override
