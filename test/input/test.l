@@ -1,1 +1,2 @@
-entier a, entier b[5];
+entier a;
+m(){si a alors {b=c;}}

@@ -79,7 +79,7 @@ Productions
     bloc         = accoladeo listinstr accoladef;
 
     affect   = variable egal expr pointvirgule;
-    variable = {simple} nom | {tab} nom crocheto expr crochetf;
+    variable = {simple} nom | {tab} nom crocheto nombre crochetf;
 
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
