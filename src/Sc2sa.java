@@ -131,10 +131,10 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAListListinstr(AListListinstr node) {
-        SaLInst tete = (SaLInst) apply(node.getInstr());
+    public void caseAListListinstr(AListListinstr node) {//todo à corriger
+       /* SaLInst tete = (SaLInst) apply(node.getInstr());
         SaLInst queue = (SaLInst) apply(node.getListinstr());
-        this.returnValue = new SaLInst(tete.getTete(),queue);
+        this.returnValue = new SaLInst(tete.getTete(),queue);*/
     }
 
     @Override
@@ -211,7 +211,6 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASiInstrsi(ASiInstrsi node) { //Pas sur de l'avoir
-
         SaExp exp = (SaExp) apply(node.getExpr());
         SaInst alors = (SaInst) apply(node.getAlors());
         SaInst sinon = (SaInst) apply(node.getSi());
@@ -231,12 +230,12 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAAffect(AAffect node) { //Marche 100%
-        node.getVariable().apply(this);
+    public void caseAAffect(AAffect node) { //Marche 100% //todo à corriger
+        /*node.getVariable().apply(this);
         SaVar op1 = (SaVar) this.returnValue;
         node.getExpr().apply(this);
         SaExp op2 = (SaExp) this.returnValue;
-        this.returnValue = new SaInstAffect(op1, op2);
+        this.returnValue = new SaInstAffect(op1, op2);*/
     }
 
     @Override
@@ -346,9 +345,9 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAPart7Expr6(APart7Expr6 node) {
-        SaLExp exp = (SaLExp) apply(node.getExpr7());
-        this.returnValue = new SaLExp(exp.getTete(),null);
+    public void caseAPart7Expr6(APart7Expr6 node) {//todo à corriger
+        /*SaLExp exp = (SaLExp) apply(node.getExpr7());
+        this.returnValue = new SaLExp(exp.getTete(),exp.getQueue());*/
     }
 
     @Override
