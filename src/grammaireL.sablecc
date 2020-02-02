@@ -59,7 +59,7 @@ Productions
     decvar      = {multiple} varsimple varmultiple pointvirgule;
     varsimple   = {entier} varent |{tab} vartab;
         varent  = typeentier nom;
-        vartab  = typeentier nom crocheto expr crochetf;
+        vartab  = typeentier nom crocheto nombre crochetf;
     varmultiple = virgule varsimple varmultiple|{rien};
 
     fctdecvar      = {multiple} varsimple varmultiple;

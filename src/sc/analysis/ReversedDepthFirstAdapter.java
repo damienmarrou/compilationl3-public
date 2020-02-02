@@ -175,9 +175,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getCrochetf().apply(this);
         }
-        if(node.getExpr() != null)
+        if(node.getNombre() != null)
         {
-            node.getExpr().apply(this);
+            node.getNombre().apply(this);
         }
         if(node.getCrocheto() != null)
         {

@@ -183,9 +183,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getCrocheto().apply(this);
         }
-        if(node.getExpr() != null)
+        if(node.getNombre() != null)
         {
-            node.getExpr().apply(this);
+            node.getNombre().apply(this);
         }
         if(node.getCrochetf() != null)
         {
