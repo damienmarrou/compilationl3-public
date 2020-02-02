@@ -24,7 +24,7 @@ public class Compiler {
 				fileNames.add(listOfFiles[i].getAbsolutePath());
 			}
 		}
-
+		int i = 0;
 		for (String fileName : fileNames) {
 			PushbackReader br = null;
 			String baseName = null;
@@ -49,7 +49,7 @@ public class Compiler {
 				//System.out.println("[SC]");
 				tree.apply(new Sc2Xml(baseName));
 
-                System.out.println("[SA]");
+                //System.out.println("[SA]");
                 Sc2sa sc2sa = new Sc2sa();
                 tree.apply(sc2sa);
                 SaNode saRoot = sc2sa.getRoot();
@@ -75,7 +75,9 @@ public class Compiler {
                 FgSolution fgSolution = new FgSolution(nasm, fg);
                 fgSolution.affiche(baseName);*/
 			} catch (Exception e) {
-				System.out.println("fileName = " + fileName);
+				//System.out.println("fileName = " + fileName);
+				System.out.println('\n'+ fileName.substring(fileName.lastIndexOf('\\')+1)+" erreur n° " +i);
+				i++;
 				System.out.println(e.getMessage());
 			}
 		}

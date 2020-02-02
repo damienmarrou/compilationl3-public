@@ -38,16 +38,17 @@ public class Sc2sa extends DepthFirstAdapter {
         SaLDec fonctions = (SaLDec) apply(node.getDeffonction2());
         this.returnValue = new SaProg(variable, fonctions);
     }
-
+    //Jusque là c'est bon
+    //TODO : Revoir les cas des varsimple, varent, vartab
+/*
     @Override
-    public void caseAMultipleDecvar(AMultipleDecvar node) { //A REVOIR Mais je pense que c'est bon
+    public void caseAMultipleDecvar(AMultipleDecvar node) { //Pas bon à vérifier l'appel en SaDecVar
         //super.caseAMultipleDecvar(node);
         SaDec opt1 = (SaDec) apply(node.getVarsimple());
         SaLDec opt2 = (SaLDec) apply(node.getVarmultiple());
-        this.returnValue = new SaLDec(opt1, opt2);
+        this.returnValue = new SaLDec(opt2.getTete(), opt2.getQueue());
     }
 
-    //TODO : Revoir les cas des varsimple, varent, vartab
     @Override
     public void caseAEntierVarsimple(AEntierVarsimple node) { //Marche 100%
         //super.caseAEntierVarsimple(node);
@@ -70,17 +71,22 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAVartab(AVartab node) { //A REVOIR
         //super.caseAVartab(node);
         apply(node.getNom());
+
     }
 
     @Override
     public void caseAVarmultiple(AVarmultiple node) {//pas sur d'avoir cette fonction
         //super.caseAVarmultiple(node);
-        apply(node.getVarmultiple());
+        node.getVarsimple().apply(this);
+        SaLDec exp1 = (SaLDec) this.returnValue;
+        node.getVarmultiple().apply(this);
+        SaLDec exp2 = (SaLDec)this.returnValue;
     }
 
     @Override
     public void caseARienVarmultiple(ARienVarmultiple node) {//pas sur mais semble bon
-        //super.caseARienVarmultiple(node);
+        super.caseARienVarmultiple(node);
+        //node.apply(this);
     }
 
     @Override
@@ -96,23 +102,38 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseARienFctvarmultiple(ARienFctvarmultiple node) {//pas sur mais normalement c'est bon
         //super.caseARienFctvarmultiple(node);
-    }
+    }*/
 
     @Override
     public void caseAFoncDeffonction2(AFoncDeffonction2 node) {
         //super.caseAFoncDeffonction2(node);
-        node.getDeffonction().apply(this);
-        SaDec exp = (SaDec) this.returnValue;
+        if(node.getDeffonction2()==null){
+            node.getDeffonction().apply(this);
+            SaDecFonc saDecFonc = (SaDecFonc) this.returnValue;
+            this.returnValue = new SaDecFonc(saDecFonc.getNom(),saDecFonc.getParametres(),saDecFonc.getVariable(),saDecFonc.getCorps());
+        }
+        else{
+            node.getDeffonction().apply(this);
+            SaDecFonc saDecFonc = (SaDecFonc) this.returnValue;
+            this.returnValue = new SaDecFonc(saDecFonc.getNom(),saDecFonc.getParametres(),saDecFonc.getVariable(),saDecFonc.getCorps());
+            node.getDeffonction2().apply(this);
+            SaDecFonc saDecFonc1 = (SaDecFonc)this.returnValue;
+            this.returnValue = new SaDecFonc(saDecFonc1.getNom(),saDecFonc1.getParametres(),saDecFonc1.getVariable(),saDecFonc1.getCorps());
+        }
+        //node.getDeffonction2();
+
+        /*SaDec exp = (SaDec) this.returnValue;
         node.getDeffonction2().apply(this);
-        SaDec exp1 = (SaDec) this.returnValue;
+        SaLDec exp1 = (SaLDec) this.returnValue;*/
         //todo : a finir
     }
 
+/*
     @Override
     public void caseARienDeffonction2(ARienDeffonction2 node) {//normalement c'est bon
-        //super.caseARienDeffonction2(node);
+        super.caseARienDeffonction2(node);
     }
-
+/*
     @Override
     public void caseAArgsDeffonction(AArgsDeffonction node) { //Marche
         //super.caseAArgsDeffonction(node);
@@ -136,7 +157,7 @@ public class Sc2sa extends DepthFirstAdapter {
         SaInst bloc = (SaInst) this.returnValue;
         this.returnValue = new SaDecFonc(nom, null,variables,bloc);
     }
-
+/*
     @Override
     public void caseAListListinstr(AListListinstr node) { //Marche
         //super.caseAListListinstr(node);
@@ -191,6 +212,21 @@ public class Sc2sa extends DepthFirstAdapter {
         node.getFonctionecrire().apply(this);
         SaExp expr = (SaExp) this.returnValue;
         this.returnValue = new SaInstEcriture(expr);
+    }
+
+    @Override
+    public void caseARienDecvar2(ARienDecvar2 node) {
+        super.caseARienDecvar2(node);
+    }
+
+    @Override
+    public void caseAVarDecvar2(AVarDecvar2 node) {
+        super.caseAVarDecvar2(node);
+    }
+
+    @Override
+    public void caseALireInstr(ALireInstr node) {
+        super.caseALireInstr(node);
     }
 
     @Override
@@ -490,4 +526,6 @@ public class Sc2sa extends DepthFirstAdapter {
         //super.caseASimpleFonctionlire(node);
         apply(node.getExpr());
     }
+    */
+
 }
