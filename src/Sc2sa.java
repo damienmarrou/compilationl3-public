@@ -108,7 +108,6 @@ public class Sc2sa extends DepthFirstAdapter {
         this.returnValue = new SaDecFonc(tete.getNom(),tete.getParametres(),queue.getVariable(),tete.getCorps());
     }
 
-
     @Override
     public void caseARienDeffonction2(ARienDeffonction2 node) {//OK
         this.returnValue=null;
@@ -136,7 +135,6 @@ public class Sc2sa extends DepthFirstAdapter {
         SaLInst tete = (SaLInst) apply(node.getInstr());
         SaLInst queue = (SaLInst) apply(node.getListinstr());
         this.returnValue = new SaLInst(tete.getTete(),queue);
-
     }
 
     @Override
@@ -311,9 +309,9 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAMoinsExpr4(AMoinsExpr4 node) { //ok
-        SaLExp op1 = (SaLExp) apply(node.getExpr4());
-        SaLExp op2 = (SaLExp) apply(node.getExpr5());
-        this.returnValue = new SaExpSub(op1.getTete(), op2.getTete());
+        SaExp op1 = (SaExp) apply(node.getExpr4());
+        SaExp op2 = (SaExp) apply(node.getExpr5());
+        this.returnValue = new SaExpSub(op1, op2);
     }
 
     @Override
@@ -323,16 +321,16 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAMultiExpr5(AMultiExpr5 node) { //ok
-        SaLExp op1 = (SaLExp) apply(node.getExpr5());
-        SaLExp op2 = (SaLExp) apply(node.getExpr6());
-        this.returnValue = new SaExpMult(op1.getTete(), op2.getTete());
+        SaExp op1 = (SaExp) apply(node.getExpr5());
+        SaExp op2 = (SaExp) apply(node.getExpr6());
+        this.returnValue = new SaExpMult(op1, op2);
     }
 
     @Override
     public void caseADivExpr5(ADivExpr5 node) { //ok
-        SaLExp op1 = (SaLExp) apply(node.getExpr5());
-        SaLExp op2 = (SaLExp) apply(node.getExpr6());
-        this.returnValue = new SaExpDiv(op1.getTete(), op2.getTete());
+        SaExp op1 = (SaExp) apply(node.getExpr5());
+        SaExp op2 = (SaExp) apply(node.getExpr6());
+        this.returnValue = new SaExpDiv(op1, op2);
     }
 
     @Override
@@ -425,8 +423,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleFonctionlire(ASimpleFonctionlire node) {
-        //SaExp exp = (SaExp) apply(node.getExpr());//TODO à finir et modifier la grammaire pour plus de logique
-
+        //TODO à finir et modifier la grammaire pour plus de logique
         this.returnValue = new SaExpLire();
 
     }
