@@ -153,7 +153,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseABlocInstr(ABlocInstr node) {
-        apply(node.getBloc());
+        SaLInst bloc = (SaLInst) apply(node.getBloc());
+        this.returnValue = new SaInstBloc(bloc);
     }
 
     @Override
