@@ -132,7 +132,7 @@ public class SaDepthFirstVisitor <T> implements SaVisitor <T>{
     public T visit(SaLInst node)
     {
 	defaultIn(node);
-	node.getTete().²accept(this);
+	node.getTete().accept(this);
 	if(node.getQueue() != null) node.getQueue().accept(this);
 	defaultOut(node);
 	return null;
