@@ -94,7 +94,7 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseARienDeffonction2(ARienDeffonction2 node) {//OK
+    public void caseARienDeffonction2(ARienDeffonction2 node) {
         this.returnValue=null;
     }
 
@@ -238,7 +238,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAffect(AAffect node) { //Marche 100% //todo à corriger le cas du tableau
-        SaVarSimple var = (SaVarSimple) apply(node.getVariable());
+        SaVar var = (SaVar) apply(node.getVariable());
         SaExp expr = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstAffect(var, expr);
     }
@@ -267,6 +267,7 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAExpr2Expr(AExpr2Expr node) { //Marche 100%
         apply(node.getExpr2());
     }
+
 
     @Override
     public void caseAEtExpr2(AEtExpr2 node) { //Marche 100%
@@ -318,7 +319,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAExpr5Expr4(AExpr5Expr4 node) { //todo à vérifier
-       this.returnValue = null;
+     //  this.returnValue = null;
+        apply(node.getExpr5());
     }
 
     @Override
@@ -337,7 +339,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAExpr6Expr5(AExpr6Expr5 node) { //todo à vérifier
-        this.returnValue = null;
+        //this.returnValue = null;
+        apply(node.getExpr6());
     }
 
     @Override
@@ -348,7 +351,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAPart7Expr6(APart7Expr6 node) {//todo à corriger
-        this.returnValue = null;
+       // this.returnValue = null;
+        apply(node.getExpr7());
     }
 
     @Override
@@ -360,7 +364,7 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseANomvarExpr7(ANomvarExpr7 node) {//ok
         String nom = node.getNom().getText();
         this.returnValue = new SaDecVar(nom);
-        //todo : pourquoi une déclaration de var ?
+
     }
 
     @Override
