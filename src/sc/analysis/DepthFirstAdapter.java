@@ -61,20 +61,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAProgramme(node);
     }
 
-    public void inAMultipleDecvar(AMultipleDecvar node)
+    public void inADecvar(ADecvar node)
     {
         defaultIn(node);
     }
 
-    public void outAMultipleDecvar(AMultipleDecvar node)
+    public void outADecvar(ADecvar node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAMultipleDecvar(AMultipleDecvar node)
+    public void caseADecvar(ADecvar node)
     {
-        inAMultipleDecvar(node);
+        inADecvar(node);
         if(node.getVarsimple() != null)
         {
             node.getVarsimple().apply(this);
@@ -87,7 +87,7 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getPointvirgule().apply(this);
         }
-        outAMultipleDecvar(node);
+        outADecvar(node);
     }
 
     public void inAEntierVarsimple(AEntierVarsimple node)

@@ -204,7 +204,7 @@ public class Parser
                 push(goTo(0), list, false);
             }
             break;
-            case 1: /* reduce AMultipleDecvar */
+            case 1: /* reduce ADecvar */
             {
                 ArrayList<Object> list = new1();
                 push(goTo(1), list, false);
@@ -605,7 +605,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new1() /* reduce AMultipleDecvar */
+    ArrayList<Object> new1() /* reduce ADecvar */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -622,7 +622,7 @@ public class Parser
         pvarmultipleNode3 = (PVarmultiple)nodeArrayList2.get(0);
         tpointvirguleNode4 = (TPointvirgule)nodeArrayList3.get(0);
 
-        pdecvarNode1 = new AMultipleDecvar(pvarsimpleNode2, pvarmultipleNode3, tpointvirguleNode4);
+        pdecvarNode1 = new ADecvar(pvarsimpleNode2, pvarmultipleNode3, tpointvirguleNode4);
         }
 	nodeList.add(pdecvarNode1);
         return nodeList;

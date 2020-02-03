@@ -61,20 +61,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAProgramme(node);
     }
 
-    public void inAMultipleDecvar(AMultipleDecvar node)
+    public void inADecvar(ADecvar node)
     {
         defaultIn(node);
     }
 
-    public void outAMultipleDecvar(AMultipleDecvar node)
+    public void outADecvar(ADecvar node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAMultipleDecvar(AMultipleDecvar node)
+    public void caseADecvar(ADecvar node)
     {
-        inAMultipleDecvar(node);
+        inADecvar(node);
         if(node.getPointvirgule() != null)
         {
             node.getPointvirgule().apply(this);
@@ -87,7 +87,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVarsimple().apply(this);
         }
-        outAMultipleDecvar(node);
+        outADecvar(node);
     }
 
     public void inAEntierVarsimple(AEntierVarsimple node)

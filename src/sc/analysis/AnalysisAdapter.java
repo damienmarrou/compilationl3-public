@@ -81,7 +81,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAMultipleDecvar(AMultipleDecvar node)
+    public void caseADecvar(ADecvar node)
     {
         defaultCase(node);
     }

@@ -13,7 +13,7 @@ public interface Analysis extends Switch
 
     void caseStart(Start node);
     void caseAProgramme(AProgramme node);
-    void caseAMultipleDecvar(AMultipleDecvar node);
+    void caseADecvar(ADecvar node);
     void caseAEntierVarsimple(AEntierVarsimple node);
     void caseATabVarsimple(ATabVarsimple node);
     void caseAVarent(AVarent node);

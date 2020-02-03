@@ -1,2 +1,6 @@
 entier a;
-m(){si a alors {b=c;}}
+main(){
+    si 0 alors{
+        a=2;
+    }
+}

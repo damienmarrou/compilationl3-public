@@ -56,7 +56,7 @@ Productions
     programme = decvar2 deffonction2;
 
 
-    decvar      = {multiple} varsimple varmultiple pointvirgule;
+    decvar      = varsimple varmultiple pointvirgule;
     varsimple   = {entier} varent |{tab} vartab;
         varent  = typeentier nom;
         vartab  = typeentier nom crocheto nombre crochetf;

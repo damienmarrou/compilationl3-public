@@ -24,7 +24,7 @@ public class Compiler {
 				fileNames.add(listOfFiles[i].getAbsolutePath());
 			}
 		}
-		int i = 0;
+		int i = 1; int j=0;
 		for (String fileName : fileNames) {
 			PushbackReader br = null;
 			String baseName = null;
@@ -41,6 +41,7 @@ public class Compiler {
 			}
 
 			try {
+				j++;
 				// Create a Parser instance.
 				Parser p = new Parser(new Lexer(br));
 				// Parse the input.
@@ -76,7 +77,7 @@ public class Compiler {
                 fgSolution.affiche(baseName);*/
 			} catch (Exception e) {
 				//System.out.println("fileName = " + fileName);
-				System.out.println('\n'+ fileName.substring(fileName.lastIndexOf('\\')+1)+" erreur n° " +i);
+				System.out.println("\nFichier n° "+j +"  "+ fileName.substring(fileName.lastIndexOf('\\')+1)+" erreur n° " +i);
 				i++;
 				System.out.println(e.getMessage());
 			}
