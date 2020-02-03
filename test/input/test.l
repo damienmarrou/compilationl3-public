@@ -1,6 +1,2 @@
-entier a;
-main(){
-    si 0 alors{
-        a=2;
-    }
-}
+entier a, entier B[10];
+

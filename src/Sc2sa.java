@@ -153,8 +153,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseABlocInstr(ABlocInstr node) {
-        /*apply(node.getBloc());
-        this.returnValue =new SaInstBloc((SaLInst)apply(node.getBloc()));*/
+        SaLInst bloc = (SaLInst) apply(node.getBloc());
+        this.returnValue =new SaInstBloc(bloc);
     }
 
     @Override
@@ -236,7 +236,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAffect(AAffect node) { //Marche 100% //todo à corriger le cas du tableau
-        SaVar var = (SaVar) apply(node.getVariable());
+        SaVarSimple var = (SaVarSimple) apply(node.getVariable());
         SaExp expr = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstAffect(var, expr);
     }
@@ -256,9 +256,9 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAOuExpr(AOuExpr node) { //Marche 100%
-/*        SaExp op1 = (SaExp) apply(node.getExpr());
+        SaExp op1 = (SaExp) apply(node.getExpr());
         SaExp op2 = (SaExp) apply(node.getExpr2());
-        this.returnValue = new SaExpOr(op1, op2);*/
+        this.returnValue = new SaExpOr(op1, op2);
     }
 
     @Override
@@ -268,9 +268,9 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAEtExpr2(AEtExpr2 node) { //Marche 100%
-/*        SaExp op1 = (SaExp) apply(node.getExpr2());
+        SaExp op1 = (SaExp) apply(node.getExpr2());
         SaExp op2 = (SaExp)apply(node.getExpr3());
-        this.returnValue = new SaExpAnd(op1, op2);*/
+        this.returnValue = new SaExpAnd(op1, op2);
     }
 
 
@@ -282,17 +282,17 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAEgalExpr3(AEgalExpr3 node) { //Marche 100%
-        /*SaExp op1 = (SaExp) apply(node.getExpr3());
+        SaExp op1 = (SaExp) apply(node.getExpr3());
         SaExp op2 = (SaExp) apply(node.getExpr4());
-        this.returnValue = new SaExpEqual(op1, op2);*/
+        this.returnValue = new SaExpEqual(op1, op2);
 
     }
 
     @Override
     public void caseAInfExpr3(AInfExpr3 node) { //Marche 100%
-/*        SaExp op1 = (SaExp) apply(node.getExpr3());
+        SaExp op1 = (SaExp) apply(node.getExpr3());
         SaExp op2 = (SaExp) apply(node.getExpr4());
-        this.returnValue = new SaExpInf(op1, op2);*/
+        this.returnValue = new SaExpInf(op1, op2);
     }
 
     @Override
@@ -302,16 +302,16 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAPlusExpr4(APlusExpr4 node) { //ok
-/*        SaExp op1 = (SaExp) apply(node.getExpr4());
+        SaExp op1 = (SaExp) apply(node.getExpr4());
         SaExp op2 = (SaExp) apply(node.getExpr5());
-        this.returnValue = new SaExpAdd(op1, op2);*/
+        this.returnValue = new SaExpAdd(op1, op2);
     }
 
     @Override
     public void caseAMoinsExpr4(AMoinsExpr4 node) { //ok
-/*        SaExp op1 = (SaExp) apply(node.getExpr4());
+        SaExp op1 = (SaExp) apply(node.getExpr4());
         SaExp op2 = (SaExp) apply(node.getExpr5());
-        this.returnValue = new SaExpSub(op1, op2);*/
+        this.returnValue = new SaExpSub(op1, op2);
     }
 
     @Override
