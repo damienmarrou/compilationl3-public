@@ -1,1 +1,5 @@
-entier a, entier b[5];
+entier a, entier B[10];
+main(){
+a=2;
+}
+

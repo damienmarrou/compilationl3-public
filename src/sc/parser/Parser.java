@@ -204,7 +204,7 @@ public class Parser
                 push(goTo(0), list, false);
             }
             break;
-            case 1: /* reduce AMultipleDecvar */
+            case 1: /* reduce ADecvar */
             {
                 ArrayList<Object> list = new1();
                 push(goTo(1), list, false);
@@ -605,7 +605,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new1() /* reduce AMultipleDecvar */
+    ArrayList<Object> new1() /* reduce ADecvar */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -622,7 +622,7 @@ public class Parser
         pvarmultipleNode3 = (PVarmultiple)nodeArrayList2.get(0);
         tpointvirguleNode4 = (TPointvirgule)nodeArrayList3.get(0);
 
-        pdecvarNode1 = new AMultipleDecvar(pvarsimpleNode2, pvarmultipleNode3, tpointvirguleNode4);
+        pdecvarNode1 = new ADecvar(pvarsimpleNode2, pvarmultipleNode3, tpointvirguleNode4);
         }
 	nodeList.add(pdecvarNode1);
         return nodeList;
@@ -1389,14 +1389,14 @@ public class Parser
             // Block
         TNom tnomNode2;
         TCrocheto tcrochetoNode3;
-        PExpr pexprNode4;
+        TNombre tnombreNode4;
         TCrochetf tcrochetfNode5;
         tnomNode2 = (TNom)nodeArrayList1.get(0);
         tcrochetoNode3 = (TCrocheto)nodeArrayList2.get(0);
-        pexprNode4 = (PExpr)nodeArrayList3.get(0);
+        tnombreNode4 = (TNombre)nodeArrayList3.get(0);
         tcrochetfNode5 = (TCrochetf)nodeArrayList4.get(0);
 
-        pvariableNode1 = new ATabVariable(tnomNode2, tcrochetoNode3, pexprNode4, tcrochetfNode5);
+        pvariableNode1 = new ATabVariable(tnomNode2, tcrochetoNode3, tnombreNode4, tcrochetfNode5);
         }
 	nodeList.add(pvariableNode1);
         return nodeList;
@@ -2140,7 +2140,7 @@ public class Parser
 			{{-1, ERROR, 63}, {8, SHIFT, 75}, {23, SHIFT, 85}, },
 			{{-1, ERROR, 64}, {9, SHIFT, 48}, {14, SHIFT, 49}, {15, SHIFT, 86}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
 			{{-1, ERROR, 65}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
-			{{-1, ERROR, 66}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
+			{{-1, ERROR, 66}, {27, SHIFT, 89}, },
 			{{-1, REDUCE, 31}, },
 			{{-1, REDUCE, 17}, },
 			{{-1, ERROR, 69}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
@@ -2163,7 +2163,7 @@ public class Parser
 			{{-1, REDUCE, 62}, },
 			{{-1, ERROR, 87}, {8, SHIFT, 75}, {15, SHIFT, 105}, },
 			{{-1, ERROR, 88}, {8, SHIFT, 75}, {15, SHIFT, 106}, },
-			{{-1, ERROR, 89}, {8, SHIFT, 75}, {11, SHIFT, 107}, },
+			{{-1, ERROR, 89}, {11, SHIFT, 107}, },
 			{{-1, ERROR, 90}, {8, SHIFT, 75}, {16, SHIFT, 108}, },
 			{{-1, REDUCE, 50}, },
 			{{-1, ERROR, 92}, {11, SHIFT, 109}, },
@@ -2215,7 +2215,7 @@ public class Parser
 			{{-1, 42}, {25, 29}, {30, 47}, {76, 96}, {85, 104}, {113, 117}, },
 			{{-1, 43}, },
 			{{-1, 44}, },
-			{{-1, 53}, {32, 62}, {33, 63}, {49, 72}, {64, 87}, {65, 88}, {66, 89}, {69, 90}, {74, 93}, {110, 116}, },
+			{{-1, 53}, {32, 62}, {33, 63}, {49, 72}, {64, 87}, {65, 88}, {69, 90}, {74, 93}, {110, 116}, },
 			{{-1, 54}, {75, 95}, },
 			{{-1, 55}, {77, 97}, },
 			{{-1, 56}, {78, 98}, {79, 99}, },
@@ -2250,31 +2250,30 @@ public class Parser
 			"expecting: ')'",
 			"expecting: '{'",
 			"expecting: '{', '}', 'si', 'retour', 'tantque', 'lire', 'ecrire', nom",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire', nom, EOF",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire', nom, EOF",
 			"expecting: '!', '(', 'lire', nombre, nom",
 			"expecting: '=', '['",
 			"expecting: '}'",
 			"expecting: '='",
 			"expecting: '(', 'lire', nombre, nom",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '[', ']', '(', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '[', '(', ')', ';', ',', 'alors', 'faire'",
 			"expecting: '|', 'alors'",
-			"expecting: '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '+', '-', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '&', '|', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
 			"expecting: '|', ';'",
 			"expecting: '|', 'faire'",
 			"expecting: '!', '(', ')', 'lire', nombre, nom",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', '{', '}', ')', ';', ',', 'si', 'alors', 'sinon', 'retour', 'tantque', 'faire', 'lire', 'ecrire', nom, EOF",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '{', '}', ')', ';', ',', 'si', 'alors', 'sinon', 'retour', 'tantque', 'faire', 'lire', 'ecrire', nom, EOF",
 			"expecting: '|', ')'",
 			"expecting: 'entier ', '!', '(', ')', 'lire', nombre, nom",
-			"expecting: '|', ']'",
 			"expecting: '|', ','",
 			"expecting: '{', '}', 'si', 'sinon', 'retour', 'tantque', 'lire', 'ecrire', nom",
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 2, 6, 11, 5, 3, 12, 2, 13, 14, 15, 16, 17, 5, 18, 17, 15, 19, 20, 18, 21, 21, 21, 10, 10, 22, 23, 19, 19, 19, 19, 19, 19, 24, 19, 9, 20, 25, 21, 26, 27, 26, 28, 29, 30, 31, 26, 26, 26, 26, 26, 32, 33, 34, 21, 21, 35, 23, 21, 19, 26, 36, 11, 37, 21, 18, 21, 21, 21, 21, 21, 21, 21, 19, 18, 26, 36, 36, 38, 32, 26, 13, 39, 17, 29, 40, 30, 31, 31, 26, 26, 26, 26, 19, 26, 9, 24, 19, 26, 21, 17, 26, 18, 19, 19, 36, 19, 
+			0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 2, 6, 11, 5, 3, 12, 2, 13, 14, 15, 16, 17, 5, 18, 17, 15, 19, 20, 18, 21, 21, 21, 10, 10, 22, 23, 19, 19, 19, 19, 19, 19, 24, 19, 9, 20, 25, 21, 26, 27, 26, 28, 29, 30, 31, 26, 26, 26, 26, 26, 32, 33, 34, 21, 11, 35, 23, 21, 19, 26, 36, 11, 37, 21, 18, 21, 21, 21, 21, 21, 21, 21, 19, 18, 26, 36, 36, 13, 32, 26, 13, 38, 17, 29, 39, 30, 31, 31, 26, 26, 26, 26, 19, 26, 9, 24, 19, 26, 21, 17, 26, 18, 19, 19, 36, 19, 
         };*/
 
     static 
