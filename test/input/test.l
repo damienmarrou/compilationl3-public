@@ -1,3 +1,5 @@
 entier a, entier B[10];
-main(){}
+main(){
+a=2;
+}
 

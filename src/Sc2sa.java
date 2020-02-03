@@ -88,9 +88,9 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAFoncDeffonction2(AFoncDeffonction2 node) {//todo vérif bien car vraiment pas sur
-            SaLDec saLDec = (SaLDec)apply(node.getDeffonction());
+            SaDec saLDec = (SaDec)apply(node.getDeffonction());
             SaLDec saLDec1 = (SaLDec)apply(node.getDeffonction2());
-            this.returnValue = new SaLDec(saLDec.getTete(),saLDec1);
+            this.returnValue = new SaLDec(saLDec,saLDec1);
     }
 
     @Override
@@ -154,6 +154,8 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseABlocInstr(ABlocInstr node) {
         SaLInst bloc = (SaLInst) apply(node.getBloc());
+        if (bloc == null)
+            bloc = new SaLInst(null, null);
         this.returnValue =new SaInstBloc(bloc);
     }
 

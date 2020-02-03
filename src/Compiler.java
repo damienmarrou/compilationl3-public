@@ -79,7 +79,8 @@ public class Compiler {
 				//System.out.println("fileName = " + fileName);
 				System.out.println("\nFichier n° "+j +"  "+ fileName.substring(fileName.lastIndexOf('\\')+1)+" erreur n° " +i);
 				i++;
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
