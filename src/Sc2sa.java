@@ -6,7 +6,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     private SaNode returnValue;
 
-    public SaNode getRoot() {
+    SaNode getRoot() {
         return returnValue;
     }
 
