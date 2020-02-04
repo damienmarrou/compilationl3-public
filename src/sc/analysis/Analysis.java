@@ -60,10 +60,9 @@ public interface Analysis extends Switch
     void caseANonExpr6(ANonExpr6 node);
     void caseAPart7Expr6(APart7Expr6 node);
     void caseAExprentreparenthesesExpr7(AExprentreparenthesesExpr7 node);
-    void caseANomvarExpr7(ANomvarExpr7 node);
+    void caseAVarExpr7(AVarExpr7 node);
     void caseANombreExpr7(ANombreExpr7 node);
     void caseALireExpr7(ALireExpr7 node);
-    void caseATabExpr7(ATabExpr7 node);
     void caseAFonctionExpr7(AFonctionExpr7 node);
     void caseAAppelExpr7(AAppelExpr7 node);
     void caseAAffect(AAffect node);

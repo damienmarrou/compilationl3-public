@@ -1260,25 +1260,25 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAExprentreparenthesesExpr7(node);
     }
 
-    public void inANomvarExpr7(ANomvarExpr7 node)
+    public void inAVarExpr7(AVarExpr7 node)
     {
         defaultIn(node);
     }
 
-    public void outANomvarExpr7(ANomvarExpr7 node)
+    public void outAVarExpr7(AVarExpr7 node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANomvarExpr7(ANomvarExpr7 node)
+    public void caseAVarExpr7(AVarExpr7 node)
     {
-        inANomvarExpr7(node);
-        if(node.getNom() != null)
+        inAVarExpr7(node);
+        if(node.getVariable() != null)
         {
-            node.getNom().apply(this);
+            node.getVariable().apply(this);
         }
-        outANomvarExpr7(node);
+        outAVarExpr7(node);
     }
 
     public void inANombreExpr7(ANombreExpr7 node)
@@ -1321,39 +1321,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getFonctionlire().apply(this);
         }
         outALireExpr7(node);
-    }
-
-    public void inATabExpr7(ATabExpr7 node)
-    {
-        defaultIn(node);
-    }
-
-    public void outATabExpr7(ATabExpr7 node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseATabExpr7(ATabExpr7 node)
-    {
-        inATabExpr7(node);
-        if(node.getCrochetf() != null)
-        {
-            node.getCrochetf().apply(this);
-        }
-        if(node.getNombre() != null)
-        {
-            node.getNombre().apply(this);
-        }
-        if(node.getCrocheto() != null)
-        {
-            node.getCrocheto().apply(this);
-        }
-        if(node.getNom() != null)
-        {
-            node.getNom().apply(this);
-        }
-        outATabExpr7(node);
     }
 
     public void inAFonctionExpr7(AFonctionExpr7 node)

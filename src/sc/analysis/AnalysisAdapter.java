@@ -363,7 +363,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANomvarExpr7(ANomvarExpr7 node)
+    public void caseAVarExpr7(AVarExpr7 node)
     {
         defaultCase(node);
     }
@@ -376,12 +376,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseALireExpr7(ALireExpr7 node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATabExpr7(ATabExpr7 node)
     {
         defaultCase(node);
     }

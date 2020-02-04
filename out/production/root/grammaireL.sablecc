@@ -84,8 +84,8 @@ Productions
     expr4= {plus}  expr4 plus expr5  | {moins} expr4 moins expr5     | {expr5} expr5;
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part7} expr7;
-    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre | {lire} fonctionlire |
-           {tab} nom crocheto  nombre crochetf | {fonction} deffonction | {appel} fonctionappel;
+    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {var}variable   | {nombre} nombre | {lire} fonctionlire |
+           {fonction} deffonction | {appel} fonctionappel;
 
     affect   = variable egal expr pointvirgule;
     variable = {simple} nom | {tab} nom crocheto nombre crochetf ;

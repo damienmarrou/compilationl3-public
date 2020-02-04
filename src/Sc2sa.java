@@ -2,6 +2,8 @@ import sa.*;
 import sc.analysis.DepthFirstAdapter;
 import sc.node.*;
 
+import java.util.Queue;
+
 public class Sc2sa extends DepthFirstAdapter {
 
     private SaNode returnValue;
@@ -236,10 +238,30 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAffect(AAffect node) { //todo à corriger le cas du tableau
-        SaVar var = (SaVar) apply(node.getVariable());
+        SaVarSimple var = (SaVarSimple) apply(node.getVariable());
+        //SaVar var = (SaVar) apply(node.getVariable());
         SaExp expr = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstAffect(var, expr);
     }
+
+    @Override
+    public void caseAVarExpr7(AVarExpr7 node) {
+       SaVar var = (SaVar) apply(node.getVariable());
+       this.returnValue = new SaExpVar(var);
+    }
+
+
+    /*@Override
+    public void caseANomvarExpr7(ANomvarExpr7 node) {//ok
+        String nom = node.getNom().getText();
+        this.returnValue = new SaExpVar(new SaVarSimple(nom));
+    }
+    @Override
+    public void caseATabExpr7(ATabExpr7 node) { //Marche normalement
+        String nom = node.getNom().getText();
+        int taille = Integer.parseInt(node.getNombre().getText());
+        this.returnValue = new SaDecTab(nom,taille);
+    }*/
 
     @Override
     public void caseASimpleVariable(ASimpleVariable node) {//Censé marcher
@@ -351,11 +373,6 @@ public class Sc2sa extends DepthFirstAdapter {
         apply(node.getExpr());
     }
 
-    @Override
-    public void caseANomvarExpr7(ANomvarExpr7 node) {//ok
-        String nom = node.getNom().getText();
-        this.returnValue = new SaExpVar(new SaVarSimple(nom));
-    }
 
     @Override
     public void caseANombreExpr7(ANombreExpr7 node) {//ok
@@ -368,12 +385,7 @@ public class Sc2sa extends DepthFirstAdapter {
         apply(node.getFonctionlire());
     }
 
-    @Override
-    public void caseATabExpr7(ATabExpr7 node) { //Marche normalement
-        String nom = node.getNom().getText();
-        int taille = Integer.parseInt(node.getNombre().getText());
-        this.returnValue = new SaDecTab(nom,taille);
-    }
+
 
     @Override
     public void caseAFonctionExpr7(AFonctionExpr7 node) { //pas sur
@@ -408,8 +420,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAListeexpr(AListeexpr node) {//todo a coriger
-        SaLExp op1 = (SaLExp)apply(node.getExpr());
-        this.returnValue = new SaLExp(op1.getTete(),op1.getQueue());
+        SaExp op1 = (SaExp)apply(node.getExpr());
+        this.returnValue = new SaLExp(op1,null);
     }
 
     @Override
