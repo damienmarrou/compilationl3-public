@@ -44,9 +44,6 @@ public interface Analysis extends Switch
     void caseASiInstrsi(ASiInstrsi node);
     void caseAInstrsinon(AInstrsinon node);
     void caseABloc(ABloc node);
-    void caseAAffect(AAffect node);
-    void caseASimpleVariable(ASimpleVariable node);
-    void caseATabVariable(ATabVariable node);
     void caseAOuExpr(AOuExpr node);
     void caseAExpr2Expr(AExpr2Expr node);
     void caseAEtExpr2(AEtExpr2 node);
@@ -69,6 +66,9 @@ public interface Analysis extends Switch
     void caseATabExpr7(ATabExpr7 node);
     void caseAFonctionExpr7(AFonctionExpr7 node);
     void caseAAppelExpr7(AAppelExpr7 node);
+    void caseAAffect(AAffect node);
+    void caseASimpleVariable(ASimpleVariable node);
+    void caseATabVariable(ATabVariable node);
     void caseAFonctionecrire(AFonctionecrire node);
     void caseAFonctionappel(AFonctionappel node);
     void caseAAppelexpr(AAppelexpr node);

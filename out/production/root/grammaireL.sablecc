@@ -67,7 +67,7 @@ Productions
 
     deffonction2 = {fonc} deffonction deffonction2|{rien};
     deffonction  = {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
-    decvar2      = {rien}|{var} decvar;
+    decvar2      = {rien} | {var} decvar;
     listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
                    {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule ;
@@ -78,9 +78,6 @@ Productions
     instrsinon   = sinon bloc;
     bloc         = accoladeo listinstr accoladef;
 
-    affect   = variable egal expr pointvirgule;
-    variable = {simple} nom | {tab} nom crocheto nombre crochetf;
-
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
     expr3= {egal}  expr3 egal expr4  | {inf}   expr3 inf   expr4     | {expr4} expr4;
@@ -89,6 +86,9 @@ Productions
     expr6= {non}   non   expr7       | {part7} expr7;
     expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre | {lire} fonctionlire |
            {tab} nom crocheto  nombre crochetf | {fonction} deffonction | {appel} fonctionappel;
+
+    affect   = variable egal expr pointvirgule;
+    variable = {simple} nom | {tab} nom crocheto nombre crochetf ;
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 

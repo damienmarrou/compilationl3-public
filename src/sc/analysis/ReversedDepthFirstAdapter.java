@@ -848,93 +848,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outABloc(node);
     }
 
-    public void inAAffect(AAffect node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAAffect(AAffect node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAAffect(AAffect node)
-    {
-        inAAffect(node);
-        if(node.getPointvirgule() != null)
-        {
-            node.getPointvirgule().apply(this);
-        }
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
-        if(node.getEgal() != null)
-        {
-            node.getEgal().apply(this);
-        }
-        if(node.getVariable() != null)
-        {
-            node.getVariable().apply(this);
-        }
-        outAAffect(node);
-    }
-
-    public void inASimpleVariable(ASimpleVariable node)
-    {
-        defaultIn(node);
-    }
-
-    public void outASimpleVariable(ASimpleVariable node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseASimpleVariable(ASimpleVariable node)
-    {
-        inASimpleVariable(node);
-        if(node.getNom() != null)
-        {
-            node.getNom().apply(this);
-        }
-        outASimpleVariable(node);
-    }
-
-    public void inATabVariable(ATabVariable node)
-    {
-        defaultIn(node);
-    }
-
-    public void outATabVariable(ATabVariable node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseATabVariable(ATabVariable node)
-    {
-        inATabVariable(node);
-        if(node.getCrochetf() != null)
-        {
-            node.getCrochetf().apply(this);
-        }
-        if(node.getNombre() != null)
-        {
-            node.getNombre().apply(this);
-        }
-        if(node.getCrocheto() != null)
-        {
-            node.getCrocheto().apply(this);
-        }
-        if(node.getNom() != null)
-        {
-            node.getNom().apply(this);
-        }
-        outATabVariable(node);
-    }
-
     public void inAOuExpr(AOuExpr node)
     {
         defaultIn(node);
@@ -1483,6 +1396,93 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getFonctionappel().apply(this);
         }
         outAAppelExpr7(node);
+    }
+
+    public void inAAffect(AAffect node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAffect(AAffect node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAffect(AAffect node)
+    {
+        inAAffect(node);
+        if(node.getPointvirgule() != null)
+        {
+            node.getPointvirgule().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getEgal() != null)
+        {
+            node.getEgal().apply(this);
+        }
+        if(node.getVariable() != null)
+        {
+            node.getVariable().apply(this);
+        }
+        outAAffect(node);
+    }
+
+    public void inASimpleVariable(ASimpleVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASimpleVariable(ASimpleVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASimpleVariable(ASimpleVariable node)
+    {
+        inASimpleVariable(node);
+        if(node.getNom() != null)
+        {
+            node.getNom().apply(this);
+        }
+        outASimpleVariable(node);
+    }
+
+    public void inATabVariable(ATabVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATabVariable(ATabVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATabVariable(ATabVariable node)
+    {
+        inATabVariable(node);
+        if(node.getCrochetf() != null)
+        {
+            node.getCrochetf().apply(this);
+        }
+        if(node.getNombre() != null)
+        {
+            node.getNombre().apply(this);
+        }
+        if(node.getCrocheto() != null)
+        {
+            node.getCrocheto().apply(this);
+        }
+        if(node.getNom() != null)
+        {
+            node.getNom().apply(this);
+        }
+        outATabVariable(node);
     }
 
     public void inAFonctionecrire(AFonctionecrire node)

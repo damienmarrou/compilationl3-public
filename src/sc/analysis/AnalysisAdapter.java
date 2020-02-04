@@ -267,24 +267,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAffect(AAffect node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASimpleVariable(ASimpleVariable node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATabVariable(ATabVariable node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAOuExpr(AOuExpr node)
     {
         defaultCase(node);
@@ -412,6 +394,24 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAAppelExpr7(AAppelExpr7 node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAffect(AAffect node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleVariable(ASimpleVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATabVariable(ATabVariable node)
     {
         defaultCase(node);
     }

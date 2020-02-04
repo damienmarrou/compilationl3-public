@@ -1,5 +1,5 @@
 entier a, entier B[10];
 main(entier a)
 {
-    fa=1;
+    a = a+2;
 }
