@@ -1522,20 +1522,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAFonctionappel(node);
     }
 
-    public void inAAppelexpr(AAppelexpr node)
+    public void inAExpAppelexpr(AExpAppelexpr node)
     {
         defaultIn(node);
     }
 
-    public void outAAppelexpr(AAppelexpr node)
+    public void outAExpAppelexpr(AExpAppelexpr node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAAppelexpr(AAppelexpr node)
+    public void caseAExpAppelexpr(AExpAppelexpr node)
     {
-        inAAppelexpr(node);
+        inAExpAppelexpr(node);
         if(node.getListeexpr() != null)
         {
             node.getListeexpr().apply(this);
@@ -1544,7 +1544,24 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getExpr().apply(this);
         }
-        outAAppelexpr(node);
+        outAExpAppelexpr(node);
+    }
+
+    public void inARienAppelexpr(ARienAppelexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARienAppelexpr(ARienAppelexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARienAppelexpr(ARienAppelexpr node)
+    {
+        inARienAppelexpr(node);
+        outARienAppelexpr(node);
     }
 
     public void inAListeexpr(AListeexpr node)

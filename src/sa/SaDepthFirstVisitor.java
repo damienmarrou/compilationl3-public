@@ -300,7 +300,7 @@ public class SaDepthFirstVisitor <T> implements SaVisitor <T>{
 
     public T visit(SaInstBloc node)
     {
-		System.out.println("node = " + node.getVal());
+		//System.out.println("node = " + node.getVal());
 	defaultIn(node);
 	node.getVal().accept(this);
 	defaultOut(node);

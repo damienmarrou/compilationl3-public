@@ -9,11 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Compiler {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		List<String> fileNames = new ArrayList<>();
 		//File folder = new File("test\\input");
 		File folder = new File("test/input");
@@ -83,7 +84,23 @@ public class Compiler {
 				e.printStackTrace();
 			}
 		}
-	}
+		List<String> fileSA = new ArrayList<>();
+		File folderSA = new File("test/input");
+		File[] listOfFilesSA = folderSA.listFiles();
+
+		for (int x = 0; x < listOfFilesSA.length; x++) {
+			if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
+				fileSA.add(listOfFilesSA[x].getAbsolutePath().substring(listOfFilesSA[x].getAbsolutePath().lastIndexOf('\\')+1));
+			}
+
+		}
+
+		for(String file : fileSA){
+			//System.out.println(file);
+			System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+		}
+
+}
 
 	public static String removeSuffix(final String s, final String suffix) {
 		if (s != null && suffix != null && s.endsWith(suffix)) {

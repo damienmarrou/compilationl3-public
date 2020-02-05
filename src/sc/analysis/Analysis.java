@@ -70,7 +70,8 @@ public interface Analysis extends Switch
     void caseATabVariable(ATabVariable node);
     void caseAFonctionecrire(AFonctionecrire node);
     void caseAFonctionappel(AFonctionappel node);
-    void caseAAppelexpr(AAppelexpr node);
+    void caseAExpAppelexpr(AExpAppelexpr node);
+    void caseARienAppelexpr(ARienAppelexpr node);
     void caseAListeexpr(AListeexpr node);
     void caseAFonctionlire(AFonctionlire node);
 

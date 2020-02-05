@@ -423,7 +423,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAppelexpr(AAppelexpr node)
+    public void caseAExpAppelexpr(AExpAppelexpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARienAppelexpr(ARienAppelexpr node)
     {
         defaultCase(node);
     }

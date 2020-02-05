@@ -93,7 +93,7 @@ Productions
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
     fonctionappel = nom  parentheseo appelexpr parenthesef;
-    appelexpr     = expr listeexpr;
+    appelexpr     = {exp}expr listeexpr|{rien};
     listeexpr     = virgule expr;
 
     fonctionlire  = lire parentheseo  parenthesef ;

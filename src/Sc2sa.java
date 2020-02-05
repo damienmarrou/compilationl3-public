@@ -15,7 +15,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     private SaNode apply(Switchable sw) {
         sw.apply(this);
-        System.out.println("returnValue = " + returnValue);
+        //System.out.println("returnValue = " + returnValue);
         return returnValue;
     }
 
@@ -51,7 +51,7 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseAEntierVarsimple(AEntierVarsimple node) { //ok
         SaDecVar var = (SaDecVar) apply(node.getVarent());
-        System.out.println("decvar(nom) = " + var.getNom());
+        //System.out.println("decvar(nom) = " + var.getNom());
         this.returnValue = new SaDecVar(var.getNom());
     }
 
@@ -399,11 +399,23 @@ public class Sc2sa extends DepthFirstAdapter {
         this.returnValue = new SaAppel(nom,op1);
     }
 
-    @Override
+/*    @Override
     public void caseAAppelexpr(AAppelexpr node) {
         SaExp op1 = (SaExp) apply(node.getExpr());
         SaLExp op2 = (SaLExp) apply(node.getListeexpr());
         this.returnValue = new SaLExp(op1,op2);
+    }*/
+
+    @Override
+    public void caseAExpAppelexpr(AExpAppelexpr node) {
+        SaExp exp = (SaExp) apply(node.getExpr());
+        SaLExp exp1 = (SaLExp)apply(node.getListeexpr());
+        this.returnValue = new SaLExp(exp,exp1);
+    }
+
+    @Override
+    public void caseARienAppelexpr(ARienAppelexpr node) {
+        this.returnValue = null;
     }
 
     @Override
