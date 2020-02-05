@@ -415,6 +415,7 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseAFonctionlire(AFonctionlire node) {
         apply(node.getLire());
+        this.returnValue = new SaExpLire();
     }
 
 }
