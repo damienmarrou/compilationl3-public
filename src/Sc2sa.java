@@ -399,13 +399,6 @@ public class Sc2sa extends DepthFirstAdapter {
         this.returnValue = new SaAppel(nom,op1);
     }
 
-/*    @Override
-    public void caseAAppelexpr(AAppelexpr node) {
-        SaExp op1 = (SaExp) apply(node.getExpr());
-        SaLExp op2 = (SaLExp) apply(node.getListeexpr());
-        this.returnValue = new SaLExp(op1,op2);
-    }*/
-
     @Override
     public void caseAExpAppelexpr(AExpAppelexpr node) {
         SaExp exp = (SaExp) apply(node.getExpr());
@@ -419,7 +412,7 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAListeexpr(AListeexpr node) {//todo a coriger
+    public void caseAListeexpr(AListeexpr node) {
         SaExp op1 = (SaExp)apply(node.getExpr());
         this.returnValue = new SaLExp(op1,null);
     }

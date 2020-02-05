@@ -55,7 +55,6 @@ Productions
     /* listedecfonc*/
     programme = decvar2 deffonction2;
 
-
     decvar      = varsimple varmultiple pointvirgule;
     varsimple   = {entier} varent |{tab} vartab;
         varent  = typeentier nom;
