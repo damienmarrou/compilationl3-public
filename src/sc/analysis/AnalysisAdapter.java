@@ -435,13 +435,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseASimpleFonctionlire(ASimpleFonctionlire node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAVideFonctionlire(AVideFonctionlire node)
+    public void caseAFonctionlire(AFonctionlire node)
     {
         defaultCase(node);
     }

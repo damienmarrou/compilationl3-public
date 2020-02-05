@@ -96,4 +96,4 @@ Productions
     appelexpr     = expr listeexpr;
     listeexpr     = virgule expr;
 
-    fonctionlire  = {simple} lire parentheseo expr parenthesef |{vide}lire parentheseo  parenthesef ;
+    fonctionlire  = lire parentheseo  parenthesef ;

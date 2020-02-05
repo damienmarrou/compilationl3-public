@@ -1572,53 +1572,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAListeexpr(node);
     }
 
-    public void inASimpleFonctionlire(ASimpleFonctionlire node)
+    public void inAFonctionlire(AFonctionlire node)
     {
         defaultIn(node);
     }
 
-    public void outASimpleFonctionlire(ASimpleFonctionlire node)
+    public void outAFonctionlire(AFonctionlire node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseASimpleFonctionlire(ASimpleFonctionlire node)
+    public void caseAFonctionlire(AFonctionlire node)
     {
-        inASimpleFonctionlire(node);
-        if(node.getParenthesef() != null)
-        {
-            node.getParenthesef().apply(this);
-        }
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
-        if(node.getParentheseo() != null)
-        {
-            node.getParentheseo().apply(this);
-        }
-        if(node.getLire() != null)
-        {
-            node.getLire().apply(this);
-        }
-        outASimpleFonctionlire(node);
-    }
-
-    public void inAVideFonctionlire(AVideFonctionlire node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAVideFonctionlire(AVideFonctionlire node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAVideFonctionlire(AVideFonctionlire node)
-    {
-        inAVideFonctionlire(node);
+        inAFonctionlire(node);
         if(node.getParenthesef() != null)
         {
             node.getParenthesef().apply(this);
@@ -1631,6 +1598,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getLire().apply(this);
         }
-        outAVideFonctionlire(node);
+        outAFonctionlire(node);
     }
 }

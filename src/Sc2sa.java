@@ -2,6 +2,7 @@ import sa.*;
 import sc.analysis.DepthFirstAdapter;
 import sc.node.*;
 
+import javax.security.sasl.SaslServer;
 import java.util.Queue;
 
 public class Sc2sa extends DepthFirstAdapter {
@@ -67,6 +68,7 @@ public class Sc2sa extends DepthFirstAdapter {
         String nom = node.getNom().getText();
         returnValue = new SaDecVar(nom);
     }
+
 
     @Override
     public void caseAVartab(AVartab node) { //ok
@@ -238,8 +240,8 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAffect(AAffect node) { //todo à corriger le cas du tableau
-        SaVarSimple var = (SaVarSimple) apply(node.getVariable());
-        //SaVar var = (SaVar) apply(node.getVariable());
+        //SaVarSimple var = (SaVarSimple) apply(node.getVariable());
+        SaVar var = (SaVar) apply(node.getVariable());
         SaExp expr = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstAffect(var, expr);
     }
@@ -249,19 +251,6 @@ public class Sc2sa extends DepthFirstAdapter {
        SaVar var = (SaVar) apply(node.getVariable());
        this.returnValue = new SaExpVar(var);
     }
-
-
-    /*@Override
-    public void caseANomvarExpr7(ANomvarExpr7 node) {//ok
-        String nom = node.getNom().getText();
-        this.returnValue = new SaExpVar(new SaVarSimple(nom));
-    }
-    @Override
-    public void caseATabExpr7(ATabExpr7 node) { //Marche normalement
-        String nom = node.getNom().getText();
-        int taille = Integer.parseInt(node.getNombre().getText());
-        this.returnValue = new SaDecTab(nom,taille);
-    }*/
 
     @Override
     public void caseASimpleVariable(ASimpleVariable node) {//Censé marcher
@@ -425,19 +414,8 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAVideFonctionlire(AVideFonctionlire node) {
-       apply(node.getLire());
+    public void caseAFonctionlire(AFonctionlire node) {
+        apply(node.getLire());
     }
-
-    @Override
-    public void caseASimpleFonctionlire(ASimpleFonctionlire node) {
-        //TODO à finir et modifier la grammaire pour plus de logique
-        SaExp exp = (SaExp) apply(node.getExpr());
-        this.returnValue = new SaLExp(exp,null);
-       /* this.returnValue = new SaExpLire();
-        //pourquoi pas apply(node.getExpr()); ??
-        */
-    }
-
 
 }
