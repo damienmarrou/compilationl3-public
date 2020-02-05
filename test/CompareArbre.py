@@ -16,7 +16,9 @@ def main():
         with open(ref_file,'r') as f:
             ref_f = f.read()
         if input_f !=ref_f:
+            print("erreur dans le fichier "+file_name,file=sys.stderr)
             print(input_f == ref_f,'\t',input_f,ref_f,file=sys.stderr)
+
     except Exception as e:
         print(e,file=sys.stderr)
 
