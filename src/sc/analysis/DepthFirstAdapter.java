@@ -662,6 +662,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outALireInstr(node);
     }
 
+    public void inAAppelInstr(AAppelInstr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAppelInstr(AAppelInstr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAppelInstr(AAppelInstr node)
+    {
+        inAAppelInstr(node);
+        if(node.getFonctionappel() != null)
+        {
+            node.getFonctionappel().apply(this);
+        }
+        outAAppelInstr(node);
+    }
+
     public void inAInstrtantque(AInstrtantque node)
     {
         defaultIn(node);
@@ -1489,20 +1510,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFonctionecrire(node);
     }
 
-    public void inAFonctionappel(AFonctionappel node)
+    public void inAAvecargsFonctionappel(AAvecargsFonctionappel node)
     {
         defaultIn(node);
     }
 
-    public void outAFonctionappel(AFonctionappel node)
+    public void outAAvecargsFonctionappel(AAvecargsFonctionappel node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFonctionappel(AFonctionappel node)
+    public void caseAAvecargsFonctionappel(AAvecargsFonctionappel node)
     {
-        inAFonctionappel(node);
+        inAAvecargsFonctionappel(node);
         if(node.getNom() != null)
         {
             node.getNom().apply(this);
@@ -1519,23 +1540,52 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getParenthesef().apply(this);
         }
-        outAFonctionappel(node);
+        outAAvecargsFonctionappel(node);
     }
 
-    public void inAExpAppelexpr(AExpAppelexpr node)
+    public void inASansargFonctionappel(ASansargFonctionappel node)
     {
         defaultIn(node);
     }
 
-    public void outAExpAppelexpr(AExpAppelexpr node)
+    public void outASansargFonctionappel(ASansargFonctionappel node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAExpAppelexpr(AExpAppelexpr node)
+    public void caseASansargFonctionappel(ASansargFonctionappel node)
     {
-        inAExpAppelexpr(node);
+        inASansargFonctionappel(node);
+        if(node.getNom() != null)
+        {
+            node.getNom().apply(this);
+        }
+        if(node.getParentheseo() != null)
+        {
+            node.getParentheseo().apply(this);
+        }
+        if(node.getParenthesef() != null)
+        {
+            node.getParenthesef().apply(this);
+        }
+        outASansargFonctionappel(node);
+    }
+
+    public void inAAppelexpr(AAppelexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAppelexpr(AAppelexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAppelexpr(AAppelexpr node)
+    {
+        inAAppelexpr(node);
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
@@ -1544,24 +1594,7 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getListeexpr().apply(this);
         }
-        outAExpAppelexpr(node);
-    }
-
-    public void inARienAppelexpr(ARienAppelexpr node)
-    {
-        defaultIn(node);
-    }
-
-    public void outARienAppelexpr(ARienAppelexpr node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseARienAppelexpr(ARienAppelexpr node)
-    {
-        inARienAppelexpr(node);
-        outARienAppelexpr(node);
+        outAAppelexpr(node);
     }
 
     public void inAListeexpr(AListeexpr node)
@@ -1586,7 +1619,28 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getExpr().apply(this);
         }
+        if(node.getListeexpr() != null)
+        {
+            node.getListeexpr().apply(this);
+        }
         outAListeexpr(node);
+    }
+
+    public void inARienListeexpr(ARienListeexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARienListeexpr(ARienListeexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARienListeexpr(ARienListeexpr node)
+    {
+        inARienListeexpr(node);
+        outARienListeexpr(node);
     }
 
     public void inAFonctionlire(AFonctionlire node)

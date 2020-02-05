@@ -9,6 +9,7 @@ public final class AListeexpr extends PListeexpr
 {
     private TVirgule _virgule_;
     private PExpr _expr_;
+    private PListeexpr _listeexpr_;
 
     public AListeexpr()
     {
@@ -17,12 +18,15 @@ public final class AListeexpr extends PListeexpr
 
     public AListeexpr(
         @SuppressWarnings("hiding") TVirgule _virgule_,
-        @SuppressWarnings("hiding") PExpr _expr_)
+        @SuppressWarnings("hiding") PExpr _expr_,
+        @SuppressWarnings("hiding") PListeexpr _listeexpr_)
     {
         // Constructor
         setVirgule(_virgule_);
 
         setExpr(_expr_);
+
+        setListeexpr(_listeexpr_);
 
     }
 
@@ -31,7 +35,8 @@ public final class AListeexpr extends PListeexpr
     {
         return new AListeexpr(
             cloneNode(this._virgule_),
-            cloneNode(this._expr_));
+            cloneNode(this._expr_),
+            cloneNode(this._listeexpr_));
     }
 
     @Override
@@ -90,12 +95,38 @@ public final class AListeexpr extends PListeexpr
         this._expr_ = node;
     }
 
+    public PListeexpr getListeexpr()
+    {
+        return this._listeexpr_;
+    }
+
+    public void setListeexpr(PListeexpr node)
+    {
+        if(this._listeexpr_ != null)
+        {
+            this._listeexpr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._listeexpr_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._virgule_)
-            + toString(this._expr_);
+            + toString(this._expr_)
+            + toString(this._listeexpr_);
     }
 
     @Override
@@ -111,6 +142,12 @@ public final class AListeexpr extends PListeexpr
         if(this._expr_ == child)
         {
             this._expr_ = null;
+            return;
+        }
+
+        if(this._listeexpr_ == child)
+        {
+            this._listeexpr_ = null;
             return;
         }
 
@@ -130,6 +167,12 @@ public final class AListeexpr extends PListeexpr
         if(this._expr_ == oldChild)
         {
             setExpr((PExpr) newChild);
+            return;
+        }
+
+        if(this._listeexpr_ == oldChild)
+        {
+            setListeexpr((PListeexpr) newChild);
             return;
         }
 

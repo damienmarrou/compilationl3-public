@@ -84,6 +84,7 @@ public class Compiler {
 				e.printStackTrace();
 			}
 		}
+		System.out.println();
 		List<String> fileSA = new ArrayList<>();
 		File folderSA = new File("test/input");
 		File[] listOfFilesSA = folderSA.listFiles();
@@ -97,7 +98,7 @@ public class Compiler {
 
 		for(String file : fileSA){
 			//System.out.println(file);
-			System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
 		}
 
 }

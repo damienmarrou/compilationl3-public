@@ -382,40 +382,55 @@ public class Sc2sa extends DepthFirstAdapter {
     }
 
     @Override
-    public void caseAAppelExpr7(AAppelExpr7 node) { //Marche 100%
-        apply(node.getFonctionappel());
-    }
-
-    @Override
     public void caseAFonctionecrire(AFonctionecrire node) { //Marche 100%
         SaExp op1 = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstEcriture(op1);
     }
 
     @Override
-    public void caseAFonctionappel(AFonctionappel node) { //Marche 100%
+    public void caseAAppelExpr7(AAppelExpr7 node) { //Marche 100%
+        apply(node.getFonctionappel());
+    }
+
+    @Override
+    public void caseAAvecargsFonctionappel(AAvecargsFonctionappel node) {
         String nom = node.getNom().getText();
-        SaLExp op1 = (SaLExp) apply(node.getAppelexpr());
-        this.returnValue = new SaAppel(nom,op1);
+        SaLExp appel = (SaLExp) apply(node.getAppelexpr());
+        this.returnValue = new SaExpAppel(new SaAppel(nom,appel));
     }
 
     @Override
-    public void caseAExpAppelexpr(AExpAppelexpr node) {
-        SaExp exp = (SaExp) apply(node.getExpr());
-        SaLExp exp1 = (SaLExp)apply(node.getListeexpr());
-        this.returnValue = new SaLExp(exp,exp1);
+    public void caseASansargFonctionappel(ASansargFonctionappel node) {
+        String nom = node.getNom().getText();
+        this.returnValue = new SaExpAppel(new SaAppel(nom,null));
     }
 
     @Override
-    public void caseARienAppelexpr(ARienAppelexpr node) {
+    public void caseAAppelexpr(AAppelexpr node) {
+       SaExp exp = (SaExp) apply(node.getExpr());
+       SaLExp expL = (SaLExp)apply(node.getListeexpr());
+       this.returnValue = new SaLExp(exp,expL);
+    }
+
+    @Override
+    public void caseARienListeexpr(ARienListeexpr node) {
         this.returnValue = null;
     }
 
     @Override
     public void caseAListeexpr(AListeexpr node) {
-        SaExp op1 = (SaExp)apply(node.getExpr());
-        this.returnValue = new SaLExp(op1,null);
+        SaExp exp = (SaExp) apply(node.getExpr());
+        SaLExp expL = (SaLExp)apply(node.getListeexpr());
+        this.returnValue = new SaLExp(exp,expL);
     }
+
+    @Override
+    public void caseAAppelInstr(AAppelInstr node) {
+        SaExpAppel inst = (SaExpAppel) apply(node.getFonctionappel());
+        this.returnValue = new SaExpAppel(inst.getVal());
+    }
+
+
 
     @Override
     public void caseAFonctionlire(AFonctionlire node) {

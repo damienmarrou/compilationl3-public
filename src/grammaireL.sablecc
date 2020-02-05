@@ -69,7 +69,7 @@ Productions
     decvar2      = {rien} | {var} decvar;
     listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule ;
+                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule|{appel}fonctionappel ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
@@ -91,8 +91,8 @@ Productions
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
-    fonctionappel = nom  parentheseo appelexpr parenthesef;
-    appelexpr     = {exp}expr listeexpr|{rien};
-    listeexpr     = virgule expr;
+    fonctionappel = {avecargs} nom  parentheseo appelexpr parenthesef |{sansarg} nom parentheseo parenthesef;
+    appelexpr     = expr listeexpr;
+    listeexpr     = virgule expr listeexpr|{rien};
 
     fonctionlire  = lire parentheseo  parenthesef ;
