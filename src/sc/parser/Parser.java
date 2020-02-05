@@ -1854,14 +1854,14 @@ public class Parser
             // Block
         TNom tnomNode2;
         TCrocheto tcrochetoNode3;
-        TNombre tnombreNode4;
+        PExpr pexprNode4;
         TCrochetf tcrochetfNode5;
         tnomNode2 = (TNom)nodeArrayList1.get(0);
         tcrochetoNode3 = (TCrocheto)nodeArrayList2.get(0);
-        tnombreNode4 = (TNombre)nodeArrayList3.get(0);
+        pexprNode4 = (PExpr)nodeArrayList3.get(0);
         tcrochetfNode5 = (TCrochetf)nodeArrayList4.get(0);
 
-        pvariableNode1 = new ATabVariable(tnomNode2, tcrochetoNode3, tnombreNode4, tcrochetfNode5);
+        pvariableNode1 = new ATabVariable(tnomNode2, tcrochetoNode3, pexprNode4, tcrochetfNode5);
         }
 	nodeList.add(pvariableNode1);
         return nodeList;
@@ -2071,7 +2071,7 @@ public class Parser
 			{{-1, ERROR, 64}, {8, SHIFT, 75}, {23, SHIFT, 85}, },
 			{{-1, ERROR, 65}, {15, SHIFT, 86}, },
 			{{-1, ERROR, 66}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
-			{{-1, ERROR, 67}, {27, SHIFT, 88}, },
+			{{-1, ERROR, 67}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
 			{{-1, REDUCE, 31}, },
 			{{-1, REDUCE, 17}, },
 			{{-1, ERROR, 70}, {9, SHIFT, 48}, {14, SHIFT, 49}, {24, SHIFT, 34}, {27, SHIFT, 50}, {28, SHIFT, 51}, },
@@ -2092,7 +2092,7 @@ public class Parser
 			{{-1, ERROR, 85}, {12, SHIFT, 28}, },
 			{{-1, REDUCE, 60}, },
 			{{-1, ERROR, 87}, {8, SHIFT, 75}, {15, SHIFT, 103}, },
-			{{-1, ERROR, 88}, {11, SHIFT, 104}, },
+			{{-1, ERROR, 88}, {8, SHIFT, 75}, {11, SHIFT, 104}, },
 			{{-1, ERROR, 89}, {8, SHIFT, 75}, {16, SHIFT, 105}, },
 			{{-1, REDUCE, 47}, },
 			{{-1, ERROR, 91}, {8, SHIFT, 75}, {17, SHIFT, 106}, },
@@ -2139,7 +2139,7 @@ public class Parser
 			{{-1, 41}, },
 			{{-1, 110}, },
 			{{-1, 42}, {25, 29}, {30, 47}, {76, 94}, {85, 102}, {109, 113}, },
-			{{-1, 53}, {32, 63}, {33, 64}, {49, 73}, {66, 87}, {70, 89}, {74, 91}, {106, 112}, },
+			{{-1, 53}, {32, 63}, {33, 64}, {49, 73}, {66, 87}, {67, 88}, {70, 89}, {74, 91}, {106, 112}, },
 			{{-1, 54}, {75, 93}, },
 			{{-1, 55}, {77, 95}, },
 			{{-1, 56}, {78, 96}, {79, 97}, },
@@ -2176,29 +2176,30 @@ public class Parser
 			"expecting: ')'",
 			"expecting: '{'",
 			"expecting: '{', '}', 'si', 'retour', 'tantque', 'lire', 'ecrire', nom",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire', nom, EOF",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire', nom, EOF",
 			"expecting: '!', '(', 'lire', nombre, nom",
 			"expecting: '=', '['",
 			"expecting: '}'",
 			"expecting: '='",
 			"expecting: '(', 'lire', nombre, nom",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '[', '(', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '[', ']', '(', ')', ';', ',', 'alors', 'faire'",
 			"expecting: '|', 'alors'",
-			"expecting: '&', '|', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
-			"expecting: '+', '-', '<', '=', '&', '|', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
+			"expecting: '+', '-', '<', '=', '&', '|', ']', ')', ';', ',', 'alors', 'faire'",
 			"expecting: '|', ';'",
 			"expecting: '|', 'faire'",
-			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', '{', '}', ')', ';', ',', 'si', 'alors', 'sinon', 'retour', 'tantque', 'faire', 'lire', 'ecrire', nom, EOF",
+			"expecting: '+', '-', '*', '/', '<', '=', '&', '|', ']', '{', '}', ')', ';', ',', 'si', 'alors', 'sinon', 'retour', 'tantque', 'faire', 'lire', 'ecrire', nom, EOF",
 			"expecting: '|', ')'",
 			"expecting: 'entier ', '!', '(', ')', 'lire', nombre, nom",
+			"expecting: '|', ']'",
 			"expecting: '|', ','",
 			"expecting: '{', '}', 'si', 'sinon', 'retour', 'tantque', 'lire', 'ecrire', nom",
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 2, 6, 11, 5, 3, 12, 2, 13, 14, 15, 16, 17, 5, 18, 17, 15, 19, 20, 18, 21, 21, 21, 10, 10, 22, 23, 19, 19, 19, 19, 19, 19, 24, 19, 9, 20, 25, 21, 26, 27, 26, 28, 29, 30, 31, 26, 26, 26, 26, 26, 26, 32, 33, 17, 21, 11, 34, 23, 21, 19, 26, 35, 36, 21, 18, 21, 21, 21, 21, 21, 21, 21, 19, 18, 26, 35, 13, 32, 26, 37, 17, 29, 38, 30, 31, 31, 26, 26, 26, 26, 19, 9, 26, 19, 21, 17, 26, 18, 19, 19, 35, 19, 
+			0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10, 2, 6, 11, 5, 3, 12, 2, 13, 14, 15, 16, 17, 5, 18, 17, 15, 19, 20, 18, 21, 21, 21, 10, 10, 22, 23, 19, 19, 19, 19, 19, 19, 24, 19, 9, 20, 25, 21, 26, 27, 26, 28, 29, 30, 31, 26, 26, 26, 26, 26, 26, 32, 33, 17, 21, 21, 34, 23, 21, 19, 26, 35, 36, 21, 18, 21, 21, 21, 21, 21, 21, 21, 19, 18, 26, 35, 37, 32, 26, 38, 17, 29, 39, 30, 31, 31, 26, 26, 26, 26, 19, 9, 26, 19, 21, 17, 26, 18, 19, 19, 35, 19, 
         };*/
 
     static 

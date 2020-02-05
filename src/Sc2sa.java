@@ -240,7 +240,6 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAAffect(AAffect node) { //todo à corriger le cas du tableau
-        //SaVarSimple var = (SaVarSimple) apply(node.getVariable());
         SaVar var = (SaVar) apply(node.getVariable());
         SaExp expr = (SaExp) apply(node.getExpr());
         this.returnValue = new SaInstAffect(var, expr);
@@ -261,8 +260,8 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseATabVariable(ATabVariable node) { //Pas sur
         String nom = node.getNom().getText();
-        int taille = Integer.parseInt(node.getNombre().getText());
-        this.returnValue = new SaDecTab(nom,taille);
+        SaExp exp = (SaExp) apply(node.getExpr());
+        this.returnValue = new SaVarIndicee(nom,exp);
     }
 
     @Override

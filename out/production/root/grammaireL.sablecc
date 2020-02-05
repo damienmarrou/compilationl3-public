@@ -88,7 +88,7 @@ Productions
            {fonction} deffonction | {appel} fonctionappel;
 
     affect   = variable egal expr pointvirgule;
-    variable = {simple} nom | {tab} nom crocheto nombre crochetf ;
+    variable = {simple} nom | {tab} nom crocheto expr crochetf ;
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
@@ -96,4 +96,4 @@ Productions
     appelexpr     = expr listeexpr;
     listeexpr     = virgule expr;
 
-    fonctionlire  = {simple} lire parentheseo expr parenthesef |{vide}lire parentheseo  parenthesef ;
+    fonctionlire  = lire parentheseo  parenthesef ;
