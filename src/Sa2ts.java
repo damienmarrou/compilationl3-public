@@ -1,4 +1,12 @@
-import sa.*;
+import sa.SaAppel;
+import sa.SaDecFonc;
+import sa.SaDecTab;
+import sa.SaDecVar;
+import sa.SaDepthFirstVisitor;
+import sa.SaNode;
+import sa.SaProg;
+import sa.SaVarIndicee;
+import sa.SaVarSimple;
 import ts.Ts;
 import ts.TsItemVar;
 
@@ -76,4 +84,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
 
+    public class TsException {
+    }
 }
