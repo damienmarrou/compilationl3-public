@@ -84,6 +84,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
 
-    public class TsException {
+    public class TsException<TsException> {
     }
 }
