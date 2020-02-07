@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Compiler {
@@ -87,8 +86,11 @@ public class Compiler {
 		}
 		System.out.println();
 		List<String> fileSA = new ArrayList<>();
+		List<String> fileTS = new ArrayList<>();
 		File folderSA = new File("test/input");
+		File folderTS = new File("test/input");
 		File[] listOfFilesSA = folderSA.listFiles();
+		File[] listOfFilesTS = folderTS.listFiles();
 
 		for (int x = 0; x < listOfFilesSA.length; x++) {
 			if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
@@ -97,10 +99,24 @@ public class Compiler {
 
 		}
 
+		for (int x = 0; x < listOfFilesTS.length; x++) {
+			if (listOfFilesTS[x].isFile() && listOfFilesTS[x].getName().endsWith(".ts")) {
+				fileTS.add(listOfFilesTS[x].getAbsolutePath().substring(listOfFilesTS[x].getAbsolutePath().lastIndexOf('\\')+1));
+			}
+
+		}
+
+
 		for(String file : fileSA){
 			//System.out.println(file);
 			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
 		}
+
+		for(String file : fileTS){
+			//System.out.println(file);
+			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+		}
+
 
 }
 

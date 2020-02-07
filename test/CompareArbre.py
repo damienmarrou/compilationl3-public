@@ -2,14 +2,20 @@ import sys
 def main():
 
     input_directory = 'test/input/'
-    ref_directory = 'test/sa-ref/'
+    file_name = sys.argv[1]
+    input_file = input_directory + f'{file_name}'
+
+    ref_directorySA = 'test/sa-ref/'
+    ref_directoryTS = 'test/ts-ref/'
+
+    if(file_name[-1]=='a'):
+        ref_file = ref_directorySA + f'{file_name}'
+    else:
+        ref_file = ref_directoryTS + f'{file_name}'
+
 
     if(len(sys.argv)!=2):
         print("pas le bon argument")
-    file_name = sys.argv[1]
-    input_file = input_directory + f'{file_name}'
-    ref_file = ref_directory + f'{file_name}'
-
     try:
         with open(input_file,'r') as f:
             input_f = f.read()
