@@ -231,6 +231,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAAppelInstr(AAppelInstr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAInstrtantque(AInstrtantque node)
     {
         defaultCase(node);
@@ -262,24 +268,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseABloc(ABloc node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAffect(AAffect node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASimpleVariable(ASimpleVariable node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATabVariable(ATabVariable node)
     {
         defaultCase(node);
     }
@@ -381,7 +369,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANomvarExpr7(ANomvarExpr7 node)
+    public void caseAVarExpr7(AVarExpr7 node)
     {
         defaultCase(node);
     }
@@ -399,12 +387,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseATabExpr7(ATabExpr7 node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAFonctionExpr7(AFonctionExpr7 node)
     {
         defaultCase(node);
@@ -417,13 +399,37 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAAffect(AAffect node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleVariable(ASimpleVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATabVariable(ATabVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAFonctionecrire(AFonctionecrire node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFonctionappel(AFonctionappel node)
+    public void caseAAvecargsFonctionappel(AAvecargsFonctionappel node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASansargFonctionappel(ASansargFonctionappel node)
     {
         defaultCase(node);
     }
@@ -441,13 +447,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseASimpleFonctionlire(ASimpleFonctionlire node)
+    public void caseARienListeexpr(ARienListeexpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAVideFonctionlire(AVideFonctionlire node)
+    public void caseAFonctionlire(AFonctionlire node)
     {
         defaultCase(node);
     }

@@ -9,7 +9,7 @@ public final class ATabVariable extends PVariable
 {
     private TNom _nom_;
     private TCrocheto _crocheto_;
-    private TNombre _nombre_;
+    private PExpr _expr_;
     private TCrochetf _crochetf_;
 
     public ATabVariable()
@@ -20,7 +20,7 @@ public final class ATabVariable extends PVariable
     public ATabVariable(
         @SuppressWarnings("hiding") TNom _nom_,
         @SuppressWarnings("hiding") TCrocheto _crocheto_,
-        @SuppressWarnings("hiding") TNombre _nombre_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") TCrochetf _crochetf_)
     {
         // Constructor
@@ -28,7 +28,7 @@ public final class ATabVariable extends PVariable
 
         setCrocheto(_crocheto_);
 
-        setNombre(_nombre_);
+        setExpr(_expr_);
 
         setCrochetf(_crochetf_);
 
@@ -40,7 +40,7 @@ public final class ATabVariable extends PVariable
         return new ATabVariable(
             cloneNode(this._nom_),
             cloneNode(this._crocheto_),
-            cloneNode(this._nombre_),
+            cloneNode(this._expr_),
             cloneNode(this._crochetf_));
     }
 
@@ -100,16 +100,16 @@ public final class ATabVariable extends PVariable
         this._crocheto_ = node;
     }
 
-    public TNombre getNombre()
+    public PExpr getExpr()
     {
-        return this._nombre_;
+        return this._expr_;
     }
 
-    public void setNombre(TNombre node)
+    public void setExpr(PExpr node)
     {
-        if(this._nombre_ != null)
+        if(this._expr_ != null)
         {
-            this._nombre_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +122,7 @@ public final class ATabVariable extends PVariable
             node.parent(this);
         }
 
-        this._nombre_ = node;
+        this._expr_ = node;
     }
 
     public TCrochetf getCrochetf()
@@ -156,7 +156,7 @@ public final class ATabVariable extends PVariable
         return ""
             + toString(this._nom_)
             + toString(this._crocheto_)
-            + toString(this._nombre_)
+            + toString(this._expr_)
             + toString(this._crochetf_);
     }
 
@@ -176,9 +176,9 @@ public final class ATabVariable extends PVariable
             return;
         }
 
-        if(this._nombre_ == child)
+        if(this._expr_ == child)
         {
-            this._nombre_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -207,9 +207,9 @@ public final class ATabVariable extends PVariable
             return;
         }
 
-        if(this._nombre_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setNombre((TNombre) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

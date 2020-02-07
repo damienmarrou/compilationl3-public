@@ -55,7 +55,6 @@ Productions
     /* listedecfonc*/
     programme = decvar2 deffonction2;
 
-
     decvar      = varsimple varmultiple pointvirgule;
     varsimple   = {entier} varent |{tab} vartab;
         varent  = typeentier nom;
@@ -67,10 +66,10 @@ Productions
 
     deffonction2 = {fonc} deffonction deffonction2|{rien};
     deffonction  = {args}nom parentheseo fctdecvar parenthesef  decvar2 bloc |{sansarg} nom parentheseo  parenthesef  decvar2 bloc ;
-    decvar2      = {rien}|{var} decvar;
+    decvar2      = {rien} | {var} decvar;
     listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule ;
+                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule|{appel}fonctionappel ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;
@@ -78,22 +77,22 @@ Productions
     instrsinon   = sinon bloc;
     bloc         = accoladeo listinstr accoladef;
 
-    affect   = variable egal expr pointvirgule;
-    variable = {simple} nom | {tab} nom crocheto nombre crochetf;
-
     expr = {ou}    expr  ou expr2    | {expr2} expr2;
     expr2= {et}    expr2 et expr3    | {expr3} expr3;
     expr3= {egal}  expr3 egal expr4  | {inf}   expr3 inf   expr4     | {expr4} expr4;
     expr4= {plus}  expr4 plus expr5  | {moins} expr4 moins expr5     | {expr5} expr5;
     expr5= {multi} expr5 multi expr6 | {div}   expr5 div   expr6     | {expr6} expr6;
     expr6= {non}   non   expr7       | {part7} expr7;
-    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {nomvar} nom   | {nombre} nombre | {lire} fonctionlire |
-           {tab} nom crocheto  nombre crochetf | {fonction} deffonction | {appel} fonctionappel;
+    expr7= {exprentreparentheses} parentheseo expr parenthesef  | {var}variable   | {nombre} nombre | {lire} fonctionlire |
+           {fonction} deffonction | {appel} fonctionappel;
+
+    affect   = variable egal expr pointvirgule;
+    variable = {simple} nom | {tab} nom crocheto expr crochetf ;
 
     fonctionecrire = ecrire parentheseo expr parenthesef pointvirgule;
 
-    fonctionappel = nom  parentheseo appelexpr parenthesef;
+    fonctionappel = {avecargs} nom  parentheseo appelexpr parenthesef |{sansarg} nom parentheseo parenthesef;
     appelexpr     = expr listeexpr;
-    listeexpr     = virgule expr;
+    listeexpr     = virgule expr listeexpr|{rien};
 
-    fonctionlire  = {simple} lire parentheseo expr parenthesef |{vide}lire parentheseo  parenthesef ;
+    fonctionlire  = lire parentheseo  parenthesef ;
