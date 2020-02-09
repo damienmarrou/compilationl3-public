@@ -77,9 +77,15 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return super.visit(node);
     }
 
+    /*  — Le nombre d’arguments réels passés à la fonction appelée est identique au nombre d’arguments formels dans la déclaration todo : verifier ça
+        — Il existe une fonction sans arguments qui s’appelle main todo : verifier ça*/
+
     @Override
     public Void visit(SaAppel node) {
-        if(!tableGlobale.fonctions.containsKey(node.getNom())) throw new RuntimeException("Fonction non declarée");
+        if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new RuntimeException("Fonction non declarée");
+        if (!tableGlobale.fonctions.containsKey("main")) throw new RuntimeException("Il n'existe aucune fonction main");
+        if(tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0) throw new RuntimeException("Trop d'argument pour main");
+
         return super.visit(node);
     }
 
