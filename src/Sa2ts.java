@@ -92,8 +92,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     public class TsException extends Exception {
 
-        public TsException(String message) {
-            super(message);
+        public TsException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 }
