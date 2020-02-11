@@ -14,7 +14,6 @@ public class Sa2tsTest {
         var parser = new Parser(new Lexer(reader));
         var tree = parser.parse();
         var sc2sa = new Sc2sa();
-
         tree.apply(sc2sa);
         new Sa2ts(sc2sa.getRoot());
     }
@@ -27,6 +26,8 @@ public class Sa2tsTest {
     @Test(expected = Sa2ts.TsException.class)
     public void testNoDuplicateArrayGlobalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a[5], entier a[5]; main() {}");
+
+        //buildTs("entier a[5], entier a[5]; main() {}");
     }
 
    @Test(expected = Sa2ts.TsException.class)

@@ -2,7 +2,6 @@
 
 package sc.analysis;
 
-import java.util.*;
 import sc.node.*;
 
 public class DepthFirstAdapter extends AnalysisAdapter
@@ -679,6 +678,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getFonctionappel() != null)
         {
             node.getFonctionappel().apply(this);
+        }
+        if (node.getPointvirgule() != null) {
+            node.getPointvirgule().apply(this);
         }
         outAAppelInstr(node);
     }

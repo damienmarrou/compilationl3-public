@@ -14,9 +14,11 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     Ts tableGlobale = new Ts();
     Ts tableLocale = null;
+    Location location;
     int argsLength = 0;
 
     public Sa2ts(SaNode saRoot) {
+        location = Location.Global;
         visit((SaProg) saRoot);
     }
 
@@ -28,12 +30,14 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Void visit(SaDecVar node) {
 
         if (tableLocale != null) {
+            location = Location.Local;
             if (tableLocale.variables.containsKey(node.getNom()))
                 throw new TsException("Variable/Arg loc déjà déclarée");
             if (tableLocale.variables.size() < argsLength)
                 tableLocale.addParam(node.getNom());
             else tableLocale.addVar(node.getNom(), 1);
         } else {
+            location = Location.Global;
             if (tableGlobale.variables.containsKey(node.getNom())) throw new TsException("Variable glob déjà déclarée");
             tableGlobale.addVar(node.getNom(), 1);
         }
@@ -73,8 +77,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if(tableLocale != null) var = tableLocale.variables.get(node.getNom());
         if (var == null) var = tableGlobale.variables.get(node.getNom());
         if (var == null) throw new TsException("Variable glob non définie");
-
-
         return super.visit(node);
     }
 
@@ -83,11 +85,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaAppel node) {
-        // if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
-            throw new TsException("Trop d'argument pour main");
+//        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
+        //          throw new TsException("Trop d'argument pour main");
 
         return super.visit(node);
     }

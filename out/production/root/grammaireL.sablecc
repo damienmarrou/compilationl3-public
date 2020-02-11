@@ -69,7 +69,7 @@ Productions
     decvar2      = {rien} | {var} decvar;
     listinstr    = {list} instr listinstr | {rien} ;
     instr        = {affectation} affect   | {bloc} bloc |  {tantque} instrtantque | {si} instrsi |
-                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule|{appel}fonctionappel ;
+                   {retour} instrretour   | {ecrire} fonctionecrire |{lire} fonctionlire pointvirgule|{appel}fonctionappel pointvirgule ;
 
     instrtantque = tantque expr faire bloc;
     instrretour  = retour expr pointvirgule;

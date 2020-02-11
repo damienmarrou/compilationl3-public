@@ -57,7 +57,7 @@ public class Compiler {
                 SaNode saRoot = sc2sa.getRoot();
                 new Sa2Xml(saRoot, baseName);
 
-                //System.out.println("[TABLE SYMBOLES]");
+				//System.out.println("[TABLE SYMBOLES]");
                 Ts table = new Sa2ts(saRoot).getTableGlobale();
                 table.afficheTout(baseName);
 /*
@@ -106,12 +106,12 @@ public class Compiler {
 
 		}
 
-
+		System.out.println("SA");
 		for(String file : fileSA){
 			//System.out.println(file);
 			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
 		}
-
+		System.out.println("TS");
 		for(String file : fileTS){
 			//System.out.println(file);
 			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));

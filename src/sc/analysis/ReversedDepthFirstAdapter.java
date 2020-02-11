@@ -2,7 +2,6 @@
 
 package sc.analysis;
 
-import java.util.*;
 import sc.node.*;
 
 public class ReversedDepthFirstAdapter extends AnalysisAdapter
@@ -676,6 +675,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAAppelInstr(AAppelInstr node)
     {
         inAAppelInstr(node);
+        if (node.getPointvirgule() != null) {
+            node.getPointvirgule().apply(this);
+        }
         if(node.getFonctionappel() != null)
         {
             node.getFonctionappel().apply(this);
