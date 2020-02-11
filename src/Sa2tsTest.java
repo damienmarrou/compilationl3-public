@@ -18,6 +18,8 @@ public class Sa2tsTest {
         new Sa2ts(sc2sa.getRoot());
     }
 
+    /******************************************VARIABLES**********************************************/
+
     @Test(expected = Sa2ts.TsException.class)
     public void testNoDuplicateVariableGlobalScope() throws ParserException, IOException, LexerException {
         buildTs("entier a, entier a; main() {}");
@@ -26,8 +28,6 @@ public class Sa2tsTest {
     @Test(expected = Sa2ts.TsException.class)
     public void testNoDuplicateArrayGlobalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a[5], entier a[5]; main() {}");
-
-        //buildTs("entier a[5], entier a[5]; main() {}");
     }
 
    @Test(expected = Sa2ts.TsException.class)
@@ -35,24 +35,21 @@ public class Sa2tsTest {
         buildTs("main(entier a, entier a) {}");
     }
 
-    @Test(expected = Sa2ts.TsException.class)
+    @Test(expected = Sa2ts.TsException.class)//V1.1
     public void testNoDuplicateVariableFunctionScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() entier a, entier a; {}");
     }
 
-    @Test(expected = Sa2ts.TsException.class)
+    @Test(expected = Sa2ts.TsException.class)//V1.3
     public void testNoFunctionVariableSameNameAsArgument() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main(entier a) entier a; {}");
     }
 
-    // TODO : uniquement la portée la plus proche est accessible
-
-    @Test(expected = Sa2ts.TsException.class)
+    @Test(expected = Sa2ts.TsException.class)//V1.4
     public void testArraysAreGlobals() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() entier a[5]; {}");
     }
 
-    //todo changer la grammaire /!\ c'est très important de vérifier les autres cas aussi
     @Test(expected = Sa2ts.TsException.class)
     public void testNoFunctionSameNameAsVariableLocalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() entier test; {main();} test() {test();}");
@@ -83,16 +80,19 @@ public class Sa2tsTest {
         buildTs("entier a[2]; main() { a = 0; }");
     }
 
-    // TODO
-
     @Test(expected = Sa2ts.TsException.class)
     public void testIntegerNotUsedAsArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a; main() { a[0] = 0; }");
     }
 
-    @Test(expected = Sa2ts.TsException.class)
+    @Test(expected = Sa2ts.TsException.class)//V2.4
     public void testNoCastsFromArrayToInteger() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a[2], entier b; main() { b = a; }");
+    }
+
+    @Test(expected = Sa2ts.TsException.class)//V2.4
+    public void testNoCastFromIntegerToArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
+        buildTs("entier a, entier b[10]; main(){a=b;}");
     }
 
     @Test(expected = Sa2ts.TsException.class)
@@ -104,6 +104,7 @@ public class Sa2tsTest {
         }
     }
 
+    /************************************************FUNCTIONS***************************************************************/
     @Test(expected = Sa2ts.TsException.class)
     public void testAllFunctionsHaveUniqueNames() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() { main(); } main() { main(); }");

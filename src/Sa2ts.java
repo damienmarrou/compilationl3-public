@@ -46,7 +46,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecTab node) {
-        if (tableLocale != null) throw new TsException("Tab non global");
+        //if (tableLocale != null) throw new TsException("Tab non global");
+        if (location != Location.Global) throw new TsException("Tab non global");
+        if (tableGlobale.variables.containsKey(node.getNom())) throw new TsException("Variable déjà déclaré");
         tableGlobale.addVar(node.getNom(), node.getTaille());
         return super.visit(node);
     }
