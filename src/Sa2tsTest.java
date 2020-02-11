@@ -14,6 +14,7 @@ public class Sa2tsTest {
         var parser = new Parser(new Lexer(reader));
         var tree = parser.parse();
         var sc2sa = new Sc2sa();
+
         tree.apply(sc2sa);
         new Sa2ts(sc2sa.getRoot());
     }
@@ -50,6 +51,7 @@ public class Sa2tsTest {
         buildTs("main() entier a[5]; {}");
     }
 
+    //todo changer la grammaire /!\ c'est très important de vérifier les autres cas aussi
     @Test(expected = Sa2ts.TsException.class)
     public void testNoFunctionSameNameAsVariableLocalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() entier test; {main();} test() {test();}");

@@ -1,5 +1,7 @@
-entier a, entier B[10];
-main(entier a)
-{
-    a = a+2;
+main()
+entier test; {
+    main();
+}
+test() {
+    test();
 }
