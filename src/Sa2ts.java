@@ -46,7 +46,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecTab node) {
-        //if (tableLocale != null) throw new TsException("Tab non global");
         if (location != Location.Global) throw new TsException("Tab non global");
         if (tableGlobale.variables.containsKey(node.getNom())) throw new TsException("Variable déjà déclaré");
         tableGlobale.addVar(node.getNom(), node.getTaille());
@@ -86,8 +85,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Void visit(SaAppel node) {
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-//        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
-        //          throw new TsException("Trop d'argument pour main");
+        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
+            throw new TsException("Trop d'argument pour main");
 
         return super.visit(node);
     }
