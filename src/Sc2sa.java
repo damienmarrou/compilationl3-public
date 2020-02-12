@@ -152,9 +152,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseABlocInstr(ABlocInstr node) {
-        SaLInst bloc = (SaLInst) apply(node.getBloc());
-        this.returnValue =new SaInstBloc(bloc);
-
+        apply(node.getBloc());
     }
 
     @Override
@@ -371,8 +369,6 @@ public class Sc2sa extends DepthFirstAdapter {
         apply(node.getFonctionlire());
     }
 
-
-
     @Override
     public void caseAFonctionExpr7(AFonctionExpr7 node) {
         SaDecFonc fonc = (SaDecFonc) apply(node.getDeffonction());
@@ -433,8 +429,4 @@ public class Sc2sa extends DepthFirstAdapter {
         apply(node.getLire());
         this.returnValue = new SaExpLire();
     }
-
-
-    //TODO : corriger le cas du bloc vide
-
 }
