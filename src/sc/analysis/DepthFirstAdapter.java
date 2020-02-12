@@ -679,7 +679,8 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFonctionappel().apply(this);
         }
-        if (node.getPointvirgule() != null) {
+        if(node.getPointvirgule() != null)
+        {
             node.getPointvirgule().apply(this);
         }
         outAAppelInstr(node);
