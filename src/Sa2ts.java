@@ -1,4 +1,12 @@
-import sa.*;
+import sa.SaAppel;
+import sa.SaDecFonc;
+import sa.SaDecTab;
+import sa.SaDecVar;
+import sa.SaDepthFirstVisitor;
+import sa.SaNode;
+import sa.SaProg;
+import sa.SaVarIndicee;
+import sa.SaVarSimple;
 import ts.Ts;
 import ts.TsItemVar;
 
@@ -61,6 +69,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         //Fonction déjà déclarée
         // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclarée");
+        if (tableGlobale.variables.containsKey(node.getNom()))
+            throw new TsException("Fonction avec le même nom qu'une variable globale");
         if (node.getParametres() == null) {
             argsLength = 0;
         } else argsLength = node.getParametres().length();
@@ -121,9 +131,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
 
-    public class TsException extends RuntimeException {
+    static class TsException extends RuntimeException {
 
-        public TsException(String message) {
+        TsException(String message) {
             super(message);
         }
     }

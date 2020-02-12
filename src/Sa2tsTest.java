@@ -9,7 +9,7 @@ import java.io.PushbackReader;
 import java.io.StringReader;
 public class Sa2tsTest {
 
-    private void buildTs(String code) throws ParserException, IOException, LexerException {
+    private void buildTs(String code) throws ParserException, IOException, LexerException, Sa2ts.TsException {
         var reader = new PushbackReader(new StringReader(code));
         var parser = new Parser(new Lexer(reader));
         var tree = parser.parse();
@@ -50,7 +50,7 @@ public class Sa2tsTest {
 
     @Test(expected = Sa2ts.TsException.class)//V1.4
     public void testArraysAreGlobals() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() entier a[5]; {}");
+        buildTs("main() entier a[5]; { main();}");
     }
 
     @Test(expected = Sa2ts.TsException.class)
@@ -124,12 +124,12 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testFunctionCallHasCorrectNumberOfArguments() throws ParserException, IOException, LexerException {
+    public void testFunctionCallHasCorrectNumberOfArguments() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("g(entier a) { retour 0; } main() { g(); }");
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testMainExists() throws ParserException, IOException, LexerException {
+    public void testMainExists() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("g() { retour 0; }");
     }
 }
