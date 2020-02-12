@@ -114,6 +114,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             throw new TsException("Trop d'argument pour main");
 */
 
+        // -- Le nombre d’arguments réels passés à la fonction appelée est identique au nombre d’arguments formels dans la déclaration
+        if(tableLocale.nbArg() != node.getArguments().length()) throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
+
         return super.visit(node);
     }
 
