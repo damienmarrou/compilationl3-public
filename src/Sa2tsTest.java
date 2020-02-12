@@ -17,6 +17,9 @@ public class Sa2tsTest {
         tree.apply(sc2sa);
         new Sa2ts(sc2sa.getRoot());
     }
+    //Todo : ajouter les tests manquants
+    //Todo : corriger les tests faux ou/et incomplet
+
 
     /******************************************VARIABLES**********************************************/
 

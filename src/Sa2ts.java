@@ -22,6 +22,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         visit((SaProg) saRoot);
     }
 
+    //TODO : ajouter dans les 6 methodes la localisation correspondante
+    //TODO : implementer toutes les conditions du TP
+
+
     public Ts getTableGlobale() {
         return tableGlobale;
     }
