@@ -130,6 +130,6 @@ public class Sa2tsTest {
 
     @Test(expected = Sa2ts.TsException.class)
     public void testMainExists() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("g() { retour 0; }");
+        buildTs("g() { retour 0; } main(){retour 0;} ");
     }
 }
