@@ -133,7 +133,7 @@ public class Sc2sa extends DepthFirstAdapter {
         this.returnValue = new SaDecFonc(nom, null,variables,bloc);
     }
 
-    @Override //todo probleme de cast sans doute du à un mauvais appel lors des Ts
+    @Override
     public void caseAListListinstr(AListListinstr node) {
         SaInst tete = (SaInst) apply(node.getInstr());
         SaLInst queue = (SaLInst) apply(node.getListinstr());
@@ -153,8 +153,10 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseABlocInstr(ABlocInstr node) {
         SaLInst bloc = (SaLInst) apply(node.getBloc());
-        if (bloc == null)
-            bloc = new SaLInst(null, null);
+        if (bloc == null) {
+            SaInst inst = (SaInst) apply(node.getBloc());
+            bloc = new SaLInst(inst, null);
+        }
         this.returnValue =new SaInstBloc(bloc);
     }
 

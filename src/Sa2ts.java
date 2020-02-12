@@ -89,9 +89,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Void visit(SaAppel node) {
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
+/*        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
             throw new TsException("Trop d'argument pour main");
-
+*/
         return super.visit(node);
     }
 
