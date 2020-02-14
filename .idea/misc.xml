@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/test/input/add1.ts" />
+    <file url="file://$PROJECT_DIR$/test/input/affect.ts" />
     <file url="file://$PROJECT_DIR$/test/input/appel.ts" />
     <file url="file://$PROJECT_DIR$/test/input/tab1.ts" />
     <file url="file://$PROJECT_DIR$/test/ts-ref/add1.ts" />

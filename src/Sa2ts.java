@@ -63,13 +63,15 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return super.visit(node);
     }
 
+    //TODO :  ajouter les arguments et les variables de la fonction dans la table locale
     @Override
     public Void visit(SaDecFonc node) {
-        if(location != Location.Global) throw new TsException("Tab non global");
+        // if(location != Location.Global) throw new TsException("fonction non global");
+        location = Location.Local;
         //Fonction déjà déclarée
         // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
-        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
-            throw new TsException("pas de main");
+        // if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
+        //   throw new TsException("pas de main");
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclarée");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Fonction avec le même nom qu'une variable globale");
@@ -102,7 +104,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     @Override //Peut pas faire : Les tableaux ne peuvent jamais être utilisés sans indice
-    public Void visit(SaVarIndicee node) {TsItemVar var = null;
+    public Void visit(SaVarIndicee node) {
+        TsItemVar var = null;
         if(tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
             location = Location.Local;
@@ -127,11 +130,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 */
 
         // -- Le nombre d’arguments réels passés à la fonction appelée est identique au nombre d’arguments formels dans la déclaration
-        if(tableLocale.nbArg() != node.getArguments().length()) throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
+        //   if(tableLocale.nbArg() != node.getArguments().length()) throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
 
         return super.visit(node);
     }
-
 
     static class TsException extends RuntimeException {
 

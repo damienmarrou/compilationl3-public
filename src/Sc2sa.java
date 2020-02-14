@@ -421,7 +421,6 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseAAppelInstr(AAppelInstr node) {
         SaExpAppel inst = (SaExpAppel) apply(node.getFonctionappel());
-        //this.returnValue = new SaExpAppel(inst.getVal());
         this.returnValue = new SaAppel(inst.getVal().getNom(), inst.getVal().getArguments());
     }
 
