@@ -66,12 +66,12 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     //TODO :  ajouter les arguments et les variables de la fonction dans la table locale
     @Override
     public Void visit(SaDecFonc node) {
-        // if(location != Location.Global) throw new TsException("fonction non global");
+        if (location != Location.Global) throw new TsException("fonction non global");
         location = Location.Local;
         //Fonction déjà déclarée
-        // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
         // if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
         //   throw new TsException("pas de main");
+        // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclarée");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Fonction avec le même nom qu'une variable globale");
@@ -125,7 +125,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         // --  Il existe une fonction sans arguments qui s’appelle main
         // if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() > 0)
+        if (tableGlobale.fonctions.containsKey("main") && tableLocale.fonctions.get("main").getTaille() > 0)
             throw new TsException("Trop d'argument pour main");
 
 

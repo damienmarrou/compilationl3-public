@@ -77,8 +77,8 @@ public class Sa2tsTest {
     public void testUsedArrayIsDeclared() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() { a[0] = 1; }");
     }
-
-    @Test(expected = Sa2ts.TsException.class)
+//no possible to test
+  /*  @Test(expected = Sa2ts.TsException.class)
     public void testArrayNotUsedAsInteger() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a[2]; main() { a = 0; }");
     }
@@ -86,7 +86,7 @@ public class Sa2tsTest {
     @Test(expected = Sa2ts.TsException.class)
     public void testIntegerNotUsedAsArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("entier a; main() { a[0] = 0; }");
-    }
+    }*/
 
     @Test(expected = Sa2ts.TsException.class)//V2.4
     public void testNoCastsFromArrayToInteger() throws ParserException, IOException, LexerException, Sa2ts.TsException {
