@@ -124,13 +124,14 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         // -- Toute fonction appelée doit être déclarée avant dans le programme.
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
         // --  Il existe une fonction sans arguments qui s’appelle main
-        //if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-/*        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() != 0)
+        // if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
+        if (tableGlobale.fonctions.containsKey("main") && tableLocale.variables.get("main").getTaille() > 0)
             throw new TsException("Trop d'argument pour main");
-*/
+
 
         // -- Le nombre d’arguments réels passés à la fonction appelée est identique au nombre d’arguments formels dans la déclaration
-        //   if(tableLocale.nbArg() != node.getArguments().length()) throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
+        if (tableLocale.fonctions.get(node.getNom()).nbArgs != node.getArguments().length())
+            throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
 
         return super.visit(node);
     }
