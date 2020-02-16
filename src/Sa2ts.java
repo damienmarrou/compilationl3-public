@@ -95,7 +95,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         }
         if (var == null) {
             var = tableGlobale.variables.get(node.getNom());
-            location = Location.Global;
         }
         if (var == null) throw new TsException("Variable glob non définie");
         //-- Les entiers ne peuvent jamais être indicés
@@ -112,7 +111,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         }
         if (var == null) {
             var = tableGlobale.variables.get(node.getNom());
-            location = Location.Global;
         }
         if (var == null) throw new TsException("Variable glob non définie");
         return super.visit(node);
