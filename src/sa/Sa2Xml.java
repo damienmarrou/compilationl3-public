@@ -1,7 +1,5 @@
 package sa;
-
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 public class Sa2Xml extends SaDepthFirstVisitor < Void > {
     private int indentation = 0;
@@ -51,7 +49,7 @@ public class Sa2Xml extends SaDepthFirstVisitor < Void > {
 	defaultOut(node);
 	return null;
     }
-
+    
     public Void visit(SaDecFonc node)
     {
 	defaultIn(node);
@@ -59,7 +57,7 @@ public class Sa2Xml extends SaDepthFirstVisitor < Void > {
 	this.out.println("<nom>"+node.getNom()+"</nom>");
 	if(node.getParametres() != null) node.getParametres().accept(this);
 	if(node.getVariable() != null) node.getVariable().accept(this);
-		if (node.getCorps() != null) node.getCorps().accept(this);
+	if (node.getCorps() != null) node.getCorps().accept(this);
 	defaultOut(node);
 	return null;
     }
