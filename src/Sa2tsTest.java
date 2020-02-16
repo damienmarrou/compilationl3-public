@@ -55,7 +55,7 @@ public class Sa2tsTest {
 
     @Test(expected = Sa2ts.TsException.class)
     public void testNoFunctionSameNameAsVariableLocalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() entier test; {main();} test() {test();}");
+        buildTs("main() entier test; {retour 0;} test() {retour 0;}");
     }
 
     @Test(expected = Sa2ts.TsException.class)
@@ -110,7 +110,7 @@ public class Sa2tsTest {
     /************************************************FUNCTIONS***************************************************************/
     @Test(expected = Sa2ts.TsException.class)
     public void testAllFunctionsHaveUniqueNames() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { main(); } main() { main(); }");
+        buildTs("main() { retour 0; } main() { retour 0; }");
     }
 
     @Test(expected = Sa2ts.TsException.class)
