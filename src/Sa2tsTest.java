@@ -31,7 +31,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("ok");
+            throw new Sa2ts.TsException("pas ok");
         }
     }
 
@@ -42,86 +42,148 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("ok");
+            throw new Sa2ts.TsException("pas ok");
         }
 
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testNoDuplicateVariableArgumentScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main(entier a, entier a) {}");
+    public void testNoDuplicateVariableArgumentScope() {
+
+        try {
+            buildTs("main(entier a, entier a) {}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)//V1.1
-    public void testNoDuplicateVariableFunctionScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() entier a, entier a; {}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)//V1.3
-    public void testNoFunctionVariableSameNameAsArgument() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main(entier a) entier a; {}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)//V1.4
-    public void testArraysAreGlobals() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() entier a[5]; { main();}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testNoFunctionSameNameAsVariableLocalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() entier test; {retour 0;} test() {retour 0;}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testNoFunctionSameNameAsVariableGlobalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier main; main() {main();}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testNoFunctionSameNameAsArrayGlobalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier main[2]; main() {main();}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testUsedVariableIsDeclared() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { a = 1; }");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testUsedArrayIsDeclared() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { a[0] = 1; }");
-    }
-//no possible to test
-  /*  @Test(expected = Sa2ts.TsException.class)
-    public void testArrayNotUsedAsInteger() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier a[2]; main() { a = 0; }");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testIntegerNotUsedAsArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier a; main() { a[0] = 0; }");
-    }*/
-
-    @Test(expected = Sa2ts.TsException.class)//V2.4
-    public void testNoCastsFromArrayToInteger() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier a[2], entier b; main() { b = a; }");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)//V2.4
-    public void testNoCastFromIntegerToArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier a, entier b[10]; main(){a=b;}");
-    }
-
-    @Test(expected = Sa2ts.TsException.class)
-    public void testNoCastsFromIntegerToArray() throws ParserException, IOException, LexerException, Sa2ts.TsException {
+    public void testNoDuplicateVariableFunctionScope() {
         try {
-            buildTs("entier a[2], entier b; main() { a = b; }");
+            buildTs("main() entier a, entier a; {}");
         } catch (Sa2ts.TsException e) {
-            buildTs("entier a[2]; g() { retour 0; } main() { a = g(); }");
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
         }
     }
 
+    @Test(expected = Sa2ts.TsException.class)//V1.3
+    public void testNoFunctionVariableSameNameAsArgument() {
+        try {
+            buildTs("main(entier a) entier a; {}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)//V1.4
+    public void testArraysAreGlobals() {
+        try {
+            buildTs("main() entier a[5]; { main();}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)
+    public void testNoFunctionSameNameAsVariableLocalScope() {//todo pas bon à modifier
+        try {
+            buildTs("main() entier test; {retour 0;} test() {retour 0;}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)
+    public void testNoFunctionSameNameAsVariableGlobalScope() {
+        try {
+            buildTs("entier main; main() {main();}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)
+    public void testNoFunctionSameNameAsArrayGlobalScope() {
+        try {
+            buildTs("entier main[2]; main() {main();}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)
+    public void testUsedVariableIsDeclared() {
+        try {
+            buildTs("main() { a = 1; }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)
+    public void testUsedArrayIsDeclared() {
+        try {
+            buildTs("main() { a[0] = 1; }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)//V2.4
+    public void testNoCastsFromArrayToInteger() {//todo à vérifier
+        try {
+            buildTs("entier a[2], entier b; main() { b = a; }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+    @Test(expected = Sa2ts.TsException.class)//V2.4
+    public void testNoCastFromIntegerToArray() {//todo à vérifier
+        try {
+            buildTs("entier a, entier b[10]; main(){a=b;}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+    }
+
+
     /************************************************FUNCTIONS***************************************************************/
+    @Test(expected = Sa2ts.TsException.class)
+    public void testNoCastsFromIntegerToFunction() {//todo corriger
+        try {
+            buildTs("entier a[2]; g() { retour 0; } main() { a = g(); }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
+
+    }
+
+
     @Test(expected = Sa2ts.TsException.class)
     public void testAllFunctionsHaveUniqueNames() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main() { retour 0; } main() { retour 0; }");

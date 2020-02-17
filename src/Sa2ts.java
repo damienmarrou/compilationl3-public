@@ -95,7 +95,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (var == null) {
             var = tableGlobale.variables.get(node.getNom());
         }
-        if (var == null) throw new TsException("Variable glob non définie");
+        if (var == null) throw new TsException("Variable non définie");
         //-- Les entiers ne peuvent jamais être indicés
         if (var.getTaille() > 1) throw new TsException("Entier indicé alors qu'il ne faut pas");
         return super.visit(node);
