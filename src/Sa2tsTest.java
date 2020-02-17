@@ -7,6 +7,7 @@ import sc.parser.ParserException;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.StringReader;
+
 public class Sa2tsTest {
 
     private void buildTs(String code) throws ParserException, IOException, LexerException, Sa2ts.TsException {
@@ -24,17 +25,30 @@ public class Sa2tsTest {
     /******************************************VARIABLES**********************************************/
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testNoDuplicateVariableGlobalScope() throws ParserException, IOException, LexerException {
-        buildTs("entier a, entier a; main() {}");
+    public void testNoDuplicateVariableGlobalScope() {
+        try {
+            buildTs("entier a, entier a; main() {}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testNoDuplicateArrayGlobalScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("entier a[5], entier a[5]; main() {}");
+    public void testNoDuplicateArrayGlobalScope() {
+        try {
+            buildTs("entier a[5], entier a[5]; main() {}");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("ok");
+        }
+
     }
 
-   @Test(expected = Sa2ts.TsException.class)
-   public void testNoDuplicateVariableArgumentScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
+    @Test(expected = Sa2ts.TsException.class)
+    public void testNoDuplicateVariableArgumentScope() throws ParserException, IOException, LexerException, Sa2ts.TsException {
         buildTs("main(entier a, entier a) {}");
     }
 
