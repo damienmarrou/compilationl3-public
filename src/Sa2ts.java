@@ -32,7 +32,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecVar node) {
-
         if (tableLocale != null) {
             location = Location.Local;
             //Var locale déjà déclarée
@@ -69,8 +68,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (location != Location.Global) throw new TsException("fonction non global");
         location = Location.Local;
         //Fonction déjà déclarée
-        // if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
-        //   throw new TsException("pas de main");
+        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
+            throw new TsException("pas de main");
         // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclarée");
         if (tableGlobale.variables.containsKey(node.getNom()))
@@ -107,12 +106,13 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         TsItemVar var = null;
         if(tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
-            location = Location.Local;
         }
         if (var == null) {
             var = tableGlobale.variables.get(node.getNom());
         }
         if (var == null) throw new TsException("Variable glob non définie");
+
+        if (var.getTaille() < 1) throw new TsException("tableau sans indice");
         return super.visit(node);
     }
 
