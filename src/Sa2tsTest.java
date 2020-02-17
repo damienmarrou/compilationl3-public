@@ -185,27 +185,57 @@ public class Sa2tsTest {
 
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testAllFunctionsHaveUniqueNames() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { retour 0; } main() { retour 0; }");
+    public void testAllFunctionsHaveUniqueNames() {//todo corriger
+        try {
+            buildTs("main() { retour 0; } main() { retour 0; }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testCalledFunctionIsDeclared() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { g(); }");
+    public void testCalledFunctionIsDeclared() {
+        try {
+            buildTs("main() { g(); }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testCalledFunctionIsDeclaredBefore() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("main() { g(); } g() { retour 0; }");
+    public void testCalledFunctionIsDeclaredBefore() {
+        try {
+            buildTs("main() { g(); } g() { retour 0; }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testFunctionCallHasCorrectNumberOfArguments() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("g(entier a) { retour 0; } main() { g(); }");
+    public void testFunctionCallHasCorrectNumberOfArguments() {//todo corriger
+        try {
+            buildTs("g(entier a) { retour 0; } main() { g(); }");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testMainExists() throws ParserException, IOException, LexerException, Sa2ts.TsException {
-        buildTs("g() { retour 0; } main(){retour 0;} ");
+    public void testMainExists() {//todo à corriger
+        try {
+            buildTs("g() { retour 0; } main(){retour 0;} ");
+        } catch (Sa2ts.TsException e) {
+            e.printStackTrace();
+        } finally {
+            throw new Sa2ts.TsException("pas ok");
+        }
     }
 }
