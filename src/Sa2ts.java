@@ -53,7 +53,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     @Override
     public Void visit(SaDecTab node) {
         location = Location.Global;
-        //if (location != Location.Global) throw new TsException("Tab non global");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Variable globale tableau déjà déclaré");
         tableGlobale.addVar(node.getNom(), node.getTaille());
@@ -63,13 +62,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     //TODO :  ajouter les arguments et les variables de la fonction dans la table locale
     @Override
     public Void visit(SaDecFonc node) {
-        if (location != Location.Global) throw new TsException("fonction non global");//todo à modifier
-        location = Location.Local;
-        //Fonction déjà déclarée
-        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
-            throw new TsException("pas de main");
-        // --  Il n’y a pas deux fonctions identiques déclarées à des endroits diﬀérents
-        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclarée");
+        //todo à modifier
+        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("fonction déjà déclaré");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Fonction avec le même nom qu'une variable globale");
         if (node.getParametres() == null) {
@@ -78,6 +72,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         //Ajout de fonction dans table globale
         tableLocale = new Ts();
         tableGlobale.addFct(node.getNom(), argsLength, tableLocale, node);
+        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 1)
+            throw new TsException("pas de main " + tableGlobale.fonctions.size());
         return super.visit(node);
     }
 
@@ -116,19 +112,13 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaAppel node) {
-        location = Location.Global;
-        // -- Toute fonction appelée doit être déclarée avant dans le programme.
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
-        // --  Il existe une fonction sans arguments qui s’appelle main
-        // if (!tableGlobale.fonctions.containsKey("main")) throw new TsException("Il n'existe aucune fonction main");
-        if (tableGlobale.fonctions.containsKey("main") && tableLocale.fonctions.get("main").getTaille() > 0)
-            throw new TsException("Trop d'argument pour main");
-
-
-        // -- Le nombre d’arguments réels passés à la fonction appelée est identique au nombre d’arguments formels dans la déclaration
-        if (tableLocale.fonctions.get(node.getNom()).nbArgs != node.getArguments().length())
-            throw new TsException("Le nombre d'arguments passés est différents du nombre attendu");
-
+        int length = 0;
+        if (node.getArguments() != null) {
+            length = node.getArguments().length();
+        }
+        if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs())
+            throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
         return super.visit(node);
     }
 
