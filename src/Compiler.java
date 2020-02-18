@@ -96,14 +96,12 @@ public class Compiler {
 			if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
 				fileSA.add(listOfFilesSA[x].getAbsolutePath().substring(listOfFilesSA[x].getAbsolutePath().lastIndexOf('\\')+1));
 			}
-
 		}
 
 		for (int x = 0; x < listOfFilesTS.length; x++) {
 			if (listOfFilesTS[x].isFile() && listOfFilesTS[x].getName().endsWith(".ts")) {
 				fileTS.add(listOfFilesTS[x].getAbsolutePath().substring(listOfFilesTS[x].getAbsolutePath().lastIndexOf('\\')+1));
 			}
-
 		}
 
 		System.out.println("SA");

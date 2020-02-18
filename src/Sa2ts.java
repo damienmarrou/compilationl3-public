@@ -53,7 +53,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecTab node) {
-        location = Location.Global;
+        //location = Location.Global;
+        if (tableLocale != null) throw new TsException("tableau non globale");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Variable globale tableau déjà déclaré");
         tableGlobale.addVar(node.getNom(), node.getTaille());
@@ -119,6 +120,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (node.getArguments() != null) {
             length = node.getArguments().length();
         }
+
         if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs())
             throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
         return super.visit(node);

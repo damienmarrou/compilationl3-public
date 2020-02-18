@@ -76,7 +76,7 @@ public class Sa2tsTest {
         }
     }
 
-    @Test(expected = Sa2ts.TsException.class)//V1.4//todo add test in sa2ts
+    @Test(expected = Sa2ts.TsException.class)//V1.4
     public void testArraysAreGlobals() {
         try {
             buildTs("main() entier a[5]; { main();}");
