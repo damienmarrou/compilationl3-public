@@ -61,7 +61,7 @@ public class Compiler {
                 Ts table = new Sa2ts(saRoot).getTableGlobale();
                 table.afficheTout(baseName);
 
-  /*              System.out.println("[C3A]");
+               /*System.out.println("[C3A]");
                 C3a c3a = new Sa2c3a(saRoot, table).getC3a();
                 c3a.affiche(baseName);
 

@@ -23,7 +23,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     //TODO : ajouter dans les 6 methodes la localisation correspondante
-    //TODO : implementer toutes les conditions du TP
 
 
     public Ts getTableGlobale() {
@@ -32,12 +31,12 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecVar node) {
-        Location loc = location;
+        //Location loc = location;
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new Sa2ts.TsException("Variable avec le même nom");
        // tableGlobale.addVar(node.getNom(), 1);
         if (tableLocale != null) {
-            location = Location.Local;
+            // location = Location.Local;
             if (tableLocale.variables.containsKey(node.getNom()))
                 throw new Sa2ts.TsException("variable locale avec le même nom");
             if (tableLocale.variables.size() < argsLength) {
@@ -45,8 +44,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             } else {
                 tableLocale.addVar(node.getNom(), 1);
             }
+        } else {
+            tableGlobale.addVar(node.getNom(), 1);
         }
-        location = loc;
+        //location = loc;
         return super.visit(node);
     }
 
@@ -59,10 +60,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return super.visit(node);
     }
 
-    //TODO :  ajouter les arguments et les variables de la fonction dans la table locale
     @Override
     public Void visit(SaDecFonc node) {
-        //todo à modifier
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("fonction déjà déclaré");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Fonction avec le même nom qu'une variable globale");
@@ -82,14 +81,16 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         TsItemVar var;
         /*  -- Toute variable utilisée est déclarée en tant que (recherche dans l’ordre)
         : — (1) Variable locale ou (2) argument de fonction ou (3) variable globale.*/
-
-        if (tableLocale != null) {
+        if (tableGlobale.variables.containsKey(node.getNom())) {
+            var = tableGlobale.variables.get(node.nom);
+        } else if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
             location = Location.Local;
         } else {
             var = tableGlobale.variables.get(node.getNom());
         }
-        if (var == null) throw new TsException("Variable non définie");
+        if (var == null)
+            throw new TsException("Variable non définie\n local.var " + tableLocale.variables + "\nglob.var " + tableGlobale.variables);
 
         //-- Les entiers ne peuvent jamais être indicés
         if (var.getTaille() > 1) throw new TsException("Entier indicé alors qu'il ne faut pas");

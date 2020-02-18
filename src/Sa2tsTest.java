@@ -45,7 +45,6 @@ public class Sa2tsTest {
 
     @Test(expected = Sa2ts.TsException.class)
     public void testNoDuplicateVariableArgumentScope() {
-
         try {
             buildTs("main(entier a, entier a) {}");
         } catch (Sa2ts.TsException e) {
@@ -77,7 +76,7 @@ public class Sa2tsTest {
         }
     }
 
-    @Test(expected = Sa2ts.TsException.class)//V1.4
+    @Test(expected = Sa2ts.TsException.class)//V1.4//todo add test in sa2ts
     public void testArraysAreGlobals() {
         try {
             buildTs("main() entier a[5]; { main();}");
@@ -144,7 +143,7 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)//V2.4
-    public void testNoCastsFromArrayToInteger() {//todo à vérifier
+    public void testNoCastsFromArrayToInteger() {
         try {
             buildTs("entier a[2], entier b; main() { b = a; }");
         } catch (Sa2ts.TsException e) {
@@ -155,7 +154,7 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)//V2.4
-    public void testNoCastFromIntegerToArray() {//todo à vérifier
+    public void testNoCastFromIntegerToArray() {
         try {
             buildTs("entier a, entier b[10]; main(){a=b;}");
         } catch (Sa2ts.TsException e) {
@@ -168,7 +167,7 @@ public class Sa2tsTest {
 
     /************************************************FUNCTIONS***************************************************************/
     @Test(expected = Sa2ts.TsException.class)
-    public void testNoCastsFromIntegerToFunction() {//todo corriger
+    public void testNoCastsFromIntegerToFunction() {
         try {
             buildTs("entier a[2]; g() { retour 0; } main() { a = g(); }");
         } catch (Sa2ts.TsException e) {
@@ -180,7 +179,7 @@ public class Sa2tsTest {
 
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testAllFunctionsHaveUniqueNames() {//todo corriger
+    public void testAllFunctionsHaveUniqueNames() {
         try {
             buildTs("main() { retour 0; } main() { retour 0; }");
         } catch (Sa2ts.TsException e) {
