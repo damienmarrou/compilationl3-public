@@ -1,7 +1,4 @@
-import c3a.C3a;
-import c3a.C3aConstant;
-import c3a.C3aInstAdd;
-import c3a.C3aOperand;
+import c3a.*;
 import sa.*;
 import ts.Ts;
 
@@ -108,24 +105,40 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     public C3aOperand visit(SaExpAdd node) {
         C3aConstant op1 = (C3aConstant) node.getOp1().accept(this);
         C3aConstant op2 =  (C3aConstant) node.getOp2().accept(this);
-        C3aInstAdd add = new C3aInstAdd(op1,op2,new C3aConstant(op1.val+op2.val),"LOL");
+        C3aConstant result =  new C3aConstant(op1.val + op2.val);
+        C3aInstAdd add = new C3aInstAdd(op1,op2,result,"SaExpAdd");
         return  add.result;
         //return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaExpSub node) {
-        return super.visit(node);
+        C3aConstant op1 = (C3aConstant) node.getOp1().accept(this);
+        C3aConstant op2 =  (C3aConstant) node.getOp2().accept(this);
+        C3aConstant result =  new C3aConstant(op1.val - op2.val);
+        C3aInstSub sub = new C3aInstSub(op1,op2,result,"SaExpSub");
+        return  sub.result;
+        //return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaExpMult node) {
-        return super.visit(node);
+        C3aConstant op1 = (C3aConstant) node.getOp1().accept(this);
+        C3aConstant op2 =  (C3aConstant) node.getOp2().accept(this);
+        C3aConstant result =  new C3aConstant(op1.val * op2.val);
+        C3aInstMult mult = new C3aInstMult(op1,op2,result,"SaExpMult");
+        return  mult.result;
+        //return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaExpDiv node) {
-        return super.visit(node);
+        C3aConstant op1 = (C3aConstant) node.getOp1().accept(this);
+        C3aConstant op2 =  (C3aConstant) node.getOp2().accept(this);
+        C3aConstant result =  new C3aConstant(op1.val / op2.val);
+        C3aInstDiv div = new C3aInstDiv(op1,op2,result,"SaExpDiv");
+        return  div.result;
+        //return super.visit(node);
     }
 
     @Override
