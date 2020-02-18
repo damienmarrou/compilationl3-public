@@ -87,8 +87,8 @@ public class Sa2tsTest {
         }
     }
 
-    @Test(expected = Sa2ts.TsException.class)
-    public void testNoFunctionSameNameAsVariableLocalScope() {//todo pas bon à modifier
+    /*@Test(expected = Sa2ts.TsException.class)
+    public void testNoFunctionSameNameAsVariableLocalScope() {//A voir si le test est nécessaire
         try {
             buildTs("main() entier test; {retour 0;} test() {retour 0;}");
         } catch (Sa2ts.TsException e) {
@@ -96,7 +96,7 @@ public class Sa2tsTest {
         } finally {
             throw new Sa2ts.TsException("pas ok \n");
         }
-    }
+    }*/
 
     @Test(expected = Sa2ts.TsException.class)
     public void testNoFunctionSameNameAsVariableGlobalScope() {
@@ -225,7 +225,7 @@ public class Sa2tsTest {
     @Test(expected = Sa2ts.TsException.class)
     public void testMainExists() {//todo à corriger
         try {
-            buildTs("g() { retour 0; } main(){retour 0;} ");
+            buildTs("g() { retour 0; } ");
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {

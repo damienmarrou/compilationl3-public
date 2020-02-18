@@ -63,6 +63,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecFonc node) {
+
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("fonction déjà déclaré");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Fonction avec le même nom qu'une variable globale");
