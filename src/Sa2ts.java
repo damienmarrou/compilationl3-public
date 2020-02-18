@@ -20,6 +20,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Sa2ts(SaNode saRoot) {
         location = Location.Global;
         visit((SaProg) saRoot);
+        checkMainExists();
     }
 
     //TODO : ajouter dans les 6 methodes la localisation correspondante
@@ -123,10 +124,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (node.getArguments() != null) {
             length = node.getArguments().length();
         }
+        if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs()) {
 
-        if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs())
             throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
-
+        }
         return super.visit(node);
     }
 
@@ -135,5 +136,11 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         TsException(String message) {
             super(message);
         }
+    }
+
+
+    private void checkMainExists() {
+        if (!tableGlobale.fonctions.containsKey("main"))
+            throw new TsException("The main function does nit exist.");
     }
 }
