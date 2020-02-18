@@ -21,7 +21,6 @@ public class Sa2tsTest {
 
 
     /******************************************VARIABLES**********************************************/
-
     @Test(expected = Sa2ts.TsException.class)
     public void testNoDuplicateVariableGlobalScope() {
         try {
@@ -29,7 +28,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -40,9 +39,8 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
-
     }
 
     @Test(expected = Sa2ts.TsException.class)
@@ -53,7 +51,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -64,7 +62,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -75,7 +73,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -86,7 +84,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -97,7 +95,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -108,7 +106,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -119,7 +117,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -130,7 +128,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -141,7 +139,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -152,7 +150,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -163,7 +161,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -176,9 +174,8 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
-
     }
 
 
@@ -189,7 +186,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -200,7 +197,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -211,7 +208,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -222,7 +219,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 
@@ -233,7 +230,7 @@ public class Sa2tsTest {
         } catch (Sa2ts.TsException e) {
             e.printStackTrace();
         } finally {
-            throw new Sa2ts.TsException("pas ok");
+            throw new Sa2ts.TsException("pas ok \n");
         }
     }
 }

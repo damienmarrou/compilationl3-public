@@ -56,7 +56,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Void visit(SaDecTab node) {
         if (location != Location.Global) throw new TsException("Tab non global");
         //Var déjà déclarée
-        if (tableGlobale.variables.containsKey(node.getNom())) throw new TsException("Variable globale tableau déjà déclaré");
+        if (tableGlobale.variables.containsKey(node.getNom()))
+            throw new TsException("Variable globale tableau déjà déclaré");
         // -- Un tableau est toujours une variable globale
         tableGlobale.addVar(node.getNom(), node.getTaille());
         return super.visit(node);
@@ -65,7 +66,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     //TODO :  ajouter les arguments et les variables de la fonction dans la table locale
     @Override
     public Void visit(SaDecFonc node) {
-        if (location != Location.Global) throw new TsException("fonction non global");
+        if (location != Location.Global) throw new TsException("fonction non global");//todo à modifier
         location = Location.Local;
         //Fonction déjà déclarée
         if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
@@ -88,7 +89,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         TsItemVar var = null;
         /*  -- Toute variable utilisée est déclarée en tant que (recherche dans l’ordre)
         : — (1) Variable locale ou (2) argument de fonction ou (3) variable globale.*/
-        if(tableLocale != null){
+        if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
             location = Location.Local;
         }
@@ -104,7 +105,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     @Override //Peut pas faire : Les tableaux ne peuvent jamais être utilisés sans indice
     public Void visit(SaVarIndicee node) {
         TsItemVar var = null;
-        if(tableLocale != null) {
+        if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
         }
         if (var == null) {
