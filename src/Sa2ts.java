@@ -35,7 +35,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         Location loc = location;
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new Sa2ts.TsException("Variable avec le même nom");
-        tableGlobale.addVar(node.getNom(), 1);
+       // tableGlobale.addVar(node.getNom(), 1);
         if (tableLocale != null) {
             location = Location.Local;
             if (tableLocale.variables.containsKey(node.getNom()))
@@ -79,17 +79,18 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaVarSimple node) {
-        TsItemVar var = null;
+        TsItemVar var;
         /*  -- Toute variable utilisée est déclarée en tant que (recherche dans l’ordre)
         : — (1) Variable locale ou (2) argument de fonction ou (3) variable globale.*/
+
         if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
             location = Location.Local;
-        }
-        if (var == null) {
+        } else {
             var = tableGlobale.variables.get(node.getNom());
         }
         if (var == null) throw new TsException("Variable non définie");
+
         //-- Les entiers ne peuvent jamais être indicés
         if (var.getTaille() > 1) throw new TsException("Entier indicé alors qu'il ne faut pas");
         return super.visit(node);
