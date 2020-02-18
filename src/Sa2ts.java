@@ -73,8 +73,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         //Ajout de fonction dans table globale
         tableLocale = new Ts();
         tableGlobale.addFct(node.getNom(), argsLength, tableLocale, node);
-        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 1)
-            throw new TsException("pas de main " + tableGlobale.fonctions.size());
+        if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 0)
+            throw new TsException("pas de main sans arguments" + tableGlobale.fonctions.size());
+        if (tableGlobale.fonctions.containsKey("main") && !(tableGlobale.fonctions.get("main").getNbArgs() == 0))
+            throw new TsException("Arguments dans main pas bon");
         return super.visit(node);
     }
 
@@ -124,6 +126,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
         if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs())
             throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
+
         return super.visit(node);
     }
 
