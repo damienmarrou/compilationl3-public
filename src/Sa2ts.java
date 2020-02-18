@@ -23,7 +23,8 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         checkMainExists();
     }
 
-    //TODO : ajouter dans les 6 methodes la localisation correspondante
+    //TODO : faire une méthode qui renvoie la localisation
+    //TODO : vérifier si addParam et add.Var sont bien utilisé comme il faut
 
 
     public Ts getTableGlobale() {
@@ -90,7 +91,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             var = tableGlobale.variables.get(node.nom);
         } else if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
-            location = Location.Local;
+            //location = Location.Local;
         } else {
             var = tableGlobale.variables.get(node.getNom());
         }
@@ -132,7 +133,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     static class TsException extends RuntimeException {
-
         TsException(String message) {
             super(message);
         }
