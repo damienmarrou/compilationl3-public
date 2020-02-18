@@ -45,7 +45,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             } else {
                 tableLocale.addVar(node.getNom(), 1);
             }
-
         }
         location = loc;
         return super.visit(node);
@@ -53,11 +52,10 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecTab node) {
-        if (location != Location.Global) throw new TsException("Tab non global");
-        //Var déjà déclarée
+        location = Location.Global;
+        //if (location != Location.Global) throw new TsException("Tab non global");
         if (tableGlobale.variables.containsKey(node.getNom()))
             throw new TsException("Variable globale tableau déjà déclaré");
-        // -- Un tableau est toujours une variable globale
         tableGlobale.addVar(node.getNom(), node.getTaille());
         return super.visit(node);
     }
@@ -101,7 +99,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return super.visit(node);
     }
 
-    @Override //Peut pas faire : Les tableaux ne peuvent jamais être utilisés sans indice
+    @Override
     public Void visit(SaVarIndicee node) {
         TsItemVar var = null;
         if (tableLocale != null) {
