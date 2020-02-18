@@ -32,23 +32,22 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaDecVar node) {
+        Location loc = location;
+        if (tableGlobale.variables.containsKey(node.getNom()))
+            throw new Sa2ts.TsException("Variable avec le même nom");
+        tableGlobale.addVar(node.getNom(), 1);
         if (tableLocale != null) {
             location = Location.Local;
-            //Var locale déjà déclarée
-            // -- Il n’y a pas deux variables identiques déclarées dans une même portée
-            // -- Il n’est pas possible de déclarer une variable locale qui a le même nom qu’un argument.
             if (tableLocale.variables.containsKey(node.getNom()))
-                throw new TsException("Variable/Arg loc déjà déclarée");
-            if (tableLocale.variables.size() < argsLength)
+                throw new Sa2ts.TsException("variable locale avec le même nom");
+            if (tableLocale.variables.size() < argsLength) {
                 tableLocale.addParam(node.getNom());
-            else tableLocale.addVar(node.getNom(), 1);
-        } else {
-            //Var globale déjà déclarée
-            // -- Il n’y a pas deux variables identiques déclarées dans une même portée
-            location = Location.Global;
-            if (tableGlobale.variables.containsKey(node.getNom())) throw new TsException("Variable glob déjà déclarée");
-            tableGlobale.addVar(node.getNom(), 1);
+            } else {
+                tableLocale.addVar(node.getNom(), 1);
+            }
+
         }
+        location = loc;
         return super.visit(node);
     }
 
