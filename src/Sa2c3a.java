@@ -63,6 +63,15 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaInstTantQue node) {
+        var LabelTrue = c3a.True;
+        var LabelFalse = c3a.False;
+        var tx = c3a.newTemp();
+
+
+
+
+
+
         /*int test = node.getTest().accept(this);
          while (test != 0){
           node.getFaire().accept(this);
@@ -114,8 +123,12 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaExpAppel node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpAppel node) { //todo verif
+        var tx = c3a.newTemp();
+        C3aFunction callFunct = new C3aFunction(node.getVal().tsItem);
+        c3a.ajouteInst(new C3aInstCall(callFunct, tx, "ExpAppel"));
+        return tx;
+        //return super.visit(node);
     }
 
     @Override
@@ -148,6 +161,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaExpInf node) {
+
         return super.visit(node);
     }
 
@@ -158,6 +172,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaExpAnd node) {
+
+
         return super.visit(node);
     }
 
@@ -173,8 +189,12 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaExpLire node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpLire node) { //todo verif
+        var tx = c3a.newTemp();
+        //C3aFunction readFunct = new C3aFunction(node);
+        c3a.ajouteInst(new C3aInstRead(tx,"ExpRead"));
+        return tx;
+        //return super.visit(node);
     }
 
     @Override
@@ -189,8 +209,9 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaInstRetour node) {
+    public C3aOperand visit(SaInstRetour node) { //todo verif
         c3a.ajouteInst(new C3aInstReturn(node.getVal().accept(this), "Return"));
+
         return null;
     }
 
