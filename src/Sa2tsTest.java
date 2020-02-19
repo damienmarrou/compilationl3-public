@@ -212,7 +212,7 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testFunctionCallHasCorrectNumberOfArguments() {//todo corriger le cas du NPE
+    public void testFunctionCallHasCorrectNumberOfArguments() {
         try {
             buildTs("g(entier a) { retour 0; } main() { g(); }");
         } catch (Sa2ts.TsException e) {

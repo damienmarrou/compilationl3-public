@@ -127,7 +127,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         }
         if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs()) {
 
-            throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
+            throw new TsException("Pas le bon nombre d'argument pour la fonction");
         }
         return super.visit(node);
     }
@@ -142,5 +142,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     private void checkMainExists() {
         if (!tableGlobale.fonctions.containsKey("main"))
             throw new TsException("The main function does nit exist.");
+        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("pas de main sans argument");
     }
 }
