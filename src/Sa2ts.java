@@ -138,7 +138,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         }
     }
 
-
     private void checkMainExists() {
         if (!tableGlobale.fonctions.containsKey("main"))
             throw new TsException("The main function does nit exist.");
