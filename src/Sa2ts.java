@@ -20,9 +20,11 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Sa2ts(SaNode saRoot) {
         location = Location.Global;
         visit((SaProg) saRoot);
+        checkMainExists();
     }
 
-    //TODO : ajouter dans les 6 methodes la localisation correspondante
+    //TODO : faire une méthode qui renvoie la localisation
+    //TODO : vérifier si addParam et add.Var sont bien utilisé comme il faut
 
 
     public Ts getTableGlobale() {
@@ -74,7 +76,9 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         tableLocale = new Ts();
         tableGlobale.addFct(node.getNom(), argsLength, tableLocale, node);
         if (!tableGlobale.fonctions.containsKey("main") && tableGlobale.fonctions.size() > 1)
-            throw new TsException("pas de main " + tableGlobale.fonctions.size());
+            throw new TsException("pas de main sans arguments" + tableGlobale.fonctions.size());
+        if (tableGlobale.fonctions.containsKey("main") && !(tableGlobale.fonctions.get("main").getNbArgs() == 0))
+            throw new TsException("Arguments dans main pas bon");
         return super.visit(node);
     }
 
@@ -87,7 +91,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             var = tableGlobale.variables.get(node.nom);
         } else if (tableLocale != null) {
             var = tableLocale.variables.get(node.getNom());
-            location = Location.Local;
+            //location = Location.Local;
         } else {
             var = tableGlobale.variables.get(node.getNom());
         }
@@ -121,16 +125,23 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         if (node.getArguments() != null) {
             length = node.getArguments().length();
         }
+        if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs()) {
 
-        if (length != tableGlobale.fonctions.get(node.getNom()).getNbArgs())
-            throw new TsException("Pas le bon nombre d'argument pour main \n ->node nb arg : " + node.tsItem.nbArgs + " " + tableGlobale.fonctions.get(node.getNom()).nbArgs);
+            throw new TsException("Pas le bon nombre d'argument pour la fonction");
+        }
         return super.visit(node);
     }
 
     static class TsException extends RuntimeException {
-
         TsException(String message) {
             super(message);
         }
+    }
+
+
+    private void checkMainExists() {
+        if (!tableGlobale.fonctions.containsKey("main"))
+            throw new TsException("The main function does nit exist.");
+        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("pas de main sans argument");
     }
 }

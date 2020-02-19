@@ -212,7 +212,7 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testFunctionCallHasCorrectNumberOfArguments() {//todo corriger
+    public void testFunctionCallHasCorrectNumberOfArguments() {
         try {
             buildTs("g(entier a) { retour 0; } main() { g(); }");
         } catch (Sa2ts.TsException e) {
@@ -223,7 +223,7 @@ public class Sa2tsTest {
     }
 
     @Test(expected = Sa2ts.TsException.class)
-    public void testMainExists() {//todo à corriger
+    public void testMainExists() {
         try {
             buildTs("g() { retour 0; } ");
         } catch (Sa2ts.TsException e) {
