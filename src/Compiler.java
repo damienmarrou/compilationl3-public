@@ -128,8 +128,6 @@ public class Compiler {
 			//System.out.println(file);
 			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
 		}
-
-
 	}
 
 	public static String removeSuffix(final String s, final String suffix) {
