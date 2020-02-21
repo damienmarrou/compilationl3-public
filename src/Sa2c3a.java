@@ -264,6 +264,12 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     public C3aOperand visit(SaExpNot node) {
         //temp a vrai
         //test si equal a false : jump to next
+        C3aTemp temp = c3a.newTemp();
+        C3aLabel e1 = c3a.newAutoLabel();
+        c3a.ajouteInst(new C3aInstAffect(c3a.True,temp,""));
+        c3a.ajouteInst(new C3aInstJumpIfEqual(node.getOp2().accept(this),null,e1,""));
+
+
         // sinon je met à faux
 
         return super.visit(node);
