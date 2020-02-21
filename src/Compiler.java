@@ -91,9 +91,10 @@ public class Compiler {
 		List<String> fileC3A = new ArrayList<>();
 		File folderSA = new File("test/input");
 		File folderTS = new File("test/input");
+		File folderC3A = new File("test/input");
 		File[] listOfFilesSA = folderSA.listFiles();
 		File[] listOfFilesTS = folderTS.listFiles();
-		File[] listOfFilesC3A = folderTS.listFiles();
+		File[] listOfFilesC3A = folderC3A.listFiles();
 
 		for (int x = 0; x < listOfFilesSA.length; x++) {
 			if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
@@ -119,7 +120,7 @@ public class Compiler {
 		}
 		for (int x = 0; x < listOfFilesC3A.length; x++) {
 			if (listOfFilesC3A[x].isFile() && listOfFilesC3A[x].getName().endsWith(".c3a")) {
-				fileTS.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
+				fileC3A.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
 			}
 		}
 
