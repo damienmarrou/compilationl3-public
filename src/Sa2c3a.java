@@ -111,8 +111,6 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
             val = varGlob[node.tsItem.adresse];
         }*/
 
-
-
         return super.visit(node);
 
     }
