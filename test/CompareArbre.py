@@ -7,12 +7,12 @@ def main():
 
     ref_directorySA = 'test/sa-ref/'
     ref_directoryTS = 'test/ts-ref/'
-    ref_directoryC3A = 'test/c3a-ref'
+    ref_directoryC3A = 'test/c3a-ref/'
 
-    if (file_name[-1] == 'a' and file_name[-2] == 's'):
+    if ('.sa' in file_name):
         ref_file = ref_directorySA + f'{file_name}'
     else:
-        if (file_name[-1] == 'a' and file_name[-2] == '3'):
+        if ('.c3a' in file_name):
             ref_file = ref_directoryC3A + f'{file_name}'
         else:
             ref_file = ref_directoryTS + f'{file_name}'
