@@ -63,9 +63,15 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaInstTantQue node) {
-        var LabelTrue = c3a.True;
-        var LabelFalse = c3a.False;
-        var tx = c3a.newTemp();
+
+        C3aLabel test = c3a.newAutoLabel();
+        C3aLabel suite = c3a.newAutoLabel();
+        C3aConstant False = new C3aConstant(0);
+
+        c3a.ajouteInst(new C3aInstJumpIfEqual(test,False,suite,""));
+
+        c3a.ajouteInst(new C3aInstJump(test,""));
+        c3a.addLabelToNextInst(suite);
 
 
 
@@ -111,6 +117,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
             val = varGlob[node.tsItem.adresse];
         }*/
 
+
         return super.visit(node);
 
     }
@@ -131,34 +138,61 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaExpAdd node) { //OK
-        var tx = c3a.newTemp();
-        c3a.ajouteInst(new C3aInstAdd(node.getOp1().accept(this), node.getOp2().accept(this), tx, "Add"));
-        return tx;
+        var tempRes = c3a.newTemp();
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+        c3a.ajouteInst(new C3aInstAdd(op1, op2, tempRes, "Add"));
+        return tempRes;
     }
 
     @Override
     public C3aOperand visit(SaExpSub node) { //OK
-        var tx = c3a.newTemp();
-        c3a.ajouteInst(new C3aInstSub(node.getOp1().accept(this), node.getOp2().accept(this), tx, "Sub"));
-        return tx;
+        var tempRes = c3a.newTemp();
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+        c3a.ajouteInst(new C3aInstSub(op1, op2, tempRes, "Sub"));
+        return tempRes;
     }
 
     @Override
     public C3aOperand visit(SaExpMult node) { //OK
-        var tx = c3a.newTemp();
-        c3a.ajouteInst(new C3aInstMult(node.getOp1().accept(this), node.getOp2().accept(this), tx, "Mult"));
-        return tx;
+        var tempRes = c3a.newTemp();
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+        c3a.ajouteInst(new C3aInstMult(op1, op2, tempRes, "Mult"));
+        return tempRes;
     }
 
     @Override
     public C3aOperand visit(SaExpDiv node) { //OK
-        var tx = c3a.newTemp();
-        c3a.ajouteInst(new C3aInstDiv(node.getOp1().accept(this), node.getOp2().accept(this), tx, "Div"));
-        return tx;
+        var tempRes = c3a.newTemp();
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+        c3a.ajouteInst(new C3aInstDiv(op1, op2, tempRes, "Div"));
+        return tempRes;
     }
 
     @Override
     public C3aOperand visit(SaExpInf node) {
+        C3aLabel e1 = c3a.newAutoLabel();
+        C3aLabel e2 = c3a.newAutoLabel();
+        C3aTemp tempTest = c3a.newTemp();
+
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+        c3a.ajouteInst(new C3aInstJumpIfLess(op1,op2,e1,""));
+        //gen(E.t =0)
+        // tempTest =  0;
+        c3a.ajouteInst(new C3aInstJump(e2,""));
+        //gen(e1 : E.t =1)
+        //gen(e2:)
+        c3a.addLabelToNextInst(e2);
+
 
         return super.visit(node);
     }
@@ -170,7 +204,11 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaExpAnd node) {
+        C3aLabel e1 = c3a.newAutoLabel();
+        C3aLabel e2 = c3a.newAutoLabel();
+        C3aTemp tempTest = c3a.newTemp();
 
+        //c3a.ajouteInst(new C3aInstJumpIfEqual());
 
         return super.visit(node);
     }
