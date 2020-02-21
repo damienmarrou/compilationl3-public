@@ -73,18 +73,19 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
         c3a.addLabelToNextInst(testLabel);
 
-
         //E.code
         C3aOperand test = node.getTest().accept(this);
 
         c3a.ajouteInst(new C3aInstJumpIfEqual(test, c3a.False, suiteLabel, "si test = 0 , goto suite"));
 
         //LI.code
-        C3aOperand code = node.getFaire().accept(this);
+        node.getFaire().accept(this);
         c3a.ajouteInst(new C3aInstJump(testLabel, "goto test"));
+
         c3a.addLabelToNextInst(suiteLabel);
 
-        return super.visit(node);
+
+        return null;
     }
 
     @Override
@@ -189,8 +190,24 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaExpEqual node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpEqual node) { //todo pareil que INF
+        C3aLabel e1 = c3a.newAutoLabel();
+        C3aLabel e2 = c3a.newAutoLabel();
+        C3aTemp tempTest = c3a.newTemp();
+
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+
+        c3a.ajouteInst(new C3aInstJumpIfEqual(op1,op2, e1, "si op1=op2 , goto e1"));
+        c3a.ajouteInst(new C3aInstJumpIfNotEqual(op1,op2, e1, "si op1!=op2 , goto e2"));
+        c3a.ajouteInst(new C3aInstAffect(c3a.True, tempTest,"E.t = 1"));
+
+        c3a.ajouteInst(new C3aInstJump(e2, "jump e2"));
+        c3a.addLabelToNextInst(e1);
+        c3a.ajouteInst(new C3aInstAffect(c3a.False, tempTest,"E.t = 0"));
+        c3a.addLabelToNextInst(e2);
+        return tempTest;
     }
 
     @Override
@@ -215,12 +232,40 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaExpOr node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpOr node) { //todo vérifier que un seul est bon, si un =1, sauter
+        C3aLabel e1 = c3a.newAutoLabel();
+        C3aLabel e2 = c3a.newAutoLabel();
+        C3aTemp tempTest = c3a.newTemp();
+
+        C3aOperand op1 = node.getOp1().accept(this);
+        C3aOperand op2 = node.getOp2().accept(this);
+
+
+        c3a.ajouteInst(new C3aInstJumpIfEqual(op1,c3a.False , e1, "si op1=0 , goto e1"));
+        c3a.ajouteInst(new C3aInstJumpIfNotEqual(op2,c3a.True , e1, "si op2 !=0 , goto e1"));
+        c3a.ajouteInst(new C3aInstAffect(c3a.True, tempTest,"E.t = 1"));
+
+        c3a.ajouteInst(new C3aInstJumpIfEqual(op2, c3a.False, e1, "si op2=0 , goto e1"));
+        c3a.ajouteInst(new C3aInstJumpIfNotEqual(op1,c3a.True , e1, "si op1 !=0 , goto e1"));
+        c3a.ajouteInst(new C3aInstAffect(c3a.True, tempTest,"E.t = 1"));
+
+
+        c3a.ajouteInst(new C3aInstJumpIfEqual(op2, c3a.True, e1, "si op2 !=0 , goto e2"));
+        c3a.ajouteInst(new C3aInstJumpIfNotEqual(op1,c3a.True , e1, "si op1 !=0 , goto e2"));
+        c3a.ajouteInst(new C3aInstAffect(c3a.False, tempTest,"E.t = 0"));
+
+        c3a.ajouteInst(new C3aInstJump(e2, "jump e2"));
+        c3a.addLabelToNextInst(e1);
+        c3a.addLabelToNextInst(e2);
+        return tempTest;
     }
 
     @Override
     public C3aOperand visit(SaExpNot node) {
+        //temp a vrai
+        //test si equal a false : jump to next
+        // sinon je met à faux
+
         return super.visit(node);
 
     }
@@ -238,7 +283,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaInstSi node) { //TODO QUESTION
+    public C3aOperand visit(SaInstSi node) { //TODO QUESTION résolue : LI1 juste pour parcourir l'arbre
+        //todo : faire un node.get.accep(this)
         //E.code
 
         C3aOperand op1 = node.getTest().accept(this);
@@ -248,6 +294,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
         c3a.ajouteInst(new C3aInstJumpIfEqual(op1,c3a.False,faux, "si test = 0 , goto faux"));
         //LI1.code
+
         c3a.ajouteInst(new C3aInstJump(suite,"goto suite"));
         c3a.addLabelToNextInst(faux);
 
