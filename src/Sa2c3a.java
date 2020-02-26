@@ -52,7 +52,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
 
     public C3aOperand visit(SaDecFonc node) { //OK
-        c3a.ajouteInst(new C3aInstFBegin(node.tsItem,""));
+        c3a.ajouteInst(new C3aInstFBegin(node.tsItem,"Begin"));
 
         if(node.getParametres() != null)
             node.getParametres().accept(this);
@@ -62,11 +62,9 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
         node.getCorps().accept(this);
 
-        c3a.ajouteInst(new C3aInstFEnd(""));
+        c3a.ajouteInst(new C3aInstFEnd("End"));
         return null;
     }
-
-
 
 
     @Override
@@ -82,7 +80,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     @Override
     public C3aOperand visit(SaInstEcriture node) { //OK
         C3aOperand op = node.getArg().accept(this);
-        c3a.ajouteInst(new C3aInstWrite(op, "InstWrite"));
+        c3a.ajouteInst(new C3aInstWrite(op, "Write"));
         return null;
     }
 
@@ -120,11 +118,11 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaInstAffect node) { //OK
-        C3aOperand op = node.getRhs().accept(this);
-        C3aTemp temp = c3a.newTemp();
+        C3aOperand op1 = node.getRhs().accept(this);
+        C3aOperand op2 = node.getLhs().accept(this);
 
-        c3a.ajouteInst(new C3aInstAffect(op, temp, "InstAffect"));
-        return temp;
+        c3a.ajouteInst(new C3aInstAffect(op1, op2, "Affect"));
+        return null;
     }
 
 
