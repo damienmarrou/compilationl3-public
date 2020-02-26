@@ -34,13 +34,27 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         return null;
     }
 
-    public C3aOperand visit(SaDecTab node) {
+    @Override
+    public C3aOperand visit(SaDecVar node) { //todo verif
+        return new C3aVar(node.tsItem,null);
+    }
+
+    public C3aOperand visit(SaDecTab node) { //todo verif
         return null;
     }
 
-    public C3aOperand visit(SaDecFonc node) { //todo
-        //ajouter inst begin
-        // ajouter inst end
+    public C3aOperand visit(SaDecFonc node) { //OK
+        c3a.ajouteInst(new C3aInstFBegin(node.tsItem,""));
+
+        if(node.getParametres() != null)
+            node.getParametres().accept(this);
+
+        if(node.getVariable() != null)
+            node.getVariable().accept(this);
+
+        node.getCorps().accept(this);
+
+        c3a.ajouteInst(new C3aInstFEnd(""));
         return null;
     }
 
@@ -48,7 +62,6 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     @Override
     public C3aOperand visit(SaExp node) { //todo
         return super.visit(node);
-
     }
 
     @Override
@@ -69,36 +82,36 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
+    public C3aOperand visit(SaInstRetour node) { //OK
+        c3a.ajouteInst(new C3aInstReturn(node.getVal().accept(this), "Return"));
+        return null;
+    }
+
+    @Override
+    public C3aOperand visit(SaExpLire node) { //OK
+        var temp = c3a.newTemp();
+        c3a.ajouteInst(new C3aInstRead(temp, "ExpRead"));
+        return temp;
+    }
+
+    @Override
     public C3aOperand visit(SaInstTantQue node) { //OK
 
         C3aLabel testLabel = c3a.newAutoLabel();
         C3aLabel suiteLabel = c3a.newAutoLabel();
-
-        c3a.addLabelToNextInst(testLabel);
-
-        //E.code
         C3aOperand test = node.getTest().accept(this);
 
+        c3a.addLabelToNextInst(testLabel);
         c3a.ajouteInst(new C3aInstJumpIfEqual(test, c3a.False, suiteLabel, "si test = 0 , goto suite"));
 
-        //LI.code
         node.getFaire().accept(this);
         c3a.ajouteInst(new C3aInstJump(testLabel, "goto test"));
-
         c3a.addLabelToNextInst(suiteLabel);
 
         return null;
     }
 
-    @Override
-    public C3aOperand visit(SaLInst node) { //todo
-        return super.visit(node);
-    }
 
-    @Override
-    public C3aOperand visit(SaDecVar node) { //todo verif
-        return new C3aVar(node.tsItem,null);
-    }
 
     @Override
     public C3aOperand visit(SaInstAffect node) { //OK
@@ -117,6 +130,11 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     @Override
     public C3aOperand visit(SaVarSimple node) {//OK
         return new C3aVar(node.tsItem, null);
+    }
+
+    @Override
+    public C3aOperand visit(SaVarIndicee node) { //ok
+        return new C3aVar(node.tsItem, node.getIndice().accept(this));
     }
 
     @Override
@@ -247,69 +265,59 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaExpNot node) { //OK
-        //temp a vrai
-        //test si equal a false : jump to next
         C3aTemp temp = c3a.newTemp();
         C3aLabel e1 = c3a.newAutoLabel();
+
         c3a.ajouteInst(new C3aInstAffect(c3a.True,temp,""));
         c3a.ajouteInst(new C3aInstJumpIfEqual(node.getOp1().accept(this),c3a.False,e1,""));
         c3a.ajouteInst(new C3aInstAffect(c3a.False,temp,""));
         c3a.addLabelToNextInst(e1);
-        // sinon je met à faux
 
         return temp;
 
     }
 
     @Override
-    public C3aOperand visit(SaExpLire node) { //ok
-        var temp = c3a.newTemp();
-        c3a.ajouteInst(new C3aInstRead(temp, "ExpRead"));
-        return temp;
-    }
-
-    @Override
-    public C3aOperand visit(SaInstBloc node) {
+    public C3aOperand visit(SaInstBloc node) { //todo : verif si on en a besoin
         return super.visit(node);
     }
 
     @Override
-    public C3aOperand visit(SaInstSi node) { //TODO QUESTION résolue : LI1 juste pour parcourir l'arbre
-        //todo : faire un node.get.accep(this)
-        //E.code
+    public C3aOperand visit(SaInstSi node) { //OK
 
-        C3aOperand op1 = node.getTest().accept(this);
+        C3aOperand test = node.getTest().accept(this);
         C3aLabel faux = c3a.newAutoLabel();
         C3aLabel suite = c3a.newAutoLabel();
+        C3aLabel jump = c3a.newAutoLabel();
 
+        if(node.getSinon() != null){
+            jump =  faux;
+        }else jump = suite;
 
-        c3a.ajouteInst(new C3aInstJumpIfEqual(op1,c3a.False,faux, "si test = 0 , goto faux"));
-        //LI1.code
+        c3a.ajouteInst(new C3aInstJumpIfEqual(test,c3a.False,jump, "si test = 0 , goto faux"));
         node.getAlors().accept(this);
 
-        c3a.ajouteInst(new C3aInstJump(suite,"goto suite"));
-        c3a.addLabelToNextInst(faux);
-
-
-        //LI2.code
+        if(node.getSinon() != null) {
+            c3a.ajouteInst(new C3aInstJump(suite, "goto suite"));
+            c3a.addLabelToNextInst(faux);
+            node.getSinon().accept(this);
+        }
         c3a.addLabelToNextInst(suite);
 
         return null;
     }
 
     @Override
-    public C3aOperand visit(SaInstRetour node) { //todo verif
-        c3a.ajouteInst(new C3aInstReturn(node.getVal().accept(this), "Return"));
-        return null;
+    public C3aOperand visit(SaLExp node) { //OK
+        c3a.ajouteInst(new C3aInstParam(node.getTete().accept(this),""));
+
+        if (node.getQueue() != null) return node.getQueue().accept(this);
+        else return null;
     }
 
     @Override
-    public C3aOperand visit(SaLExp node) {
+    public C3aOperand visit(SaLInst node) { //todo : verif si on en a besoin
         return super.visit(node);
     }
 
-    @Override
-    public C3aOperand visit(SaVarIndicee node) { //ok
-        return new C3aVar(node.tsItem, node.getIndice().accept(this));
-    }
 }
