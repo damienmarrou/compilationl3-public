@@ -34,14 +34,22 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         return null;
     }
 
+    //TODO : Vérifier comment on utilise SaDecVar et SaDecTab et SaExp
     @Override
-    public C3aOperand visit(SaDecVar node) { //todo verif
-        return new C3aVar(node.tsItem,null);
-    }
-
-    public C3aOperand visit(SaDecTab node) { //todo verif
+    public C3aOperand visit(SaDecVar node) {
         return null;
     }
+
+    public C3aOperand visit(SaDecTab node) {
+        return null;
+    }
+
+    @Override
+    public C3aOperand visit(SaExp node) {
+        return super.visit(node);
+    }
+    //Le reste est bon
+
 
     public C3aOperand visit(SaDecFonc node) { //OK
         c3a.ajouteInst(new C3aInstFBegin(node.tsItem,""));
@@ -59,10 +67,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
 
-    @Override
-    public C3aOperand visit(SaExp node) { //todo
-        return super.visit(node);
-    }
+
 
     @Override
     public C3aOperand visit(SaExpInt node) { // OK
@@ -122,10 +127,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         return temp;
     }
 
-    @Override
-    public C3aOperand visit(SaLDec node) {
-        return super.visit(node);
-    }
+
 
     @Override
     public C3aOperand visit(SaVarSimple node) {//OK
@@ -137,18 +139,30 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         return new C3aVar(node.tsItem, node.getIndice().accept(this));
     }
 
+
+    //TODO : Vérifier les fonctions d'appel SaAppel et SaExpAppel mais normalement OK
+
     @Override
     public C3aOperand visit(SaAppel node) {
-        return super.visit(node);
+        C3aFunction c3aFunction = new C3aFunction(node.tsItem);
+        if(node.getArguments() != null) node.getArguments().accept(this);
+        c3a.ajouteInst(new C3aInstCall(c3aFunction, null,""));
+        return c3aFunction;
     }
 
     @Override
-    public C3aOperand visit(SaExpAppel node) { //todo verif
-        var tx = c3a.newTemp();
-        C3aFunction callFunct = new C3aFunction(node.getVal().tsItem);
-        c3a.ajouteInst(new C3aInstCall(callFunct, tx, "ExpAppel"));
-        return tx;
+    public C3aOperand visit(SaExpAppel node) {
+        C3aTemp temp = c3a.newTemp();
+
+        C3aFunction c3aFunction = new C3aFunction(node.getVal().tsItem);
+        if(node.getVal().getArguments() != null)
+            node.getVal().getArguments().accept(this);
+        c3a.ajouteInst(new C3aInstCall(c3aFunction, temp,""));
+
+        return temp;
     }
+
+    //Le reste est bon
 
     @Override
     public C3aOperand visit(SaExpAdd node) { //OK
@@ -193,7 +207,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaExpInf node) { //ok
+    public C3aOperand visit(SaExpInf node) { //OK
         C3aLabel label = c3a.newAutoLabel();
         C3aTemp tempTest = c3a.newTemp();
         C3aOperand op1 = node.getOp1().accept(this);
@@ -277,10 +291,6 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     }
 
-    @Override
-    public C3aOperand visit(SaInstBloc node) { //todo : verif si on en a besoin
-        return super.visit(node);
-    }
 
     @Override
     public C3aOperand visit(SaInstSi node) { //OK
@@ -315,8 +325,21 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         else return null;
     }
 
+
+    //TODO : Verif si on en a besoin ou pas pour les fonctions SaLInst, SaLDec, SaInstBloc
     @Override
-    public C3aOperand visit(SaLInst node) { //todo : verif si on en a besoin
+    public C3aOperand visit(SaLInst node) {
+        return super.visit(node);
+    }
+
+    @Override
+    public C3aOperand visit(SaLDec node) {
+        return super.visit(node);
+    }
+
+
+    @Override
+    public C3aOperand visit(SaInstBloc node) {
         return super.visit(node);
     }
 
