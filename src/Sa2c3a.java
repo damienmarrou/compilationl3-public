@@ -18,20 +18,6 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         root.accept(this);
     }
 
-    public C3aOperand visit(SaProg node) {
-        return null;
-    }
-
-    public C3aOperand visit(SaDecTab node) {
-
-        return null;
-    }
-
-    public C3aOperand visit(SaDecFonc node) {
-        //ajouter inst begin
-        // ajouter inst end
-        return null;
-    }
 
     @Override
     public void defaultIn(SaNode node) {
@@ -43,19 +29,36 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         super.defaultOut(node);
     }
 
+
+    public C3aOperand visit(SaProg node) {
+        return null;
+    }
+
+    public C3aOperand visit(SaDecTab node) {
+        return null;
+    }
+
+    public C3aOperand visit(SaDecFonc node) { //todo
+        //ajouter inst begin
+        // ajouter inst end
+        return null;
+    }
+
+
     @Override
-    public C3aOperand visit(SaExp node) {
+    public C3aOperand visit(SaExp node) { //todo
         return super.visit(node);
+
     }
 
     @Override
-    public C3aOperand visit(SaExpInt node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpInt node) { // OK
+        return new C3aConstant(node.getVal());
     }
 
     @Override
-    public C3aOperand visit(SaExpVar node) {
-        return super.visit(node);
+    public C3aOperand visit(SaExpVar node) { // OK
+        return node.getVar().accept(this);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     @Override
-    public C3aOperand visit(SaInstTantQue node) { //todo QUESTION
+    public C3aOperand visit(SaInstTantQue node) { //OK
 
         C3aLabel testLabel = c3a.newAutoLabel();
         C3aLabel suiteLabel = c3a.newAutoLabel();
@@ -84,18 +87,17 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
         c3a.addLabelToNextInst(suiteLabel);
 
-
         return null;
     }
 
     @Override
-    public C3aOperand visit(SaLInst node) {
+    public C3aOperand visit(SaLInst node) { //todo
         return super.visit(node);
     }
 
     @Override
-    public C3aOperand visit(SaDecVar node) {
-        return super.visit(node);
+    public C3aOperand visit(SaDecVar node) { //todo verif
+        return new C3aVar(node.tsItem,null);
     }
 
     @Override
@@ -267,12 +269,12 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         C3aTemp temp = c3a.newTemp();
         C3aLabel e1 = c3a.newAutoLabel();
         c3a.ajouteInst(new C3aInstAffect(c3a.True,temp,""));
-        c3a.ajouteInst(new C3aInstJumpIfEqual(node.getOp2().accept(this),null,e1,""));
-
-
+        c3a.ajouteInst(new C3aInstJumpIfEqual(node.getOp1().accept(this),c3a.False,e1,""));
+        c3a.ajouteInst(new C3aInstAffect(c3a.False,temp,""));
+        c3a.addLabelToNextInst(e1);
         // sinon je met à faux
 
-        return super.visit(node);
+        return temp;
 
     }
 
@@ -300,6 +302,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
         c3a.ajouteInst(new C3aInstJumpIfEqual(op1,c3a.False,faux, "si test = 0 , goto faux"));
         //LI1.code
+        node.getAlors().accept(this);
 
         c3a.ajouteInst(new C3aInstJump(suite,"goto suite"));
         c3a.addLabelToNextInst(faux);
@@ -308,7 +311,7 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         //LI2.code
         c3a.addLabelToNextInst(suite);
 
-        return super.visit(node);
+        return null;
     }
 
     @Override
