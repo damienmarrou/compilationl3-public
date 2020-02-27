@@ -321,17 +321,17 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     //TODO : Verif si on en a besoin ou pas pour les fonctions SaLInst, SaLDec, SaInstBloc
     @Override
     public C3aOperand visit(SaLInst node) {
-        return null;
+        return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaLDec node) {
-        return null;
+        return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaInstBloc node) {
-        return null;
+        return super.visit(node);
     }
 
 }
