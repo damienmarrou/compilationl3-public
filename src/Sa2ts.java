@@ -83,7 +83,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     @Override
     public Void visit(SaDecFonc node) {
 
-        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("fonction déjà déclaré");
+        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclaré");
         node.tsItem = tableGlobale.addFct(
                 node.getNom(),
                 node.getParametres() != null ? node.getParametres().length() : 0,
@@ -192,7 +192,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     private void checkMainExists() {
         if (!tableGlobale.fonctions.containsKey("main"))
-            throw new TsException("The main function does nit exist.");
-        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("pas de main sans argument");
+            throw new TsException("Il n'y a pas de fonction main");
+        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("La fonction main doit avoir aucun argument");
     }
 }
