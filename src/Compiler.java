@@ -108,6 +108,7 @@ public class Compiler {
 			}
 		}
 
+
 		for (int x = 0; x < listOfFilesC3A.length; x++) {
 			if (listOfFilesC3A[x].isFile() && listOfFilesC3A[x].getName().endsWith(".c3a")) {
 				fileC3A.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
