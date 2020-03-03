@@ -114,7 +114,7 @@ public class Compiler {
 				fileC3A.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
 			}
 		}
-
+/*
 		System.out.println("SA");
 		for (String file : fileSA) {
 			//System.out.println(file);
@@ -124,7 +124,7 @@ public class Compiler {
 		for (String file : fileTS) {
 			//System.out.println(file);
 			System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
-		}
+		}*/
 
 		System.out.println("C3A");
 		for (String file : fileC3A) {
