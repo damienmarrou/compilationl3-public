@@ -130,7 +130,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     @Override
-    public NasmOperand visit(C3aInstSub inst) {
+    public NasmOperand visit(C3aInstSub inst) { //OK
         NasmOperand label = (inst.label !=null) ?
                 inst.label.accept(this) :
                 null;
@@ -143,7 +143,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     @Override
-    public NasmOperand visit(C3aInstMult inst) {
+    public NasmOperand visit(C3aInstMult inst) { //OK
         NasmOperand label = (inst.label !=null) ?
                 inst.label.accept(this) :
                 null;
@@ -156,7 +156,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     @Override
-    public NasmOperand visit(C3aInstDiv inst) {
+    public NasmOperand visit(C3aInstDiv inst) { //OK
         NasmOperand label = (inst.label !=null) ?
                 inst.label.accept(this) :
                 null;
