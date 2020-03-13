@@ -47,7 +47,6 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
 
-
     @Override
     public NasmOperand visit(C3aInstRead inst) {
         return null;
@@ -58,7 +57,6 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     public NasmOperand visit(C3aInstAffect inst) {
         return null;
     }
-
 
 
     @Override
@@ -124,12 +122,12 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstAdd inst) { //OK
-        NasmOperand label = (inst.label !=null) ?
+        NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
         NasmOperand oper1 = inst.op1.accept(this);
         NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest =  inst.result.accept(this);
+        NasmOperand dest = inst.result.accept(this);
         nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
         nasm.ajouteInst(new NasmAdd(null, dest, oper2, ""));
         return null;
@@ -137,12 +135,10 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstSub inst) { //OK
-        NasmOperand label = (inst.label !=null) ?
-                inst.label.accept(this) :
-                null;
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
         NasmOperand oper1 = inst.op1.accept(this);
         NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest =  inst.result.accept(this);
+        NasmOperand dest = inst.result.accept(this);
         nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
         nasm.ajouteInst(new NasmSub(null, dest, oper2, ""));
         return null;
@@ -150,29 +146,25 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstMult inst) { //OK
-        NasmOperand label = (inst.label !=null) ?
-                inst.label.accept(this) :
-                null;
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
         NasmOperand oper1 = inst.op1.accept(this);
         NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest =  inst.result.accept(this);
-        nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
-        nasm.ajouteInst(new NasmMul(null, dest, oper2, ""));
+        NasmOperand dest = inst.result.accept(this);
+        this.nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
+        this.nasm.ajouteInst(new NasmMul(null, dest, oper2, ""));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstDiv inst) { //OK
-        NasmOperand label = (inst.label !=null) ?
-                inst.label.accept(this) :
-                null;
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
         NasmOperand oper1 = inst.op1.accept(this);
         NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest =  inst.result.accept(this);
+        NasmOperand dest = inst.result.accept(this);
 
-        nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
+        this.nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
         NasmRegister register = nasm.newRegister();
-        nasm.ajouteInst(new NasmMov(label, register, oper2, ""));
+        this.nasm.ajouteInst(new NasmMov(label, register, oper2, ""));
         this.nasm.ajouteInst(new NasmDiv(null, register, ""));
         return null;
     }
