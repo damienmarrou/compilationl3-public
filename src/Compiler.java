@@ -136,25 +136,44 @@ public class Compiler {
         }
 
         System.out.println("SA");
-        for (String file : fileSA) {
-            //System.out.println(file);
-            System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
-        }
-        System.out.println("TS");
-        for (String file : fileTS) {
-            //System.out.println(file);
-            System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+        if (fileSA.size() == 0) {
+            System.out.println("pas de fichier input");
+        } else {
+            for (String file : fileSA) {
+                //System.out.println(file);
+                System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+            }
         }
 
+        System.out.println("TS");
+        if (fileTS.size() == 0) {
+            System.out.println("pas de fichier input");
+        } else {
+            for (String file : fileTS) {
+                //System.out.println(file);
+                System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+            }
+        }
+
+
         System.out.println("C3A");
-        for (String file : fileC3A) {
-            //System.out.println(file);
-            System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+        if (fileC3A.size() == 0) {
+            System.out.println("pas de fichier input");
+        } else {
+            for (String file : fileC3A) {
+                //System.out.println(file);
+                System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+            }
         }
         System.out.println("NASM");
-        for (String file : fileNASM) {
-            System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+        if (fileNASM.size() == 0) {
+            System.out.println("pas de fichier input");
+        } else {
+            for (String file : fileNASM) {
+                System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+            }
         }
+
     }
 
 
