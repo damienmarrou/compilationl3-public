@@ -99,17 +99,17 @@ public class Compiler {
         List<String> fileSA = new ArrayList<>();
         List<String> fileTS = new ArrayList<>();
         List<String> fileC3A = new ArrayList<>();
-        List<String> fileNASM = new ArrayList<>();
+        List<String> filePRENASM = new ArrayList<>();
         File folderSA = new File("test/input");
         File folderTS = new File("test/input");
         File folderC3A = new File("test/input");
-        File folderNASM = new File("test/input");
+        File folderPRENASM = new File("test/input");
         File[] listOfFilesSA = folderSA.listFiles();
         File[] listOfFilesTS = folderTS.listFiles();
         File[] listOfFilesC3A = folderC3A.listFiles();
-        File[] listOfFileNASM = folderNASM.listFiles();
+        File[] listOfFilePRENASM = folderPRENASM.listFiles();
 
-
+/*
         for (int x = 0; x < listOfFilesSA.length; x++) {
             if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
                 fileSA.add(listOfFilesSA[x].getAbsolutePath().substring(listOfFilesSA[x].getAbsolutePath().lastIndexOf('\\') + 1));
@@ -128,13 +128,13 @@ public class Compiler {
                 fileC3A.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
             }
         }
-
-        for (int x = 0; x < listOfFileNASM.length; x++) {
-            if (listOfFileNASM[x].isFile() && listOfFileNASM[x].getName().endsWith(".nasm")) {
-                fileNASM.add((listOfFileNASM[x].getAbsolutePath().substring(listOfFileNASM[x].getAbsolutePath().lastIndexOf("\\") + 1)));
+*/
+        for (int x = 0; x < listOfFilePRENASM.length; x++) {
+            if (listOfFilePRENASM[x].isFile() && listOfFilePRENASM[x].getName().endsWith(".pre-nasm")) {
+                filePRENASM.add((listOfFilePRENASM[x].getAbsolutePath().substring(listOfFilePRENASM[x].getAbsolutePath().lastIndexOf("\\") + 1)));
             }
         }
-
+/*
         System.out.println("SA");
         if (fileSA.size() == 0) {
             System.out.println("pas de fichier input");
@@ -164,12 +164,12 @@ public class Compiler {
                 //System.out.println(file);
                 System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
-        }
-        System.out.println("NASM");
-        if (fileNASM.size() == 0) {
+        }*/
+        System.out.println("PRENASM");
+        if (filePRENASM.size() == 0) {
             System.out.println("pas de fichier input");
         } else {
-            for (String file : fileNASM) {
+            for (String file : filePRENASM) {
                 System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
         }
