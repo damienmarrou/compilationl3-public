@@ -1,4 +1,5 @@
 import c3a.C3a;
+import c3a.C3aEval;
 import nasm.Nasm;
 import sa.Sa2Xml;
 import sa.SaNode;
@@ -67,9 +68,9 @@ public class Compiler {
                 C3a c3a = new Sa2c3a(saRoot, table).getC3a();
                 c3a.affiche(baseName);
 
-  /*              System.out.println("[PRINT C3A OUT]");
+                //System.out.println("[PRINT C3A OUT]");
                 C3aEval c3aEval = new C3aEval(c3a, table);
-                c3aEval.affiche(baseName);*/
+                c3aEval.affiche(baseName);
 
                 //System.out.print("[BUILD PRE NASM] ");
                 Nasm nasm = new C3a2nasm(c3a, table).getNasm();
@@ -98,12 +99,16 @@ public class Compiler {
         List<String> fileSA = new ArrayList<>();
         List<String> fileTS = new ArrayList<>();
         List<String> fileC3A = new ArrayList<>();
+        List<String> fileNASM = new ArrayList<>();
         File folderSA = new File("test/input");
         File folderTS = new File("test/input");
         File folderC3A = new File("test/input");
+        File folderNASM = new File("test/input");
         File[] listOfFilesSA = folderSA.listFiles();
         File[] listOfFilesTS = folderTS.listFiles();
         File[] listOfFilesC3A = folderC3A.listFiles();
+        File[] listOfFileNASM = folderNASM.listFiles();
+
 
         for (int x = 0; x < listOfFilesSA.length; x++) {
             if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
@@ -124,6 +129,12 @@ public class Compiler {
             }
         }
 
+        for (int x = 0; x < listOfFileNASM.length; x++) {
+            if (listOfFileNASM[x].isFile() && listOfFileNASM[x].getName().endsWith(".nasm")) {
+                fileNASM.add((listOfFileNASM[x].getAbsolutePath().substring(listOfFileNASM[x].getAbsolutePath().lastIndexOf("\\") + 1)));
+            }
+        }
+
         System.out.println("SA");
         for (String file : fileSA) {
             //System.out.println(file);
@@ -139,6 +150,10 @@ public class Compiler {
         for (String file : fileC3A) {
             //System.out.println(file);
             System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+        }
+        System.out.println("NASM");
+        for (String file : fileNASM) {
+            System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
         }
     }
 
