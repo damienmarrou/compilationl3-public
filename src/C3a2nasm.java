@@ -268,7 +268,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         NasmOperand oper2 = inst.op2.accept(this);
         NasmOperand dest = inst.result.accept(this);
 
-       /* NasmRegister eax = nasm.newRegister();
+        /*NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
 */
         //nasm.ajouteInst(new NasmMov(label, oper2, eax, ""));
