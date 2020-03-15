@@ -19,12 +19,12 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
         nasm.ajouteInst(new NasmCall(null, new NasmLabel("main"),""));
 
-        NasmRegister ebx = new NasmRegister(Nasm.REG_EBX);
+        NasmRegister ebx = nasm.newRegister();
         ebx.colorRegister(Nasm.REG_EBX);
         nasm.ajouteInst(new NasmMov(null,ebx,new NasmConstant(0)," valeur de retour du programme"));
 
 
-        NasmRegister eax = new NasmRegister(Nasm.REG_EAX);
+        NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
         nasm.ajouteInst(new NasmMov(null,eax,new NasmConstant(1),""));
         nasm.ajouteInst(new NasmInt(null,""));
@@ -41,6 +41,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     public NasmOperand visit(C3aInstCall inst) {
         NasmOperand op1 = inst.op1.accept(this);
 
+        //NasmConstant ebp = new NasmConstant(Nasm.REG_EBP);
         nasm.ajouteInst(new NasmCall(null, op1,""));
         return null;
     }
@@ -78,7 +79,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 null;
         NasmOperand op = inst.result.accept(this);
 
-        NasmRegister eax = new NasmRegister(Nasm.REG_EAX);
+        NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
         nasm.ajouteInst(new NasmMov(label,eax,op,""));
         return null;
@@ -91,9 +92,18 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 inst.label.accept(this) :
                 null;
         NasmOperand op1 = inst.op1.accept(this);
+        NasmAddress add = new NasmAddress(op1);
         NasmOperand result = inst.result.accept(this);
-        String comment = inst.comment;
-        nasm.ajouteInst(new NasmMov(label, result, op1, "Affect"));
+
+        if(op1.isGeneralRegister()){
+            nasm.ajouteInst(new NasmMov(label, result, add, "Affect"));
+        }
+
+
+
+       // NasmAddress add = new NasmAddress(op1);
+        //nasm.ajouteInst(new NasmMov(label,add, result,""));
+        //System.out.println(result);
         return null;
     }
 
@@ -104,8 +114,9 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 inst.label.accept(this) :
                 null;
 
-        NasmRegister ebp = nasm.newRegister();
+        NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
         ebp.colorRegister(Nasm.REG_EBP);
+
         NasmRegister esp = new NasmRegister(Nasm.REG_ESP);
         esp.colorRegister(Nasm.REG_ESP);
 
@@ -193,6 +204,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstReturn inst) {
+        nasm.ajouteInst(new NasmRet(new NasmLabel(inst.label.toString()),inst.comment));
         return null;
     }
 
@@ -202,7 +214,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 inst.label.accept(this) :
                 null;
 
-        NasmRegister eax = new NasmRegister(Nasm.REG_EAX);
+        NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
 
         NasmOperand op1 = inst.op1.accept(this);
@@ -231,8 +243,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aVar oper) {
-        NasmRegister ebp = new NasmRegister(Nasm.REG_EBX);
-        ebp.colorRegister(Nasm.REG_EBX);
+        NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
+        ebp.colorRegister(Nasm.REG_EBP);
 
         TsItemVar fct = oper.item;
         int adres = 8 + 4 *fct.portee.nbArg() - 4 * fct.adresse;
