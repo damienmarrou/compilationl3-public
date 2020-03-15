@@ -39,12 +39,9 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstCall inst) {
-        NasmOperand label = (inst.label != null) ?
-                inst.label.accept(this) :
-                null;
         NasmOperand op1 = inst.op1.accept(this);
 
-        nasm.ajouteInst(new NasmCall(label, op1,""));
+        nasm.ajouteInst(new NasmCall(null, op1,""));
         return null;
     }
 
@@ -90,26 +87,35 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstAffect inst) {
-        NasmOperand label = (inst.label != null) ?
+        /*NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
         NasmOperand op1 = inst.op1.accept(this);
         NasmOperand result = inst.result.accept(this);
         String comment = inst.comment;
         nasm.ajouteInst(new NasmMov(label, new NasmAddress(result), op1, comment));
+        return null;*/
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
+        NasmOperand oper = inst.op1.accept(this);
+        NasmOperand dest = inst.result.accept(this);
+        NasmMov nasmMov = new NasmMov(label, dest, oper, "Affect");
+        nasm.ajouteInst(nasmMov);
         return null;
     }
 
 
     @Override
     public NasmOperand visit(C3aInstFEnd inst) { //OK
+
         NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
-        NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
+
+        NasmRegister ebp = nasm.newRegister();
         ebp.colorRegister(Nasm.REG_EBP);
         NasmRegister esp = new NasmRegister(Nasm.REG_ESP);
         esp.colorRegister(Nasm.REG_ESP);
+
         nasm.ajouteInst(new NasmAdd(null,esp,new NasmConstant(nbArgs),"désallocation des variables locales"));
         nasm.ajouteInst(new NasmPop(label,ebp,"restaure la valeur de ebp"));
         nasm.ajouteInst(new NasmRet(label,""));
@@ -118,31 +124,69 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstJumpIfEqual inst) {
-        NasmOperand label = (inst.label != null) ?
+        /*NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
         NasmOperand address = inst.result.accept(this);
         nasm.ajouteInst(new NasmJe(label,address, inst.comment));
+        return null;*/
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
+
+        NasmOperand oper = inst.op1.accept(this);
+        NasmOperand oper2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
+
+        NasmCmp nasmCmp = new NasmCmp(label, oper, oper2, "JumpIfEqual 1");
+        nasm.ajouteInst(nasmCmp);
+
+        NasmJe nasmJe = new NasmJe(null, result, "JumpIfEqual 2");
+        nasm.ajouteInst(nasmJe);
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstJumpIfNotEqual inst) {
-        NasmOperand label = (inst.label != null) ?
+        /*NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
         NasmOperand address = inst.result.accept(this);
         nasm.ajouteInst(new NasmJne(label,address, inst.comment));
+        return null;*/
+
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
+
+        NasmOperand oper = inst.op1.accept(this);
+        NasmOperand oper2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
+
+        NasmCmp nasmCmp = new NasmCmp(label, oper, oper2, "on passe par un registre temporaire");
+        nasm.ajouteInst(nasmCmp);
+
+        NasmJne nasmJne = new NasmJne(null, result, "Jump");
+        nasm.ajouteInst(nasmJne);
         return null;
+
     }
 
     @Override
     public NasmOperand visit(C3aInstJumpIfLess inst) {
-        NasmOperand label = (inst.label != null) ?
+       /* NasmOperand label = (inst.label != null) ?
                 inst.label.accept(this) :
                 null;
         NasmOperand address = inst.result.accept(this);
         nasm.ajouteInst(new NasmJl(label,address, inst.comment));
+        return null;*/
+        NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
+
+        NasmOperand oper = inst.op1.accept(this);
+        NasmOperand oper2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
+
+        NasmCmp nasmCmp = new NasmCmp(label, oper, oper2, "JumpIfLess 1");
+        nasm.ajouteInst(nasmCmp);
+
+        NasmJl nasmJ = new NasmJl(null, result, "JumpIfLess 2");
+        nasm.ajouteInst(nasmJ);
         return null;
     }
 
@@ -154,7 +198,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 null;
         NasmOperand adresse = inst.result.accept(this);
         String comment = inst.comment;
-        nasm.ajouteInst(new NasmJmp(label, adresse,comment));
+        nasm.ajouteInst(new NasmJmp(label, adresse,"Jump"));
 
         return null;
     }
@@ -184,8 +228,11 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         eax.colorRegister(Nasm.REG_EAX);
 
         NasmOperand op1 = inst.op1.accept(this);
+
+        nasm.ajouteInst(new NasmMov(label, op1, eax,""));
+
         nasm.ajouteInst(new NasmMov(label, eax, op1,"Write 1"));
-        nasm.ajouteInst(new NasmCall(label, new NasmLabel("iprintLF"),"Write 2"));
+        nasm.ajouteInst(new NasmCall(null, new NasmLabel("iprintLF"),"Write 2"));
 
         return null;
     }
@@ -197,7 +244,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aLabel oper) {
-        return null;
+        return new NasmLabel(oper.toString());
+       // return null;
     }
 
     @Override
@@ -242,6 +290,11 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         NasmOperand oper1 = inst.op1.accept(this);
         NasmOperand oper2 = inst.op2.accept(this);
         NasmOperand dest = inst.result.accept(this);
+
+        NasmRegister eax = nasm.newRegister();
+        eax.colorRegister(Nasm.REG_EAX);
+
+        nasm.ajouteInst(new NasmMov(label, oper2, eax, ""));
         nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
         nasm.ajouteInst(new NasmSub(null, dest, oper2, ""));
         return null;
@@ -265,10 +318,19 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         NasmOperand oper2 = inst.op2.accept(this);
         NasmOperand dest = inst.result.accept(this);
 
-        nasm.ajouteInst(new NasmMov(label, dest, oper1, ""));
+        NasmRegister eax = nasm.newRegister();
+        eax.colorRegister(Nasm.REG_EAX);
+
+        nasm.ajouteInst(new NasmMov(label, eax, oper1, ""));
+
+        //Pour correspondre aux fichiers de ref
+        nasm.setTempCounter(5);
         NasmRegister register = nasm.newRegister();
+
         nasm.ajouteInst(new NasmMov(label, register, oper2, ""));
         nasm.ajouteInst(new NasmDiv(null, register, ""));
+        nasm.ajouteInst(new NasmMov(label, register, oper2, ""));
+
         return null;
     }
 
