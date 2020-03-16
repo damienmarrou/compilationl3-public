@@ -29,16 +29,20 @@ def main():
         ref_f = open(ref_file, 'r')
         input_line = input_f.readline()
         ref_line = ref_f.readline()
+        nbErreur = 0
         while input_line:
             # print(input_line +"\t"+ref_line,sys.stderr)
             if (input_line != ref_line):
                 if (haveError == False):
                     haveError = True
                     print(input_file, file=sys.stderr)
-
+                nbErreur = nbErreur + 1
                 print("input :" + input_line + "\nref   :" + ref_line + "\n", file=sys.stderr)
             input_line = input_f.readline()
             ref_line = ref_f.readline()
+        if (nbErreur > 0):
+            print("nb error in file : ", nbErreur, file=sys.stderr)
+            print("____________________________________________________________", file=sys.stderr)
         # with open(input_file,'r') as f:
         #   input_f = f.read()
         # with open(ref_file,'r') as f:
