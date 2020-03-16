@@ -5,7 +5,6 @@ import ts.TsItemFct;
 
 
 public class C3a2nasm implements C3aVisitor<NasmOperand> {
-    NasmConstant ebp = new NasmConstant(Nasm.REG_EBP);
     private C3a c3a;
     private Nasm nasm;
     private Ts tableGlobale;
@@ -209,6 +208,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aVar oper) {
+        NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
+        ebp.colorRegister(Nasm.REG_EBP);
         var base = oper.item.portee == tableGlobale ? new NasmLabel(oper.item.identif) : ebp;
         if (oper.item.portee == tableGlobale && oper.item.getTaille() == 1)
             return new NasmAddress(base);
