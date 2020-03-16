@@ -208,9 +208,15 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aVar oper) {
-        NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
-        ebp.colorRegister(Nasm.REG_EBP);
-        var base = oper.item.portee == tableGlobale ? new NasmLabel(oper.item.identif) : ebp;
+        NasmOperand base = null;
+        if(oper.item.portee == tableGlobale) {
+            base = new NasmLabel(oper.item.identif);
+        }else {
+            NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
+            ebp.colorRegister(Nasm.REG_EBP);
+            base = ebp;
+        }
+
         if (oper.item.portee == tableGlobale && oper.item.getTaille() == 1)
             return new NasmAddress(base);
         var direction = oper.item.isParam || oper.item.portee == tableGlobale ? '+' : '-';
