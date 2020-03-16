@@ -58,7 +58,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         nasm.ajouteInst(new NasmMov(null, ebp, esp, "nouvelle valeur de ebp"));
         if (nbArgs > 0) {
             nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(4 * nbArgs), "allocation des variables locales"));
-        } else if (nbParam > 0) {
+        } else {
             nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(4 * nbParam), "allocation des variables locales"));
         }
 
