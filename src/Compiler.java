@@ -170,7 +170,7 @@ public class Compiler {
             System.out.println("pas de fichier input");
         } else {
             for (String file : filePRENASM) {
-                System.out.println(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+                System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
         }
 
