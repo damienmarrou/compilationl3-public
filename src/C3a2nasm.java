@@ -44,7 +44,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     @Override
-    public NasmOperand visit(C3aInstFBegin inst) {//todo fix pb de nb arg or nb param
+    public NasmOperand visit(C3aInstFBegin inst) {
         NasmOperand label = new NasmLabel(inst.val.identif);
 
         NasmRegister ebp = new NasmRegister(Nasm.REG_EBP);
@@ -53,11 +53,15 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
         NasmRegister esp = new NasmRegister(Nasm.REG_ESP);
         esp.colorRegister(Nasm.REG_ESP);
-        nasm.ajouteInst(new NasmMov(null, ebp, esp, "nouvelle valeur de ebp"));
         nbArgs = inst.val.getNbArgs();
         int nbParam = inst.val.getTaille();
-        nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(4 * nbParam), "allocation des variables locales"));
-        nbArgs = inst.val.nbArgs;
+        nasm.ajouteInst(new NasmMov(null, ebp, esp, "nouvelle valeur de ebp"));
+        if (nbArgs > 0) {
+            nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(4 * nbArgs), "allocation des variables locales"));
+        } else if (nbParam > 0) {
+            nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(4 * nbParam), "allocation des variables locales"));
+        }
+
 
         return null;
     }
