@@ -18,12 +18,12 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         this.nasm = new Nasm(table);
 
         nasm.ajouteInst(new NasmCall(null, new NasmLabel("main"), ""));
-
+        nasm.setTempCounter(1);
         NasmRegister ebx = nasm.newRegister();
         ebx.colorRegister(Nasm.REG_EBX);
         nasm.ajouteInst(new NasmMov(null, ebx, new NasmConstant(0), " valeur de retour du programme"));
 
-        nasm.setTempCounter(1);
+
         NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
         nasm.ajouteInst(new NasmMov(null, eax, new NasmConstant(1), ""));
