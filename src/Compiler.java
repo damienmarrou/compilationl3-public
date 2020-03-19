@@ -1,5 +1,7 @@
 import c3a.C3a;
 import c3a.C3aEval;
+import fg.Fg;
+import fg.FgSolution;
 import nasm.Nasm;
 import sa.Sa2Xml;
 import sa.SaNode;
@@ -77,8 +79,8 @@ public class Compiler {
                // System.out.println("[PRINT PRE NASM] ");
                 nasm.affichePre(baseName);
 
-		  /*
-			System.out.print("[BUILD FG] ");
+
+                System.out.print("[BUILD FG] ");
 			Fg fg = new Fg(nasm);
 			System.out.print("[PRINT FG] ");
 			fg.affiche(baseName);
@@ -86,7 +88,7 @@ public class Compiler {
 			System.out.println("[SOLVE FG]");
 			FgSolution fgSolution = new FgSolution(nasm, fg);
 			fgSolution.affiche(baseName);
-		  */
+
             } catch (Exception e) {
                 //System.out.println("fileName = " + fileName);
                 System.out.println("\nFichier n° " + j + "  " + fileName.substring(fileName.lastIndexOf('\\') + 1) + " erreur n° " + i);
