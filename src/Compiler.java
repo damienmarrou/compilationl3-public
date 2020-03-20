@@ -1,7 +1,5 @@
 import c3a.C3a;
 import c3a.C3aEval;
-import fg.Fg;
-import fg.FgSolution;
 import nasm.Nasm;
 import sa.Sa2Xml;
 import sa.SaNode;
@@ -76,18 +74,18 @@ public class Compiler {
 
                 //System.out.print("[BUILD PRE NASM] ");
                 Nasm nasm = new C3a2nasm(c3a, table).getNasm();
-               // System.out.println("[PRINT PRE NASM] ");
+                // System.out.println("[PRINT PRE NASM] ");
                 nasm.affichePre(baseName);
+                nasm.affiche(baseName);
 
+                /*System.out.print("[BUILD FG] ");
+                Fg fg = new Fg(nasm);
+                System.out.print("[PRINT FG] ");
+                fg.affiche(baseName);
 
-                System.out.print("[BUILD FG] ");
-			Fg fg = new Fg(nasm);
-			System.out.print("[PRINT FG] ");
-			fg.affiche(baseName);
-
-			System.out.println("[SOLVE FG]");
-			FgSolution fgSolution = new FgSolution(nasm, fg);
-			fgSolution.affiche(baseName);
+                System.out.println("[SOLVE FG]");
+                FgSolution fgSolution = new FgSolution(nasm, fg);
+                fgSolution.affiche(baseName);*/
 
             } catch (Exception e) {
                 //System.out.println("fileName = " + fileName);
@@ -102,16 +100,19 @@ public class Compiler {
         List<String> fileTS = new ArrayList<>();
         List<String> fileC3A = new ArrayList<>();
         List<String> filePRENASM = new ArrayList<>();
+        List<String> fileNASM = new ArrayList<>();
         File folderSA = new File("test/input");
         File folderTS = new File("test/input");
         File folderC3A = new File("test/input");
         File folderPRENASM = new File("test/input");
+        File folderNASM = new File("test/input");
         File[] listOfFilesSA = folderSA.listFiles();
         File[] listOfFilesTS = folderTS.listFiles();
         File[] listOfFilesC3A = folderC3A.listFiles();
         File[] listOfFilePRENASM = folderPRENASM.listFiles();
+        File[] listOfFileNASM = folderNASM.listFiles();
 
-/*
+
         for (int x = 0; x < listOfFilesSA.length; x++) {
             if (listOfFilesSA[x].isFile() && listOfFilesSA[x].getName().endsWith(".sa")) {
                 fileSA.add(listOfFilesSA[x].getAbsolutePath().substring(listOfFilesSA[x].getAbsolutePath().lastIndexOf('\\') + 1));
@@ -130,13 +131,18 @@ public class Compiler {
                 fileC3A.add(listOfFilesC3A[x].getAbsolutePath().substring(listOfFilesC3A[x].getAbsolutePath().lastIndexOf('\\') + 1));
             }
         }
-*/
+
         for (int x = 0; x < listOfFilePRENASM.length; x++) {
             if (listOfFilePRENASM[x].isFile() && listOfFilePRENASM[x].getName().endsWith(".pre-nasm")) {
                 filePRENASM.add((listOfFilePRENASM[x].getAbsolutePath().substring(listOfFilePRENASM[x].getAbsolutePath().lastIndexOf("\\") + 1)));
             }
         }
-/*
+        for (int x = 0; x < listOfFileNASM.length; x++) {
+            if (listOfFileNASM[x].isFile() && listOfFileNASM[x].getName().endsWith(".nasm")) {
+                fileNASM.add((listOfFileNASM[x].getAbsolutePath().substring(listOfFileNASM[x].getAbsolutePath().lastIndexOf("\\") + 1)));
+            }
+        }
+
         System.out.println("SA");
         if (fileSA.size() == 0) {
             System.out.println("pas de fichier input");
@@ -166,12 +172,21 @@ public class Compiler {
                 //System.out.println(file);
                 System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
-        }*/
+        }
         System.out.println("PRENASM");
         if (filePRENASM.size() == 0) {
             System.out.println("pas de fichier input");
         } else {
             for (String file : filePRENASM) {
+                System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
+            }
+        }
+
+        System.out.println("NASM");
+        if (fileNASM.size() == 0) {
+            System.out.println("pas de fichier input");
+        } else {
+            for (String file : fileNASM) {
                 System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
         }

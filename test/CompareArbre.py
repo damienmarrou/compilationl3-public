@@ -9,6 +9,7 @@ def main():
     ref_directoryTS = 'test/ts-ref/'
     ref_directoryC3A = 'test/c3a-ref/'
     ref_directoryPRENASM = 'test/prenasm-ref/'
+    ref_directoryNASM = 'test/nasm-ref/'
 
     if ('.sa' in file_name):
         ref_file = ref_directorySA + f'{file_name}'
@@ -19,9 +20,12 @@ def main():
             if ('.ts' in file_name):
                 ref_file = ref_directoryTS + f'{file_name}'
             else:
-                ref_file = ref_directoryPRENASM + f'{file_name}'
+                if ('.pre-nasm' in file_name):
+                    ref_file = ref_directoryPRENASM + f'{file_name}'
+                else:
+                    ref_file = ref_directoryNASM + f'{file_name}'
 
-    if(len(sys.argv)!=2):
+    if (len(sys.argv) != 2):
         print("pas le bon argument")
         haveError = False
     try:
