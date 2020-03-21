@@ -1,5 +1,7 @@
 import c3a.C3a;
 import c3a.C3aEval;
+import fg.Fg;
+import fg.FgSolution;
 import nasm.Nasm;
 import sa.Sa2Xml;
 import sa.SaNode;
@@ -14,7 +16,6 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.util.ArrayList;
 import java.util.List;
-//import fg.*;
 
 public class Compiler {
     public static void main(String[] args) throws IOException {
@@ -78,14 +79,14 @@ public class Compiler {
                 nasm.affichePre(baseName);
                 nasm.affiche(baseName);
 
-                /*System.out.print("[BUILD FG] ");
+                System.out.print("[BUILD FG] ");
                 Fg fg = new Fg(nasm);
                 System.out.print("[PRINT FG] ");
                 fg.affiche(baseName);
 
                 System.out.println("[SOLVE FG]");
                 FgSolution fgSolution = new FgSolution(nasm, fg);
-                fgSolution.affiche(baseName);*/
+                fgSolution.affiche(baseName);
 
             } catch (Exception e) {
                 //System.out.println("fileName = " + fileName);
