@@ -23,16 +23,15 @@ public class Fg implements NasmVisitor<Void> {
         this.node2Inst = new HashMap<Node, NasmInst>();
         this.label2Inst = new HashMap<String, NasmInst>();
         this.graph = new Graph();
-        for (NasmInst nasmInst : nasm.listeInst) {
-            // creer les sommet
-            Node node = graph.newNode();
-            inst2Node.put(nasmInst, node);
-            node2Inst.put(node, nasmInst);
-            // Si a un label
-            if (nasmInst.label != null) {
-                label2Inst.put(nasmInst.label.toString(), nasmInst);
-            }
-        }
+        nasm.listeInst.forEach(this::init);
+        nasm.listeInst.forEach(inst -> inst.accept(this));
+    }
+
+    private void init(NasmInst inst) {
+        if (inst.label != null) label2Inst.put(inst.label.toString(), inst);
+        Node node = graph.newNode();
+        inst2Node.put(inst, node);
+        node2Inst.put(node, inst);
     }
 
     public void affiche(String baseFileName) {
@@ -61,7 +60,8 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     private void addArcToNextNode(NasmInst inst) {
-        Node actualNode = inst2Node.get(inst);
+        graph.addEdge(inst2Node.get(inst), inst2Node.get(nasm.listeInst.get(nasm.listeInst.indexOf(inst))));
+        /* Node actualNode = inst2Node.get(inst);
         Node nextNode = graph.nodes().head;
         NodeList succesorOfNextNode = graph.nodes().tail;
         while (actualNode != nextNode) {//todo remplacer par un for et print un message d'erreur si pas de correspondance
@@ -69,7 +69,7 @@ public class Fg implements NasmVisitor<Void> {
             succesorOfNextNode = succesorOfNextNode.tail;
         }
         nextNode = succesorOfNextNode.head;
-        graph.addEdge(actualNode, nextNode);
+        graph.addEdge(actualNode, nextNode);*/
     }
 
     private void addLabelToArcNode(NasmInst inst) {
@@ -82,11 +82,13 @@ public class Fg implements NasmVisitor<Void> {
 
     public Void visit(NasmAdd inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmCall inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
@@ -98,65 +100,73 @@ public class Fg implements NasmVisitor<Void> {
     public Void visit(NasmJe inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmJle inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmJne inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmMul inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmOr inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmCmp inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmInst inst) {//todo a voir
-        addArcToNextNode(inst);
         return null;
     }
 
     public Void visit(NasmJge inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmJl inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmNot inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmPop inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmRet inst) {
-        addArcToNextNode(inst);
         return null;
     }
 
@@ -167,38 +177,45 @@ public class Fg implements NasmVisitor<Void> {
 
     public Void visit(NasmAnd inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmJg inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmJmp inst) {
         addArcToNextNode(inst);
         addLabelToArcNode(inst);
+
         return null;
     }
 
     public Void visit(NasmMov inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmPush inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmSub inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
     public Void visit(NasmEmpty inst) {
         addArcToNextNode(inst);
+
         return null;
     }
 
