@@ -85,6 +85,7 @@ public class Fg implements NasmVisitor<Void> {
         return null;
     }
 
+
     public Void visit(NasmCall inst) {
         addArcToNextNode(inst);
         return null;
