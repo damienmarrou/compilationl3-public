@@ -111,10 +111,10 @@ public class Compiler {
         filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);
         fileNames = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
 
-        printCompare("SA", fileSA);
+       /* printCompare("SA", fileSA);
         printCompare("TS", fileTS);
         printCompare("C3A", fileC3A);
-        printCompare("PRENASM", filePRENASM);
+        printCompare("PRENASM", filePRENASM);*/
         printCompare("NASM", fileNASM);
     }
 

@@ -8,14 +8,13 @@ import java.util.Map;
 //TODO : Revoir pour les noms de registres différents
 
 public class C3a2nasm implements C3aVisitor<NasmOperand> {
+    Map<String, TsItemVar> localVar;
     private C3a c3a;
     private NasmRegister eax;
     private NasmRegister ebp;
     private NasmRegister esp;
     private Nasm nasm;
     private Ts tableGlobale;
-    Map<String, TsItemVar> localVar;
-
     //Pour calcul de cas précis
     private int nbArgs = -1;
     private int argSize = -1;
@@ -27,7 +26,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         this.c3a = c3a;
         this.tableGlobale = table;
         this.nasm = new Nasm(table);
-        nasm.setTempCounter(1);
+        nasm.setTempCounter(0);
 
         //Création des registres
         NasmRegister ebx = new NasmRegister(Nasm.REG_EBX);
@@ -58,6 +57,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 ? inst.label.accept(this)
                 : null;
     }
+
     @Override
     public NasmOperand visit(C3aInstFBegin inst) {
         NasmOperand label = new NasmLabel(inst.val.identif);
@@ -279,6 +279,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aTemp oper) {
+        nasm.setTempCounter(nasm.getTempCounter() + 1);
         return new NasmRegister(oper.num);
     }
 

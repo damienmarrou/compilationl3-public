@@ -60,7 +60,7 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     private void addArcToNextNode(NasmInst inst) {
-        graph.addEdge(inst2Node.get(inst), inst2Node.get(nasm.listeInst.get(nasm.listeInst.indexOf(inst))));
+        graph.addEdge(inst2Node.get(inst), inst2Node.get(nasm.listeInst.get(nasm.listeInst.indexOf(inst) + 1)));
         /* Node actualNode = inst2Node.get(inst);
         Node nextNode = graph.nodes().head;
         NodeList succesorOfNextNode = graph.nodes().tail;
