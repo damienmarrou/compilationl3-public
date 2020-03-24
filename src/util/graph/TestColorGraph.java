@@ -1,9 +1,4 @@
 package util.graph;
-import util.graph.*;
-import util.intset.*;
-import java.util.*;
-import java.io.*;
-
 public class TestColorGraph
 {
     public static void main(String[] args)
@@ -11,17 +6,17 @@ public class TestColorGraph
 	Graph g = new Graph();
 
 	Node n1 = g.newNode();
-	Node n2 = g.newNode();
-	Node n3 = g.newNode();
-	Node n4 = g.newNode();
-	Node n5 = g.newNode();
-	Node n6 = g.newNode();
-	Node n7 = g.newNode();
-	Node n8 = g.newNode();
-	Node n9 = g.newNode();
-	Node n10 = g.newNode();
+        Node n2 = g.newNode();
+        Node n3 = g.newNode();
+        Node n4 = g.newNode();
+        Node n5 = g.newNode();
+        Node n6 = g.newNode();
+        Node n7 = g.newNode();
+        Node n8 = g.newNode();
+        Node n9 = g.newNode();
+        Node n10 = g.newNode();
 
-	g.addNOEdge(n1, n2);
+	/*g.addNOEdge(n1, n2);
 	g.addNOEdge(n1, n4);
 	g.addNOEdge(n1, n9);
 
@@ -44,8 +39,7 @@ public class TestColorGraph
 
 	g.addNOEdge(n7, n8);
 
-	g.addNOEdge(n8, n9);
-
+	g.addNOEdge(n8, n9);*/
 	g.show(System.out);
 	int[] phi = new int[]{ -3,-3,-3,0,-3,2,1,-3,-3,-3};
 	ColorGraph cg = new ColorGraph(g, 3, phi);

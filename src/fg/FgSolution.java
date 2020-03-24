@@ -44,8 +44,8 @@ public class FgSolution {
     }
 
     private void addOperandToIntSet(NasmOperand operand, IntSet intSet) {
-        //if (operand.isGeneralRegister())
-        //  intSet.add(((NasmRegister) operand).val);
+        if (operand.isGeneralRegister())
+            intSet.add(((NasmRegister) operand).val);
 
         if (operand instanceof NasmAddress) {
             var address = (NasmAddress) operand;

@@ -1,6 +1,7 @@
 import c3a.*;
 import nasm.*;
 import ts.Ts;
+import ts.TsItemFct;
 import ts.TsItemVar;
 
 import java.util.Map;
@@ -20,13 +21,13 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     private int argSize = -1;
     private int jmp_eq_offset = 0;
     private int jmp_l_offset = 0;
-    //private TsItemFct currentFct;
+    private TsItemFct currentFct;
 
     public C3a2nasm(C3a c3a, Ts table) {
         this.c3a = c3a;
         this.tableGlobale = table;
         this.nasm = new Nasm(table);
-        nasm.setTempCounter(0);
+        nasm.setTempCounter(2);
 
         //Création des registres
         NasmRegister ebx = new NasmRegister(Nasm.REG_EBX);
@@ -61,7 +62,6 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     @Override
     public NasmOperand visit(C3aInstFBegin inst) {
         NasmOperand label = new NasmLabel(inst.val.identif);
-
         localVar = inst.val.getTable().variables;
         nbArgs = inst.val.getNbArgs();
         argSize = inst.val.getTable().nbVar();
