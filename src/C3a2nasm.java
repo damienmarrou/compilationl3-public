@@ -27,7 +27,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         this.c3a = c3a;
         this.tableGlobale = table;
         this.nasm = new Nasm(table);
-        nasm.setTempCounter(2);
+        nasm.setTempCounter(0);
 
         //Création des registres
         NasmRegister ebx = new NasmRegister(Nasm.REG_EBX);

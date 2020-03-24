@@ -78,11 +78,6 @@ public class FgSolution {
                         node1 = node1.succ().tail.head;
                     }
                 }
-/*
-                    for (var successor : node.succ()) {
-                        out.get(inst).union(in.get(fg.node2Inst.get(successor)));
-                    }*/
-
                 if (stable)
                     stable = _in.equal(in.get(inst)) && _out.equal(out.get(inst));
             }

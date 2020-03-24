@@ -115,7 +115,7 @@ public class Compiler {
         printCompare("TS", fileTS);
         printCompare("C3A", fileC3A);
         printCompare("PRENASM", filePRENASM);*/
-        printCompare("NASM", fileNASM);
+        //printCompare("NASM", fileNASM);
     }
 
     public static List<String> makeListOfFiles(String type, List<String> fileType, File[] listOfFiles) {
