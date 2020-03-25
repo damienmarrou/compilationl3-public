@@ -71,8 +71,21 @@ public class ColorGraph {
     /* à la fin du processus, le graphe peut ne pas être vide, il s'agit des temporaires qui ont au moins k voisin */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public int simplification() {
-        return 0;
+    public void simplification() {//todo a finir d'implémenter  (attention je suis passé en void au lieux de int) je pense qu'il faut utiliser @pile
+        Stack<Node> stack = new Stack();
+        int nbVertexPreColored = R;
+        boolean modif = true;
+        while (stack.size() != nbVertexPreColored) {
+            modif = false;
+            for (Node node : int2Node) {
+                if (nbVoisins(node.mykey) < K) {
+                    stack.push(node);
+                    modif = true;
+                }
+            }
+        }
+
+
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/

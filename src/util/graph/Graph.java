@@ -58,14 +58,16 @@ public class Graph {
      public void show(java.io.PrintStream out) {
 	for (NodeList p=nodes(); p!=null; p=p.tail) {
 	  Node n = p.head;
-	  out.print(n.toString());
-	  out.print(": ");
-	  for(NodeList q=n.succ(); q!=null; q=q.tail) {
-	     out.print(q.head.toString());
-	     out.print(" ");
-	  }
-	  out.println();
-	}
+        out.print(n.toString());
+        out.print(": ");
+        for (NodeList q = n.succ(); q != null; q = q.tail) {
+            out.print(q.head.toString());
+            out.print(" ");
+        }
+        out.println();
+    }
      }
 
+    public void addNOEdge(Node n7, Node n8) {
+    }
 }
