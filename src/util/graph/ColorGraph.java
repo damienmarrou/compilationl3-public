@@ -3,6 +3,7 @@ package util.graph;
 import util.intset.IntSet;
 
 import java.util.Stack;
+import java.util.stream.IntStream;
 
 public class ColorGraph {
     static int NOCOLOR = -1;
@@ -61,7 +62,7 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public int nbVoisins(int t) {
-        return 0;
+        return int2Node[t].len(int2Node[t].adj());
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -71,27 +72,31 @@ public class ColorGraph {
     /* à la fin du processus, le graphe peut ne pas être vide, il s'agit des temporaires qui ont au moins k voisin */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public void simplification() {//todo a finir d'implémenter  (attention je suis passé en void au lieux de int) je pense qu'il faut utiliser @pile
-        Stack<Node> stack = new Stack();
-        int nbVertexPreColored = R;
+    public void simplification() {//todo a finir d'implémenter
+        int N = R - (int) IntStream.of(couleur).filter(c -> c != NOCOLOR).count();
         boolean modif = true;
-        while (stack.size() != nbVertexPreColored) {
+        pile = new Stack<>();
+        while (pile.size() != N && modif) {
             modif = false;
             for (Node node : int2Node) {
-                if (nbVoisins(node.mykey) < K) {
-                    stack.push(node);
+                if (enleves.isMember(node.mykey)) continue;
+                if (nbVoisins(node.mykey) < K && couleur[node.mykey] == NOCOLOR) {
+                    enleves.add(node.mykey);
+                    pile.push(node.mykey);
                     modif = true;
                 }
             }
         }
-
-
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public void debordement() {
+        deborde = new IntSet(R);
+      /*  while (pile.size() != R){
+
+        }*/
     }
 
 
