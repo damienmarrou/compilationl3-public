@@ -125,22 +125,22 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstJumpIfEqual inst) {
-        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), ""));
-        nasm.ajouteInst(new NasmJe(null, inst.result.accept(this), ""));
+        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), "JumpIfEqual 1"));
+        nasm.ajouteInst(new NasmJe(null, inst.result.accept(this), "JumpIfEqual 2"));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstJumpIfNotEqual inst) {
-        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), ""));
-        nasm.ajouteInst(new NasmJne(null, inst.result.accept(this), ""));
+        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), "jumpIfNotEqual 1"));
+        nasm.ajouteInst(new NasmJne(null, inst.result.accept(this), "jumpIfNotEqual 2"));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstJumpIfLess inst) {
-        nasm.ajouteInst(new NasmCmp(null, inst.op1.accept(this), inst.op2.accept(this), ""));
-        nasm.ajouteInst(new NasmJl(getLabel(inst), inst.result.accept(this), ""));
+        nasm.ajouteInst(new NasmCmp(null, inst.op1.accept(this), inst.op2.accept(this), "JumpIfLess 1"));
+        nasm.ajouteInst(new NasmJl(getLabel(inst), inst.result.accept(this), "JumpIfLess 2"));
         return null;
     }
 
