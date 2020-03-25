@@ -10,27 +10,27 @@ public class ColorGraph {
     public Graph G;
     public int R;
     public int K;
-    public IntSet enleves;
-    public IntSet deborde;
-    public int[] couleur;
+    public IntSet remove;
+    public IntSet overflow;
+    public int[] color;
     public Node[] int2Node;
-    private Stack<Integer> pile;
+    private Stack<Integer> stack;
 
     public ColorGraph(Graph G, int K, int[] phi) {
         this.G = G;
         this.K = K;
-        pile = new Stack<Integer>();
+        stack = new Stack<Integer>();
         R = G.nodeCount();
-        couleur = new int[R];
-        enleves = new IntSet(R);
-        deborde = new IntSet(R);
+        color = new int[R];
+        remove = new IntSet(R);
+        overflow = new IntSet(R);
         int2Node = G.nodeArray();
         for (int v = 0; v < R; v++) {
             int preColor = phi[v];
             if (preColor >= 0 && preColor < K)
-                couleur[v] = phi[v];
+                color[v] = phi[v];
             else
-                couleur[v] = NOCOLOR;
+                color[v] = NOCOLOR;
         }
     }
 
@@ -39,30 +39,52 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public void selection() {
+        while (!stack.isEmpty()) {
+            int vertex = stack.pop();
+            color[vertex] = pickColor(colorOfNeighboor(vertex));
+        }
+    }
+
+    private int pickVertex() {
+        for (int v = 0; v < remove.getSize(); v++)
+            if (!remove.isMember(v) && color[v] == NOCOLOR) return v;
+        return -1;
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
     /* récupère les couleurs des voisins de t */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public IntSet couleursVoisins(int t) {
-        return null;
+    public IntSet colorOfNeighboor(int vertex) {
+        IntSet colorSet = new IntSet(K);
+
+        if (int2Node[vertex].succ() != null)
+            for (var successor : int2Node[vertex].succ())
+                if (color[successor.mykey] != NOCOLOR) colorSet.add(color[successor.mykey]);
+
+        return colorSet;
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
     /* recherche une couleur absente de colorSet */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public int choisisCouleur(IntSet colorSet) {
-        return 0;
+    public int pickColor(IntSet colorSet) {
+        for (int color = 0; color < colorSet.getSize(); ++color)
+            if (!colorSet.isMember(color)) return color;
+        return NOCOLOR;
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
     /* calcule le nombre de voisins du sommet t */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public int nbVoisins(int t) {
-        return int2Node[t].len(int2Node[t].adj());
+    public int nbNeighboor(int t) {
+        if (int2Node[t].succ() == null) return 0;
+        int count = int2Node[t].outDegree();
+        for (var successor : int2Node[t].succ())
+            if (remove.isMember(successor.mykey)) count--;
+        return count;
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -72,18 +94,18 @@ public class ColorGraph {
     /* à la fin du processus, le graphe peut ne pas être vide, il s'agit des temporaires qui ont au moins k voisin */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public void simplification() {//todo a finir d'implémenter
-        int N = R - (int) IntStream.of(couleur).filter(c -> c != NOCOLOR).count();
-        boolean modif = true;
-        pile = new Stack<>();
-        while (pile.size() != N && modif) {
-            modif = false;
+    public void simplify() {
+        int N = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo faire propre
+        boolean isUpdated = true;
+        stack = new Stack<>();
+        while (stack.size() != N && isUpdated) {
+            isUpdated = false;
             for (Node node : int2Node) {
-                if (enleves.isMember(node.mykey)) continue;
-                if (nbVoisins(node.mykey) < K && couleur[node.mykey] == NOCOLOR) {
-                    enleves.add(node.mykey);
-                    pile.push(node.mykey);
-                    modif = true;
+                if (remove.isMember(node.mykey)) continue;
+                if (nbNeighboor(node.mykey) < K && color[node.mykey] == NOCOLOR) {
+                    remove.add(node.mykey);
+                    stack.push(node.mykey);
+                    isUpdated = true;
                 }
             }
         }
@@ -92,27 +114,31 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public void debordement() {
-        deborde = new IntSet(R);
-      /*  while (pile.size() != R){
-
-        }*/
+    public void overflow() {
+        while (stack.size() != R) {
+            int vertex = pickVertex();
+            remove.add(vertex);
+            overflow.add(vertex);
+            simplify();
+        }
     }
 
 
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public void coloration() {
-        this.simplification();
-        this.debordement();
+    public void color() {
+        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();
+
+        this.simplify();
+        this.overflow();
         this.selection();
     }
 
-    void affiche() {
+    void print() {
         System.out.println("vertex\tcolor");
         for (int i = 0; i < R; i++) {
-            System.out.println(i + "\t" + couleur[i]);
+            System.out.println(i + "\t" + color[i]);
         }
     }
 
