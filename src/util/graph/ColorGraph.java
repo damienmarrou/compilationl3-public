@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 
 public class ColorGraph {
     static int NOCOLOR = -1;
-    public Graph G;
     public int R;
     public int K;
     public IntSet remove;
@@ -17,7 +16,6 @@ public class ColorGraph {
     private Stack<Integer> stack;
 
     public ColorGraph(Graph G, int K, int[] phi) {
-        this.G = G;
         this.K = K;
         stack = new Stack<Integer>();
         R = G.nodeCount();
@@ -46,8 +44,9 @@ public class ColorGraph {
     }
 
     private int pickVertex() {
-        for (int v = 0; v < remove.getSize(); v++)
-            if (!remove.isMember(v) && color[v] == NOCOLOR) return v;
+        for (int i = 0; i < remove.getSize(); i++)
+            if (!remove.isMember(i) && color[i] == NOCOLOR)
+                return i;
         return -1;
     }
 
@@ -57,11 +56,9 @@ public class ColorGraph {
 
     public IntSet colorOfNeighboor(int vertex) {
         IntSet colorSet = new IntSet(K);
-
         if (int2Node[vertex].succ() != null)
-            for (var successor : int2Node[vertex].succ())
+            for (Node successor : int2Node[vertex].succ())
                 if (color[successor.mykey] != NOCOLOR) colorSet.add(color[successor.mykey]);
-
         return colorSet;
     }
 
@@ -70,8 +67,8 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public int pickColor(IntSet colorSet) {
-        for (int color = 0; color < colorSet.getSize(); ++color)
-            if (!colorSet.isMember(color)) return color;
+        for (int i = 0; i < colorSet.getSize(); i++)
+            if (!colorSet.isMember(i)) return i;
         return NOCOLOR;
     }
 
@@ -79,10 +76,10 @@ public class ColorGraph {
     /* calcule le nombre de voisins du sommet t */
     /*-------------------------------------------------------------------------------------------------------------*/
 
-    public int nbNeighboor(int t) {
-        if (int2Node[t].succ() == null) return 0;
-        int count = int2Node[t].outDegree();
-        for (var successor : int2Node[t].succ())
+    public int nbNeighboor(int vertex) {
+        if (int2Node[vertex].succ() == null) return 0;
+        int count = int2Node[vertex].outDegree();
+        for (Node successor : int2Node[vertex].succ())
             if (remove.isMember(successor.mykey)) count--;
         return count;
     }
@@ -95,10 +92,8 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public void simplify() {
-        int N = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo faire propre
         boolean isUpdated = true;
-        stack = new Stack<>();
-        while (stack.size() != N && isUpdated) {
+        while (stack.size() != R && isUpdated) {
             isUpdated = false;
             for (Node node : int2Node) {
                 if (remove.isMember(node.mykey)) continue;
