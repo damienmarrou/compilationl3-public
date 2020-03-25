@@ -19,31 +19,31 @@ public class FgSolution {
     public Map<NasmInst, IntSet> def = new HashMap<NasmInst, IntSet>();
     public Map<NasmInst, IntSet> in = new HashMap<NasmInst, IntSet>();
     public Map<NasmInst, IntSet> out = new HashMap<NasmInst, IntSet>();
-    int iterNum = 0;
+    int nbIteration = 0;
     Fg fg;
 
     public FgSolution(Nasm nasm, Fg fg) {
         this.nasm = nasm;
         this.fg = fg;
-        nasm.listeInst.forEach(this::init);
-        computeInAndOut();
+        nasm.listeInst.forEach(this::initialisation);
+        makeInOut();
     }
 
-    private void init(NasmInst inst) {
+    private void initialisation(NasmInst inst) {
         in.put(inst, new IntSet(nasm.getTempCounter()));
         out.put(inst, new IntSet(nasm.getTempCounter()));
         use.put(inst, new IntSet(nasm.getTempCounter()));
         def.put(inst, new IntSet(nasm.getTempCounter()));
 
         if (inst.srcUse)
-            addOperandToIntSet(inst.source, use.get(inst));
+            addOperand(inst.source, use.get(inst));
         if (inst.destUse)
-            addOperandToIntSet(inst.destination, use.get(inst));
+            addOperand(inst.destination, use.get(inst));
         if (inst.destDef)
-            addOperandToIntSet(inst.destination, def.get(inst));
+            addOperand(inst.destination, def.get(inst));
     }
 
-    private void addOperandToIntSet(NasmOperand operand, IntSet intSet) {
+    private void addOperand(NasmOperand operand, IntSet intSet) {
         if (operand.isGeneralRegister())
             intSet.add(((NasmRegister) operand).val);
 
@@ -56,33 +56,31 @@ public class FgSolution {
         }
     }
 
-    private void computeInAndOut() {
-        boolean stable;
+    private void makeInOut() {
+        boolean isStable;
         Node[] nodes = fg.graph.nodeArray();
 
         do {
-            stable = true;
-            iterNum++;
+            isStable = true;
+            nbIteration++;
 
             for (var node : nodes) {
-                var inst = fg.node2Inst.get(node);
-                var _in = in.get(inst).copy();
-                var _out = out.get(inst).copy();
+                var currentInst = fg.node2Inst.get(node);
+                var in = this.in.get(currentInst).copy();
+                var out = this.out.get(currentInst).copy();
 
-                in.replace(inst, use.get(inst).copy().union(out.get(inst).copy().minus(def.get(inst))));
+                this.in.replace(currentInst, use.get(currentInst).copy().union(this.out.get(currentInst).copy().minus(def.get(currentInst))));
 
-                if (node.succ() != null) {
-                    Node node1 = node.succ().head;
-                    while (node.succ().tail != null) {
-                        out.get(inst).union(in.get(fg.node2Inst.get(node1)));
-                        node1 = node1.succ().tail.head;
-                    }
-                }
-                if (stable)
-                    stable = _in.equal(in.get(inst)) && _out.equal(out.get(inst));
+                if (node.succ() != null)
+                    for (var successor : node.succ())
+                        this.out.get(currentInst).union(this.in.get(fg.node2Inst.get(successor)));
+
+                if (isStable)
+                    isStable = in.equal(this.in.get(currentInst)) && out.equal(this.out.get(currentInst));
             }
-        } while (!stable);
+        } while (!isStable);
     }
+
 
     public void affiche(String baseFileName) {
         String fileName;
@@ -98,7 +96,7 @@ public class FgSolution {
             }
         }
 
-        out.println("iter num = " + iterNum);
+        out.println("iter num = " + nbIteration);
         for (NasmInst nasmInst : this.nasm.listeInst) {
             out.println("use = " + this.use.get(nasmInst) + " def = " + this.def.get(nasmInst) + "\tin = " + this.in.get(nasmInst) + "\t \tout = " + this.out.get(nasmInst) + "\t \t" + nasmInst);
         }

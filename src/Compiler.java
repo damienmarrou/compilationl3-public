@@ -92,7 +92,7 @@ public class Compiler {
                 //System.out.println("fileName = " + fileName);
                 System.out.println("\nFichier n° " + j + "  " + fileName.substring(fileName.lastIndexOf('\\') + 1) + " erreur n° " + i);
                 i++;
-                //System.out.println(e.getMessage());
+                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -119,9 +119,9 @@ public class Compiler {
     }
 
     public static List<String> makeListOfFiles(String type, List<String> fileType, File[] listOfFiles) {
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile() && listOfFiles[i].getName().endsWith(type)) {
-                fileType.add(listOfFiles[i].getAbsolutePath().substring(listOfFiles[i].getAbsolutePath().lastIndexOf("\\") + 1));
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile() && listOfFile.getName().endsWith(type)) {
+                fileType.add(listOfFile.getAbsolutePath().substring(listOfFile.getAbsolutePath().lastIndexOf("\\") + 1));
             }
         }
         return fileType;

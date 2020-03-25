@@ -63,10 +63,11 @@ public class Fg implements NasmVisitor<Void> {
         graph.addEdge(inst2Node.get(inst), inst2Node.get(nasm.listeInst.get(nasm.listeInst.indexOf(inst) + 1)));
     }
 
-    private void addLabelToArcNode(NasmInst inst) {
-        if (label2Inst.containsKey(inst.address)) {
+    private void addLabelToArcNode(NasmInst inst, NasmLabel label) {
+        graph.addEdge(inst2Node.get(inst), inst2Node.get(label2Inst.get(label.val)));
+        /* if (label2Inst.containsKey(inst.address)) {
             graph.addEdge(inst2Node.get(inst), inst2Node.get(label2Inst.get(inst.address)));
-        }
+        }*/
     }
 
 
@@ -87,20 +88,20 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     public Void visit(NasmJe inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
     public Void visit(NasmJle inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
     public Void visit(NasmJne inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
@@ -124,14 +125,14 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     public Void visit(NasmJge inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
     public Void visit(NasmJl inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
@@ -160,14 +161,14 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     public Void visit(NasmJg inst) {
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         addArcToNextNode(inst);
-        addLabelToArcNode(inst);
         return null;
     }
 
     public Void visit(NasmJmp inst) {
-        addArcToNextNode(inst);
-        addLabelToArcNode(inst);
+        //addArcToNextNode(inst);
+        addLabelToArcNode(inst, (NasmLabel) inst.address);
         return null;
     }
 

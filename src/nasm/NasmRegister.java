@@ -4,18 +4,23 @@ public class NasmRegister extends NasmOperand {
     public int val;
     public int color = Nasm.REG_UNK;
 
-    public NasmRegister(int val){
-	this.val = val;
+    public NasmRegister(int val, int color) {//permet de factoriser le code
+        this.val = val;
+        colorRegister(color);
     }
 
-    public void colorRegister(int color){
-	this.color = color;
+    public NasmRegister(int val) {
+        this(val, Nasm.REG_UNK);
     }
 
-    public String toString(){
-	if(this.color == Nasm.REG_ESP) return "esp";
-	if(this.color == Nasm.REG_EBP) return "ebp";
-	if(this.color == Nasm.REG_EAX) return "eax";
+    public void colorRegister(int color) {
+        this.color = color;
+    }
+
+    public String toString() {
+        if (this.color == Nasm.REG_ESP) return "esp";
+        if (this.color == Nasm.REG_EBP) return "ebp";
+        if (this.color == Nasm.REG_EAX) return "eax";
 	if(this.color == Nasm.REG_EBX) return "ebx";
 	if(this.color == Nasm.REG_ECX) return "ecx";
 	if(this.color == Nasm.REG_EDX) return "edx";
