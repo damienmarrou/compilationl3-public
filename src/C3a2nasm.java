@@ -71,8 +71,9 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     @Override
     public NasmOperand visit(C3aInstWrite inst) {
         NasmOperand op1 = inst.op1.accept(this);
+        NasmRegister eax = nasm.newRegister();
+        eax.colorRegister(Nasm.REG_EAX);
         nasm.ajouteInst(new NasmMov(getLabel(inst), eax, op1, "Write 1"));
-
         NasmLabel print = new NasmLabel("iprintLF");
         nasm.ajouteInst(new NasmCall(null, print, "Write 2"));
         return null;
@@ -95,22 +96,16 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     @Override
     public NasmOperand visit(C3aInstCall inst) {
         NasmConstant valRet = new NasmConstant(4);
-        nasm.ajouteInst(new NasmSub(null, esp, valRet, "allocation mémoire pour la valeur de retour"));
-
-        NasmLabel nasmlabel = new NasmLabel(inst.op1.val.identif);
-        nasm.ajouteInst(new NasmCall(null, nasmlabel, ""));
+        nasm.ajouteInst(new NasmSub(getLabel(inst), esp, valRet, "allocation mémoire pour la valeur de retour"));
+        nasm.ajouteInst(new NasmCall(null, inst.op1.accept(this), ""));
         nasm.ajouteInst(new NasmPop(null, inst.result.accept(this), "récupération de la valeur de retour"));
-
-        nbArgs = inst.op1.val.getNbArgs();
-        if (nbArgs > 0)
-            nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(4 * nbArgs), "désallocation des arguments"));
+        nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(inst.op1.val.nbArgs * 4), "désallocation des arguments"));
         return null;
     }
 
     public NasmOperand visit(C3aInstAffect inst) {
         NasmOperand op1 = inst.op1.accept(this);
         NasmOperand result = inst.result.accept(this);
-
         nasm.ajouteInst(new NasmMov(getLabel(inst), result, op1, "Affect"));
         return null;
     }
@@ -118,18 +113,14 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     @Override
     public NasmOperand visit(C3aInstParam inst) {
         NasmOperand op1 = inst.op1.accept(this);
-
         nasm.ajouteInst(new NasmPush(getLabel(inst), op1, "Param"));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstReturn inst) {
-        NasmRegister register = new NasmRegister(0);
-        NasmConstant size = new NasmConstant(localVar.size());
-        NasmAddress address = new NasmAddress(ebp, '+', size);
-
-        nasm.ajouteInst(new NasmMov(null, address, register, "ecriture de la valeur de retour"));
+        NasmAddress address = new NasmAddress(ebp, '+', new NasmConstant(2));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), address, inst.op1.accept(this), "ecriture de la valeur de retour"));
         return null;
     }
 
