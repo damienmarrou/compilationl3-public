@@ -2,8 +2,6 @@ import c3a.*;
 import nasm.*;
 import ts.Ts;
 
-//TODO : Revoir pour les noms de registres différents
-
 public class C3a2nasm implements C3aVisitor<NasmOperand> {
     private NasmOperand ebp = new NasmRegister(Nasm.REG_EBP, Nasm.REG_EBP);
     private NasmOperand esp = new NasmRegister(Nasm.REG_ESP, Nasm.REG_ESP);
@@ -91,7 +89,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         nasm.ajouteInst(new NasmSub(getLabel(inst), esp, valRet, "allocation mémoire pour la valeur de retour"));
         nasm.ajouteInst(new NasmCall(null, inst.op1.accept(this), ""));
         nasm.ajouteInst(new NasmPop(null, inst.result.accept(this), "récupération de la valeur de retour"));
-        nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(inst.op1.val.nbArgs * 4), "désallocation des arguments"));
+        if (inst.op1.val.nbArgs > 0)
+            nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(inst.op1.val.nbArgs * 4), "désallocation des arguments"));
         return null;
     }
 
