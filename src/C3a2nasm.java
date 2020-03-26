@@ -191,7 +191,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
             nasm.ajouteInst(new NasmMov(getLabel(inst), register, oper2, ""));
         }
         nasm.ajouteInst(new NasmDiv(null, register, ""));
-        nasm.ajouteInst(new NasmMov(null, register, eax, ""));
+        nasm.ajouteInst(new NasmMov(null, dest, eax, ""));
         return null;
     }
 
@@ -242,4 +242,3 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return null;
     }
 }
-

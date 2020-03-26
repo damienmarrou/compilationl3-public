@@ -92,9 +92,8 @@ public class Compiler {
                 //System.out.print("[BUILD IG] ");
                 Ig ig = new Ig(fgSolution);
                 ig.allocateRegisters();
-
-                // System.out.println("[PRINT NASM] ");
                 nasm.affiche(baseName);
+
 
             } catch (Exception e) {
                 //System.out.println("fileName = " + fileName);
@@ -122,7 +121,7 @@ public class Compiler {
         fileNASM = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
         fileFG = makeListOfFiles(".fg", fileFG, listOfFilesInput);
         fileFGS = makeListOfFiles(".fgs", fileFGS, listOfFilesInput);
-        // printCompare("SA", fileSA);
+        //printCompare("SA", fileSA);
         //printCompare("TS", fileTS);
         //printCompare("C3A", fileC3A);
         //printCompare("PRENASM", filePRENASM);

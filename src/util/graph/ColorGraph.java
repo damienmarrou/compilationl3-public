@@ -32,10 +32,6 @@ public class ColorGraph {
         }
     }
 
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /* associe une couleur à tous les sommets se trouvant dans la pile */
-    /*-------------------------------------------------------------------------------------------------------------*/
-
     public void selection() {
         while (!stack.isEmpty()) {
             int vertex = stack.pop();
@@ -50,9 +46,6 @@ public class ColorGraph {
         return -1;
     }
 
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /* récupère les couleurs des voisins de t */
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public IntSet colorOfNeighboor(int vertex) {
         IntSet colorSet = new IntSet(K);
@@ -62,19 +55,12 @@ public class ColorGraph {
         return colorSet;
     }
 
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /* recherche une couleur absente de colorSet */
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public int pickColor(IntSet colorSet) {
         for (int i = 0; i < colorSet.getSize(); i++)
             if (!colorSet.isMember(i)) return i;
         return NOCOLOR;
     }
-
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /* calcule le nombre de voisins du sommet t */
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public int nbNeighboor(int vertex) {
         int count = int2Node[vertex].outDegree();
@@ -83,12 +69,6 @@ public class ColorGraph {
         return count;
     }
 
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /* simplifie le graphe d'interférence g                                                                        */
-    /* la simplification consiste à enlever du graphe les temporaires qui ont moins de k voisins                   */
-    /* et à les mettre dans une pile                                                                               */
-    /* à la fin du processus, le graphe peut ne pas être vide, il s'agit des temporaires qui ont au moins k voisin */
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public void simplify() {
         boolean isUpdated = true;
@@ -105,8 +85,6 @@ public class ColorGraph {
         }
     }
 
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public void overflow() {
         while (stack.size() != R) {
@@ -118,9 +96,6 @@ public class ColorGraph {
         }
     }
 
-
-    /*-------------------------------------------------------------------------------------------------------------*/
-    /*-------------------------------------------------------------------------------------------------------------*/
 
     public void color() {
         R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();
@@ -136,6 +111,5 @@ public class ColorGraph {
             System.out.println(i + "\t  \t  " + color[i]);
         }
     }
-
 
 }
