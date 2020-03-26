@@ -10,6 +10,8 @@ def main():
     ref_directoryC3A = 'test/c3a-ref/'
     ref_directoryPRENASM = 'test/prenasm-ref/'
     ref_directoryNASM = 'test/nasm-ref/'
+    ref_directoryFG = 'test/fg-ref/'
+    ref_directoryFGS = 'test/fgs-ref/'
 
     if ('.sa' in file_name):
         ref_file = ref_directorySA + f'{file_name}'
@@ -23,7 +25,15 @@ def main():
                 if ('.pre-nasm' in file_name):
                     ref_file = ref_directoryPRENASM + f'{file_name}'
                 else:
-                    ref_file = ref_directoryNASM + f'{file_name}'
+                    if('.nasm' in file_name):
+                        ref_file = ref_directoryNASM + f'{file_name}'
+                    else:
+                        if('.fg' in file_name):
+                            ref_file = ref_directoryFG + f'{file_name}'
+                        else:
+                            if('.fgs' in file_name):
+                                ref_file = ref_directoryFGS + f'{file_name}'
+
 
     if (len(sys.argv) != 2):
         print("pas le bon argument")

@@ -101,6 +101,8 @@ public class Compiler {
         List<String> fileTS = new ArrayList<>();
         List<String> fileC3A = new ArrayList<>();
         List<String> filePRENASM = new ArrayList<>();
+        List<String> fileFG = new ArrayList<>();
+        List<String> fileFGS = new ArrayList<>();
         List<String> fileNASM = new ArrayList<>();
         File folderInput = new File("test/input");
         File[] listOfFilesInput = folderInput.listFiles();
@@ -109,12 +111,16 @@ public class Compiler {
         fileTS = makeListOfFiles(".ts", fileTS, listOfFilesInput);
         fileC3A = makeListOfFiles(".c3a", fileC3A, listOfFilesInput);
         filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);
+        fileFG= makeListOfFiles(".fg", fileFG, listOfFilesInput);
+        fileFGS = makeListOfFiles(".fgs", fileFGS, listOfFilesInput);
         fileNames = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
 
         // printCompare("SA", fileSA);
         //printCompare("TS", fileTS);
         //printCompare("C3A", fileC3A);
-        printCompare("PRENASM", filePRENASM);
+        //printCompare("PRENASM", filePRENASM);
+        printCompare("FG", fileFG);
+        printCompare("FG", fileFGS);
         printCompare("NASM", fileNASM);
     }
 
