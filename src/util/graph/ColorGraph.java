@@ -17,7 +17,7 @@ public class ColorGraph {
 
     public ColorGraph(Graph G, int K, int[] phi) {
         this.K = K;
-        stack = new Stack<Integer>();
+        stack = new Stack<>();
         R = G.nodeCount();
         color = new int[R];
         remove = new IntSet(R);
@@ -77,7 +77,6 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
 
     public int nbNeighboor(int vertex) {
-        if (int2Node[vertex].succ() == null) return 0;
         int count = int2Node[vertex].outDegree();
         for (Node successor : int2Node[vertex].succ())
             if (remove.isMember(successor.mykey)) count--;
@@ -133,8 +132,8 @@ public class ColorGraph {
 
     void print() {
         System.out.println("vertex\tcolor");
-        for (int i = 0; i < R; i++) {
-            System.out.println(i + "\t" + color[i]);
+        for (int i = 0; i < int2Node.length; i++) {
+            System.out.println(i + "\t  \t  " + color[i]);
         }
     }
 

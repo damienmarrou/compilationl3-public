@@ -115,10 +115,10 @@ public class Compiler {
         File folderInput = new File("test/input");
         File[] listOfFilesInput = folderInput.listFiles();
 
-       /* fileSA = makeListOfFiles(".sa", fileSA, listOfFilesInput);
+        fileSA = makeListOfFiles(".sa", fileSA, listOfFilesInput);
         fileTS = makeListOfFiles(".ts", fileTS, listOfFilesInput);
         fileC3A = makeListOfFiles(".c3a", fileC3A, listOfFilesInput);
-        filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);*/
+        filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);
         fileNASM = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
         fileFG = makeListOfFiles(".fg", fileFG, listOfFilesInput);
         fileFGS = makeListOfFiles(".fgs", fileFGS, listOfFilesInput);
