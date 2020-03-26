@@ -112,6 +112,7 @@ public class ColorGraph {
     public void overflow() {
         while (stack.size() != R) {
             int vertex = pickVertex();
+            stack.push(vertex);
             remove.add(vertex);
             overflow.add(vertex);
             simplify();
