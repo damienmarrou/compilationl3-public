@@ -25,6 +25,7 @@ public class Ig {
         this.int2Node = new Node[regNb];
         //this.build();
         this.construction();
+
     }
 
     public void construction(){
