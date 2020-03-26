@@ -2,6 +2,7 @@ import c3a.C3a;
 import c3a.C3aEval;
 import fg.Fg;
 import fg.FgSolution;
+import ig.Ig;
 import nasm.Nasm;
 import sa.Sa2Xml;
 import sa.SaNode;
@@ -88,6 +89,13 @@ public class Compiler {
                 FgSolution fgSolution = new FgSolution(nasm, fg);
                 fgSolution.affiche(baseName);
 
+                //System.out.print("[BUILD IG] ");
+                Ig ig = new Ig(fgSolution);
+                ig.allocateRegisters();
+
+                // System.out.println("[PRINT NASM] ");
+                nasm.affiche(baseName);
+
             } catch (Exception e) {
                 //System.out.println("fileName = " + fileName);
                 System.out.println("\nFichier n° " + j + "  " + fileName.substring(fileName.lastIndexOf('\\') + 1) + " erreur n° " + i);
@@ -107,20 +115,20 @@ public class Compiler {
         File folderInput = new File("test/input");
         File[] listOfFilesInput = folderInput.listFiles();
 
-        fileSA = makeListOfFiles(".sa", fileSA, listOfFilesInput);
+       /* fileSA = makeListOfFiles(".sa", fileSA, listOfFilesInput);
         fileTS = makeListOfFiles(".ts", fileTS, listOfFilesInput);
         fileC3A = makeListOfFiles(".c3a", fileC3A, listOfFilesInput);
-        filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);
+        filePRENASM = makeListOfFiles(".pre-nasm", filePRENASM, listOfFilesInput);*/
         fileNASM = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
         fileFG = makeListOfFiles(".fg", fileFG, listOfFilesInput);
         fileFGS = makeListOfFiles(".fgs", fileFGS, listOfFilesInput);
         // printCompare("SA", fileSA);
         //printCompare("TS", fileTS);
         //printCompare("C3A", fileC3A);
-        printCompare("PRENASM", filePRENASM);
-        printCompare("NASM", fileNASM);
+        //printCompare("PRENASM", filePRENASM);
         printCompare("FG", fileFG);
         printCompare("FGS", fileFGS);
+        printCompare("NASM", fileNASM);
     }
 
     public static List<String> makeListOfFiles(String type, List<String> fileType, File[] listOfFiles) {
@@ -141,7 +149,6 @@ public class Compiler {
                 System.out.print(new String(Runtime.getRuntime().exec("python test/CompareArbre.py " + file + " " + file).getErrorStream().readAllBytes()));
             }
         }
-        return;
     }
 
     public static String removeSuffix(final String s, final String suffix) {

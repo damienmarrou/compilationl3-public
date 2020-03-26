@@ -15,10 +15,10 @@ import java.util.Map;
 
 public class FgSolution {
     public Nasm nasm;
-    public Map<NasmInst, IntSet> use = new HashMap<NasmInst, IntSet>();
-    public Map<NasmInst, IntSet> def = new HashMap<NasmInst, IntSet>();
-    public Map<NasmInst, IntSet> in = new HashMap<NasmInst, IntSet>();
-    public Map<NasmInst, IntSet> out = new HashMap<NasmInst, IntSet>();
+    public Map<NasmInst, IntSet> use = new HashMap<>();
+    public Map<NasmInst, IntSet> def = new HashMap<>();
+    public Map<NasmInst, IntSet> in = new HashMap<>();
+    public Map<NasmInst, IntSet> out = new HashMap<>();
     int nbIteration = 0;
     Fg fg;
 
@@ -64,10 +64,11 @@ public class FgSolution {
             isStable = true;
             nbIteration++;
 
-            for (var node : nodes) {
-                var currentInst = fg.node2Inst.get(node);
-                var in = this.in.get(currentInst).copy();
-                var out = this.out.get(currentInst).copy();
+            for (Node node : nodes) {
+                NasmInst currentInst = fg.node2Inst.get(node);
+
+                IntSet in = this.in.get(currentInst).copy();
+                IntSet out = this.out.get(currentInst).copy();
 
                 this.in.replace(currentInst, use.get(currentInst).copy().union(this.out.get(currentInst).copy().minus(def.get(currentInst))));
 

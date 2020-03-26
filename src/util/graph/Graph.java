@@ -32,42 +32,49 @@ public class Graph {
 	}
 	return array;
     }
-    
 
-  public void addEdge(Node from, Node to) {
-      check(from); check(to);
-      if (from.goesTo(to)) return;
-      to.preds=new NodeList(from, to.preds);
-      from.succs=new NodeList(to, from.succs);
-  }
 
-  NodeList delete(Node a, NodeList l) {
-	if (l==null) throw new Error("Graph.rmEdge: edge nonexistent");
-        else if (a==l.head) return l.tail;
-	else return new NodeList(l.head, delete(a, l.tail));
-  }
+    public void addEdge(Node from, Node to) {
+        check(from);
+        check(to);
+        if (from.goesTo(to)) return;
+        to.preds = new NodeList(from, to.preds);
+        from.succs = new NodeList(to, from.succs);
+    }
 
-  public void rmEdge(Node from, Node to) {
-	to.preds=delete(from,to.preds);
-        from.succs=delete(to,from.succs);
-  }
 
- /**
-  * Print a human-readable dump for debugging.
-  */
-     public void show(java.io.PrintStream out) {
-	for (NodeList p=nodes(); p!=null; p=p.tail) {
-	  Node n = p.head;
-        out.print(n.toString());
-        out.print(": ");
-        for (NodeList q = n.succ(); q != null; q = q.tail) {
-            out.print(q.head.toString());
-            out.print(" ");
+    NodeList delete(Node a, NodeList l) {
+        if (l == null) throw new Error("Graph.rmEdge: edge nonexistent");
+        else if (a == l.head) return l.tail;
+        else return new NodeList(l.head, delete(a, l.tail));
+    }
+
+    public void rmEdge(Node from, Node to) {
+        to.preds = delete(from, to.preds);
+        from.succs = delete(to, from.succs);
+    }
+
+
+    public void addNOEdge(Node from, Node to) {
+        addEdge(from, to);
+        addEdge(to, from);
+    }
+
+
+    /**
+     * Print a human-readable dump for debugging.
+     */
+    public void show(java.io.PrintStream out) {
+        for (NodeList p = nodes(); p != null; p = p.tail) {
+            Node n = p.head;
+            out.print(n.toString());
+            out.print(": ");
+            for (NodeList q = n.succ(); q != null; q = q.tail) {
+                out.print(q.head.toString());
+                out.print(" ");
+            }
+            out.println();
         }
-        out.println();
     }
-     }
 
-    public void addNOEdge(Node n7, Node n8) {
-    }
 }
