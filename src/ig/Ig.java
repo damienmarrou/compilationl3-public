@@ -76,7 +76,6 @@ public class Ig {
     // @FIXME :: hardcoded K value
     public void allocateRegisters() {
         ColorGraph cg = new ColorGraph(graph, 4, getPreColoredTemporaries());
-        cg.color();
         int[] colors = cg.color;
         for (var inst : nasm.listeInst) {
             allocateRegister(inst.source, colors);

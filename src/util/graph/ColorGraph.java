@@ -102,7 +102,6 @@ public class ColorGraph {
 
     public void color() {
         R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
-
         this.simplify();
         this.overflow();
         this.selection();
