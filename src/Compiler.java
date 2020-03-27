@@ -124,7 +124,7 @@ public class Compiler {
         //printCompare("SA", fileSA);
         //printCompare("TS", fileTS);
         //printCompare("C3A", fileC3A);
-        //printCompare("PRENASM", filePRENASM);
+        printCompare("PRENASM", filePRENASM);
         printCompare("FG", fileFG);
         printCompare("FGS", fileFGS);
         printCompare("NASM", fileNASM);
