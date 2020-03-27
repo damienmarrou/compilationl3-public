@@ -6,7 +6,6 @@ import java.util.Stack;
 import java.util.stream.IntStream;
 
 public class ColorGraph {
-    public Graph G; //Graphe d'interference
     public int R; //Nombre de sommets
     public int K; //Nombre de couleurs
     private Stack<Integer> stack; //pile
@@ -17,7 +16,6 @@ public class ColorGraph {
     static int NOCOLOR = -1;
 
     public ColorGraph(Graph G, int K, int[] phi) {
-        this.G = G;
         this.K = K;
         stack = new Stack<>();
         R = G.nodeCount();
