@@ -1,6 +1,6 @@
 import java.io.*;
-import sc.analysis.*;
-import sc.node.*;
+import sc.analysis.DepthFirstAdapter;
+import sc.node.Node;
 
 class Sc2Xml extends DepthFirstAdapter
 {
