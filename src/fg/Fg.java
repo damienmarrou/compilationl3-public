@@ -79,6 +79,7 @@ public class Fg implements NasmVisitor<Void> {
 
     public Void visit(NasmCall inst) {
         addArcToNextNode(inst);
+        //addLabelToArcNode(inst,(NasmLabel) inst.address);
         return null;
     }
 
@@ -121,6 +122,7 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     public Void visit(NasmInst inst) {
+        addArcToNextNode(inst);
         return null;
     }
 
