@@ -65,8 +65,8 @@ public class Fg implements NasmVisitor<Void> {
 
     private void addLabelToArcNode(NasmInst inst, NasmLabel label) {
         graph.addEdge(inst2Node.get(inst), inst2Node.get(label2Inst.get(label.val)));
-        /* if (label2Inst.containsKey(inst.address)) {
-            graph.addEdge(inst2Node.get(inst), inst2Node.get(label2Inst.get(inst.address)));
+         /*if (label2Inst.containsKey(inst.address)) {
+            graph.addEdge(inst2Node.get(inst), inst2Node.get(label2Inst.get(label.val)));
         }*/
     }
 
@@ -78,8 +78,8 @@ public class Fg implements NasmVisitor<Void> {
 
 
     public Void visit(NasmCall inst) {
-        addArcToNextNode(inst);
         //addLabelToArcNode(inst,(NasmLabel) inst.address);
+        addArcToNextNode(inst);
         return null;
     }
 
