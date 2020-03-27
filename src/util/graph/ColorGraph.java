@@ -3,17 +3,16 @@ package util.graph;
 import util.intset.IntSet;
 
 import java.util.Stack;
-import java.util.stream.IntStream;
 
 public class ColorGraph {
+    static int NOCOLOR = -1;
     public int R; //Nombre de sommets
     public int K; //Nombre de couleurs
-    private Stack<Integer> stack; //pile
     public IntSet remove; //Sommets enlevés
     public IntSet overflow; //Sommets qui débordent
     public int[] color; //Tableau des couleurs
     public Node[] int2Node; //Tableau pour accéder à un sommet
-    static int NOCOLOR = -1;
+    private Stack<Integer> stack; //pile
 
     public ColorGraph(Graph G, int K, int[] phi) {
         this.K = K;
@@ -30,64 +29,96 @@ public class ColorGraph {
             else
                 color[v] = NOCOLOR;
         }
+        simplify();
+        selection();
         color();
     }
 
     public void selection() {
         while (!stack.isEmpty()) {
             int vertex = stack.pop();
+            remove.remove(vertex);
+            if (color[vertex] == NOCOLOR) {
+                IntSet nc = colorOfNeighboor(vertex);
+                if (nc.getSize() != K) {
+                    color[vertex] = pickColor(nc);
+                }
+            }
             color[vertex] = pickColor(colorOfNeighboor(vertex));
         }
     }
 
     private int pickVertex() {
-        for (int i = 0; i < remove.getSize(); i++)
-            if (!remove.isMember(i) && color[i] == NOCOLOR)
-                return i;
+        for (int vertex = 0; vertex < R; vertex++) {
+            if (!stack.contains(vertex)) return vertex;
+        }
         return -1;
     }
 
 
     public IntSet colorOfNeighboor(int vertex) {
         IntSet colorSet = new IntSet(K);
+        NodeList nodeList = int2Node[vertex].pred();
+        while (nodeList != null) {
+            if (!remove.isMember(nodeList.head.mykey) && color[nodeList.head.mykey] != NOCOLOR) {
+                colorSet.add(color[nodeList.head.mykey]);
+            }
+            nodeList = nodeList.tail;
+        }
+        return colorSet;
+
+        /*
         if (int2Node[vertex].succ() != null)
             for (Node successor : int2Node[vertex].succ())
                 if (color[successor.mykey] != NOCOLOR) colorSet.add(color[successor.mykey]);
-        return colorSet;
+        return colorSet;*/
     }
 
 
     public int pickColor(IntSet colorSet) {
-        for (int i = 0; i < colorSet.getSize(); i++)
+        for (int i = 0; i < K; i++)
             if (!colorSet.isMember(i)) return i;
         return NOCOLOR;
     }
 
     public int nbNeighboor(int vertex) {
-        int count = int2Node[vertex].outDegree();
-        if (int2Node[vertex].succs != null)
-            for (Node successor : int2Node[vertex].succ())
-                if (remove.isMember(successor.mykey)) count--;
-        return count;
-    }
+        //int count = int2Node[vertex].outDegree();
+        int count = 0;
+        NodeList nodeList = int2Node[vertex].pred();
+        while (nodeList != null) {
+            if (!remove.isMember(nodeList.head.mykey)) {
+                count++;
+            }
+            nodeList = nodeList.tail;
+        }
 
+
+        /*if (int2Node[vertex].succs != null)
+            for (Node successor : int2Node[vertex].succ())
+                if (remove.isMember(successor.mykey)) count--;*/
+        return count;
+
+    }
 
     public void simplify() {
         boolean isUpdated = true;
 
         while (stack.size() != R && isUpdated) {
             isUpdated = false;
-            for (Node node : int2Node) {
-                if (remove.isMember(node.mykey)) continue;
-                if (nbNeighboor(node.mykey) < K && color[node.mykey] == NOCOLOR) {
-                    remove.add(node.mykey);
-                    stack.push(node.mykey);
-                    isUpdated = true;
+            for (int vertex = 0; vertex < R; vertex++) {
+                if (!stack.contains(vertex)) {
+                    if (nbNeighboor(vertex) < K) {// && color[vertex] == NOCOLOR) {
+                        remove.add(vertex);
+                        stack.push(vertex);
+                        isUpdated = true;
+                    } else {
+                        overflow();
+                    }
                 }
+                //if (remove.isMember(node.mykey)) continue;
             }
         }
     }
-
 
     public ColorGraph overflow() {
         while (stack.size() != R) {
@@ -102,7 +133,7 @@ public class ColorGraph {
 
 
     public void color() {
-        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
+        //R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
         this.simplify();
         this.overflow();
         this.selection();

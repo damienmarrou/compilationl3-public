@@ -15,8 +15,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         nasm.setTempCounter(c3a.getTempCounter());
         //Création des registres
         NasmRegister eax = nasm.newRegister();
-        eax.colorRegister(Nasm.REG_EAX);
         NasmRegister ebx = nasm.newRegister();
+        eax.colorRegister(Nasm.REG_EAX);
         ebx.colorRegister(Nasm.REG_EBX);
 
         nasm.ajouteInst(new NasmCall(null, new NasmLabel("main"), ""));
