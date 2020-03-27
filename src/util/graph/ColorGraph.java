@@ -29,8 +29,6 @@ public class ColorGraph {
             else
                 color[v] = NOCOLOR;
         }
-        simplify();
-        selection();
         color();
     }
 
@@ -107,13 +105,13 @@ public class ColorGraph {
             isUpdated = false;
             for (int vertex = 0; vertex < R; vertex++) {
                 if (!stack.contains(vertex)) {
-                    if (nbNeighboor(vertex) < K) {// && color[vertex] == NOCOLOR) {
+                    if (nbNeighboor(vertex) < K && color[vertex] == NOCOLOR) {
                         remove.add(vertex);
                         stack.push(vertex);
                         isUpdated = true;
-                    } else {
+                    } /*else {
                         overflow();
-                    }
+                    }*/
                 }
                 //if (remove.isMember(node.mykey)) continue;
             }
