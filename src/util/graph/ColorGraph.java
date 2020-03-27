@@ -30,6 +30,7 @@ public class ColorGraph {
             else
                 color[v] = NOCOLOR;
         }
+        color();
     }
 
     public void selection() {
@@ -64,8 +65,9 @@ public class ColorGraph {
 
     public int nbNeighboor(int vertex) {
         int count = int2Node[vertex].outDegree();
-        for (Node successor : int2Node[vertex].succ())
-            if (remove.isMember(successor.mykey)) count--;
+        if (int2Node[vertex].succs != null)
+            for (Node successor : int2Node[vertex].succ())
+                if (remove.isMember(successor.mykey)) count--;
         return count;
     }
 
@@ -86,7 +88,7 @@ public class ColorGraph {
     }
 
 
-    public void overflow() {
+    public ColorGraph overflow() {
         while (stack.size() != R) {
             int vertex = pickVertex();
             stack.push(vertex);
@@ -94,11 +96,12 @@ public class ColorGraph {
             overflow.add(vertex);
             simplify();
         }
+        return this;
     }
 
 
     public void color() {
-        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();
+        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
 
         this.simplify();
         this.overflow();

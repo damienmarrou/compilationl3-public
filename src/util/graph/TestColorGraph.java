@@ -3,9 +3,9 @@ public class TestColorGraph
 {
     public static void main(String[] args)
     {
-	Graph g = new Graph();
+        Graph g = new Graph();
 
-	Node n1 = g.newNode();
+        Node n1 = g.newNode();
         Node n2 = g.newNode();
         Node n3 = g.newNode();
         Node n4 = g.newNode();
