@@ -175,7 +175,6 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         nasm.ajouteInst(new NasmMul(null, dest, oper2, ""));
         return null;
     }
-
     @Override
     public NasmOperand visit(C3aInstDiv inst) {
         NasmOperand oper1 = inst.op1.accept(this);
@@ -183,19 +182,19 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         NasmOperand dest = inst.result.accept(this);
         NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
+
         var register = oper2 instanceof NasmConstant
                 ? nasm.newRegister()
                 : oper2;
         nasm.ajouteInst(new NasmMov(getLabel(inst), eax, oper1, ""));
         if (oper2 instanceof NasmConstant) {
             nasm.ajouteInst(new NasmMov(getLabel(inst), register, oper2, ""));
+            nasm.ajouteInst(new NasmDiv(null, register, ""));
         }
-        nasm.ajouteInst(new NasmDiv(null, register, ""));
-        //méthode des profs
-        NasmRegister eax1 = nasm.newRegister();
-        eax1.colorRegister(Nasm.REG_EAX);
-        nasm.ajouteInst(new NasmMov(null, dest, eax1, ""));
-       // nasm.ajouteInst(new NasmMov(null, dest, eax, ""));//méthode optimisé
+        else {
+            nasm.ajouteInst(new NasmDiv(null, oper2, ""));
+        }
+        nasm.ajouteInst(new NasmMov(null, dest, eax, ""));
 
         return null;
     }
