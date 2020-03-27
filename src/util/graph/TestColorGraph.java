@@ -27,8 +27,8 @@ public class TestColorGraph
         g.addNOEdge(n3, n10);
 
         g.addNOEdge(n4, n5);
-	g.addNOEdge(n4, n8);
-	g.addNOEdge(n4, n10);
+	    g.addNOEdge(n4, n8);
+	    g.addNOEdge(n4, n10);
 
         g.addNOEdge(n5, n8);
         g.addNOEdge(n5, n10);

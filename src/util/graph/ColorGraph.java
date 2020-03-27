@@ -6,16 +6,18 @@ import java.util.Stack;
 import java.util.stream.IntStream;
 
 public class ColorGraph {
+    public Graph G; //Graphe d'interference
+    public int R; //Nombre de sommets
+    public int K; //Nombre de couleurs
+    private Stack<Integer> stack; //pile
+    public IntSet remove; //Sommets enlevés
+    public IntSet overflow; //Sommets qui débordent
+    public int[] color; //Tableau des couleurs
+    public Node[] int2Node; //Tableau pour accéder à un sommet
     static int NOCOLOR = -1;
-    public int R;
-    public int K;
-    public IntSet remove;
-    public IntSet overflow;
-    public int[] color;
-    public Node[] int2Node;
-    private Stack<Integer> stack;
 
     public ColorGraph(Graph G, int K, int[] phi) {
+        this.G = G;
         this.K = K;
         stack = new Stack<>();
         R = G.nodeCount();
@@ -74,6 +76,7 @@ public class ColorGraph {
 
     public void simplify() {
         boolean isUpdated = true;
+
         while (stack.size() != R && isUpdated) {
             isUpdated = false;
             for (Node node : int2Node) {
