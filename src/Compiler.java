@@ -35,7 +35,7 @@ public class Compiler {
             // Create a Parser instance.
             Parser p = new Parser(new Lexer(br));
             // Parse the input.
-            //System.out.print("[BUILD SC] ");
+            System.out.print("[BUILD SC] ");
             Start tree = p.parse();
 
             System.out.println("[PRINT SC]");
@@ -101,8 +101,8 @@ public class Compiler {
     }
 }
 
-/*
-import c3a.C3a;
+
+/*import c3a.C3a;
 import c3a.C3aEval;
 import fg.Fg;
 import fg.FgSolution;
@@ -146,8 +146,8 @@ public class Compiler {
                 baseName = removeSuffix(fileName, ".l");
 				/*} else {
 					System.out.println("il manque un argument");
-				}*//*
-            }* catch (IOException e) {
+				}*/
+            /*} catch (IOException e) {
                 e.printStackTrace();
             }
             try {
@@ -229,7 +229,7 @@ public class Compiler {
         //printCompare("TS", fileTS);
         //printCompare("C3A", fileC3A);
         //printCompare("PRENASM", filePRENASM);
-        printCompare("FG", fileFG);
+        //printCompare("FG", fileFG);
         printCompare("FGS", fileFGS);
         printCompare("NASM", fileNASM);
     }
@@ -260,4 +260,5 @@ public class Compiler {
         }
         return s;
     }
-}*/
+}
+*/
