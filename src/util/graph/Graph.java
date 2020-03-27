@@ -42,6 +42,19 @@ public class Graph {
         from.succs = new NodeList(to, from.succs);
     }
 
+    public void addNOEdge(Node from, Node to) {
+        check(from);
+        check(to);
+        if (!from.goesTo(to)) {
+            to.preds = new NodeList(from, to.preds);
+            from.succs = new NodeList(to, from.succs);
+        }
+        if (!to.goesTo(from)) {
+            from.preds = new NodeList(to, from.preds);
+            to.succs = new NodeList(from, to.succs);
+        }
+    }
+
 
     NodeList delete(Node a, NodeList l) {
         if (l == null) throw new Error("Graph.rmEdge: edge nonexistent");
@@ -53,13 +66,6 @@ public class Graph {
         to.preds = delete(from, to.preds);
         from.succs = delete(to, from.succs);
     }
-
-
-    public void addNOEdge(Node from, Node to) {
-        addEdge(from, to);
-        addEdge(to, from);
-    }
-
 
     /**
      * Print a human-readable dump for debugging.
