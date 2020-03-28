@@ -112,9 +112,9 @@ public class ColorGraph {
                         remove.add(vertex);
                         stack.push(vertex);
                         isUpdated = true;
-                    } else {
+                    }/* else {
                         overflow();
-                    }
+                    }*/
                 }
                 //if (remove.isMember(node.mykey)) continue;
             }
@@ -134,7 +134,7 @@ public class ColorGraph {
 
 
     public void color() {
-        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
+        //R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
         this.simplify();
         this.overflow();
         this.selection();
