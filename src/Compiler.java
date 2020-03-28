@@ -102,15 +102,13 @@ public class Compiler {
 }
 
 
-/*import c3a.C3a;
-import c3a.C3aEval;
-import fg.Fg;
-import fg.FgSolution;
+/*
+import c3a.*;
+import fg.*;
 import ig.Ig;
 import nasm.Nasm;
-import sa.Sa2Xml;
-import sa.SaNode;
-import sc.lexer.Lexer;
+import sa.*;
+import sc.lexer.*;
 import sc.node.Start;
 import sc.parser.Parser;
 import ts.Ts;
@@ -121,6 +119,7 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Compiler {
     public static void main(String[] args) throws IOException {
@@ -225,11 +224,11 @@ public class Compiler {
         fileNASM = makeListOfFiles(".nasm", fileNASM, listOfFilesInput);
         fileFG = makeListOfFiles(".fg", fileFG, listOfFilesInput);
         fileFGS = makeListOfFiles(".fgs", fileFGS, listOfFilesInput);
-        //printCompare("SA", fileSA);
-        //printCompare("TS", fileTS);
-        //printCompare("C3A", fileC3A);
-        //printCompare("PRENASM", filePRENASM);
-        //printCompare("FG", fileFG);
+        printCompare("SA", fileSA);
+        printCompare("TS", fileTS);
+        printCompare("C3A", fileC3A);
+        printCompare("PRENASM", filePRENASM);
+        printCompare("FG", fileFG);
         printCompare("FGS", fileFGS);
         printCompare("NASM", fileNASM);
     }
