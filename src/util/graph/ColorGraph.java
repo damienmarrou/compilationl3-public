@@ -38,12 +38,12 @@ public class ColorGraph {
         while (!stack.isEmpty()) {
             int vertex = stack.pop();
             remove.remove(vertex);
-            if (color[vertex] == NOCOLOR) {
+            /*if (color[vertex] == NOCOLOR) {
                 IntSet nc = colorOfNeighboor(vertex);
                 if (nc.getSize() != K) {
                     color[vertex] = pickColor(nc);
                 }
-            }
+            }*/
             color[vertex] = pickColor(colorOfNeighboor(vertex));
         }
     }
@@ -107,13 +107,13 @@ public class ColorGraph {
             isUpdated = false;
             for (int vertex = 0; vertex < R; vertex++) {
                 if (!stack.contains(vertex)) {
-                    if (nbNeighboor(vertex) < K) {// && color[vertex] == NOCOLOR) {
+                    if (nbNeighboor(vertex) < K && color[vertex] == NOCOLOR) {
                         remove.add(vertex);
                         stack.push(vertex);
                         isUpdated = true;
-                    } /*else {
+                    } else {
                         overflow();
-                    }*/
+                    }
                 }
                 //if (remove.isMember(node.mykey)) continue;
             }
