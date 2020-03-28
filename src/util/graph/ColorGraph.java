@@ -29,8 +29,8 @@ public class ColorGraph {
             else
                 color[v] = NOCOLOR;
         }
-        simplify();
-        selection();
+        //simplify();
+        //selection();
         color();
     }
 
