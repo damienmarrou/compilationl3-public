@@ -3,6 +3,7 @@ package util.graph;
 import util.intset.IntSet;
 
 import java.util.Stack;
+import java.util.stream.IntStream;
 
 public class ColorGraph {
     static int NOCOLOR = -1;
@@ -133,7 +134,7 @@ public class ColorGraph {
 
 
     public void color() {
-        //R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
+        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
         this.simplify();
         this.overflow();
         this.selection();
