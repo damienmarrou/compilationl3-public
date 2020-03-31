@@ -3,7 +3,9 @@ import ts.Ts;
 import ts.TsItemVar;
 
 public class Sa2ts extends SaDepthFirstVisitor<Void> {
+
     Ts tableGlobale = new Ts();
+    Ts tableLocale = null;
     Ts location = tableGlobale;
     int argsLength = 0;
     boolean isParam = false;
@@ -21,20 +23,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return location != tableGlobale;
     }
 
-    /**
-     * Vérifie que le main existe et qu'il est défini correctement (sans arguments)
-     */
-    private void checkMainExists() {
-        if (!tableGlobale.fonctions.containsKey("main"))
-            throw new TsException("Absence de la fonction main");
-        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("La fonction main doit avoir aucun argument");
-    }
-
-
-    /**
-     * Vérifie si la déclaration d'une variable simple est unique
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaDecVar node) {
         TsItemVar itemVar = location.getVar(node.getNom());
@@ -50,10 +38,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return null;
     }
 
-    /**
-     * Vérifie si la déclaration d'un tableau est au bon endroit et unique
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaDecTab node) {
         if (isLocalTable()) throw new TsException("Ne pas définir un tableau en local");
@@ -62,11 +46,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return null;
     }
 
-
-    /**
-     * Vérifie si la déclaration de fonction est unique
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaDecFonc node) {
         if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclaré");
@@ -86,11 +65,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return null;
     }
 
-
-    /**
-     * Vérifie si la variable simple est bien définie et qu'elle n'est pas indicée
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaVarSimple node) {
         if(isLocalTable() && location.variables.containsKey(node.getNom())) node.tsItem = location.variables.get(node.getNom());
@@ -100,10 +74,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         return null;
     }
 
-    /**
-     * Vérifie si la variable tableau est bien définie et que le tableau est bien indicé
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaVarIndicee node) {
        if(isLocalTable() && location.variables.containsKey(node.getNom())) node.tsItem = location.variables.get(node.getNom());
@@ -113,10 +83,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
        return null;
     }
 
-    /**
-     * Vérifie que la fonction appelée est bien déclarée et qu'elle est appelée avec le bon nombre d'arguments
-     * @param node le noeud à visiter
-     */
     @Override
     public Void visit(SaAppel node) {
         if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
@@ -131,18 +97,21 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             node.getArguments().accept(this);
         }
         if (length != node.tsItem.nbArgs) {
+
             throw new TsException("Pas le bon nombre d'argument pour la fonction");
         }
         return null;
     }
 
-    /**
-     * Définition d'une exception spéciale pour cette classe là
-     */
     static class TsException extends RuntimeException {
         TsException(String message) {
             super(message);
         }
+    }
 
+    private void checkMainExists() {
+        if (!tableGlobale.fonctions.containsKey("main"))
+            throw new TsException("Absence de la fonction main");
+        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("La fonction main doit avoir aucun argument");
     }
 }
