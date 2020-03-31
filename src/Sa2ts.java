@@ -4,7 +4,6 @@ import ts.TsItemVar;
 
 public class Sa2ts extends SaDepthFirstVisitor<Void> {
     Ts tableGlobale = new Ts();
-    Ts tableLocale = null;
     Ts location = tableGlobale;
     int argsLength = 0;
     boolean isParam = false;
