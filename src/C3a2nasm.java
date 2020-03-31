@@ -39,6 +39,10 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
                 : null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de début de fonction
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstFBegin inst) {
         localScope = inst.val.getTable();
@@ -49,44 +53,59 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de fin de fonction
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstFEnd inst) {
         nasm.ajouteInst(new NasmAdd(getLabel(inst), esp, new NasmConstant(localScope.nbVar() * 4), "désallocation des variables locales"));
         nasm.ajouteInst(new NasmPop(null, ebp, "restaure la valeur de ebp"));
         nasm.ajouteInst(new NasmRet(null, ""));
-
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction d'écriture
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstWrite inst) {
-        NasmOperand op1 = inst.op1.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
         NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
-        nasm.ajouteInst(new NasmMov(getLabel(inst), eax, op1, "Write 1"));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), eax, operand1, "Write 1"));
         NasmLabel print = new NasmLabel("iprintLF");
         nasm.ajouteInst(new NasmCall(null, print, "Write 2"));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de lecture
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstRead inst) {
-        NasmOperand dest = inst.result.accept(this);
+        NasmOperand destination = inst.result.accept(this);
         NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
 
         nasm.ajouteInst(new NasmMov(getLabel(inst), eax, new NasmConstant(2), ""));
         nasm.ajouteInst(new NasmCall(null, new NasmLabel("readline"), ""));
         nasm.ajouteInst(new NasmCall(null, new NasmLabel("atoi"), ""));
-        nasm.ajouteInst(new NasmMov(null, dest, eax, ""));
+        nasm.ajouteInst(new NasmMov(null, destination, eax, ""));
 
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction d'appel
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstCall inst) {
-        NasmConstant valRet = new NasmConstant(4);
-        nasm.ajouteInst(new NasmSub(getLabel(inst), esp, valRet, "allocation mémoire pour la valeur de retour"));
+        NasmConstant returnValue = new NasmConstant(4);
+        nasm.ajouteInst(new NasmSub(getLabel(inst), esp, returnValue, "allocation mémoire pour la valeur de retour"));
         nasm.ajouteInst(new NasmCall(null, inst.op1.accept(this), ""));
         nasm.ajouteInst(new NasmPop(null, inst.result.accept(this), "récupération de la valeur de retour"));
         if (inst.op1.val.nbArgs > 0)
@@ -94,20 +113,32 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction d'affectation
+     * @param inst l'instruction à visiter
+     */
     public NasmOperand visit(C3aInstAffect inst) {
-        NasmOperand op1 = inst.op1.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
         NasmOperand result = inst.result.accept(this);
-        nasm.ajouteInst(new NasmMov(getLabel(inst), result, op1, "Affect"));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), result, operand1, "Affect"));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de paramêtre
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstParam inst) {
-        NasmOperand op1 = inst.op1.accept(this);
-        nasm.ajouteInst(new NasmPush(getLabel(inst), op1, "Param"));
+        NasmOperand operand1 = inst.op1.accept(this);
+        nasm.ajouteInst(new NasmPush(getLabel(inst), operand1, "Param"));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de retour
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstReturn inst) {
         NasmAddress address = new NasmAddress(ebp, '+', new NasmConstant(2));
@@ -115,6 +146,10 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de saut
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstJump inst) {
         NasmOperand adresse = inst.result.accept(this);
@@ -122,98 +157,150 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de saut si égalité
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstJumpIfEqual inst) {
-        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), "JumpIfEqual 1"));
-        nasm.ajouteInst(new NasmJe(null, inst.result.accept(this), "JumpIfEqual 2"));
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op1.accept(this);
+        NasmOperand result = inst.result.accept(this);
+        nasm.ajouteInst(new NasmCmp(getLabel(inst), operand1, operand2, "JumpIfEqual 1"));
+        nasm.ajouteInst(new NasmJe(null, result, "JumpIfEqual 2"));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de saut si non égalité
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstJumpIfNotEqual inst) {
-        nasm.ajouteInst(new NasmCmp(getLabel(inst), inst.op1.accept(this), inst.op2.accept(this), "jumpIfNotEqual 1"));
-        nasm.ajouteInst(new NasmJne(null, inst.result.accept(this), "jumpIfNotEqual 2"));
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op1.accept(this);
+        NasmOperand result = inst.result.accept(this);
+        nasm.ajouteInst(new NasmCmp(getLabel(inst),operand1, operand2, "jumpIfNotEqual 1"));
+        nasm.ajouteInst(new NasmJne(null, result, "jumpIfNotEqual 2"));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de saut si infériorité
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstJumpIfLess inst) {
-        nasm.ajouteInst(new NasmCmp(null, inst.op1.accept(this), inst.op2.accept(this), "JumpIfLess 1"));
-        nasm.ajouteInst(new NasmJl(getLabel(inst), inst.result.accept(this), "JumpIfLess 2"));
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op1.accept(this);
+        NasmOperand result = inst.result.accept(this);
+        nasm.ajouteInst(new NasmCmp(null, operand1, operand2, "JumpIfLess 1"));
+        nasm.ajouteInst(new NasmJl(getLabel(inst), result, "JumpIfLess 2"));
         return null;
     }
 
-
+    /**
+     * Créer le code pré-nasm pour l'instruction d'addition
+     * @param inst l'instruction à visiter
+     */
     public NasmOperand visit(C3aInstAdd inst) {
-        NasmOperand oper1 = inst.op1.accept(this);
-        NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest = inst.result.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
 
-        nasm.ajouteInst(new NasmMov(getLabel(inst), dest, oper1, ""));
-        nasm.ajouteInst(new NasmAdd(null, dest, oper2, ""));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), result, operand1, ""));
+        nasm.ajouteInst(new NasmAdd(null, result, operand2, ""));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de soustraction
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstSub inst) {
-        NasmOperand oper1 = inst.op1.accept(this);
-        NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest = inst.result.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
 
-        nasm.ajouteInst(new NasmMov(getLabel(inst), dest, oper1, ""));
-        nasm.ajouteInst(new NasmSub(null, dest, oper2, ""));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), result, operand1, ""));
+        nasm.ajouteInst(new NasmSub(null, result, operand2, ""));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour l'instruction de multiplication
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstMult inst) {
-        NasmOperand oper1 = inst.op1.accept(this);
-        NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest = inst.result.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
 
-        nasm.ajouteInst(new NasmMov(getLabel(inst), dest, oper1, ""));
-        nasm.ajouteInst(new NasmMul(null, dest, oper2, ""));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), result, operand1, ""));
+        nasm.ajouteInst(new NasmMul(null, result, operand2, ""));
         return null;
     }
+
+    /**
+     * Créer le code pré-nasm pour l'instruction de division
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInstDiv inst) {
-        NasmOperand oper1 = inst.op1.accept(this);
-        NasmOperand oper2 = inst.op2.accept(this);
-        NasmOperand dest = inst.result.accept(this);
+        NasmOperand operand1 = inst.op1.accept(this);
+        NasmOperand operand2 = inst.op2.accept(this);
+        NasmOperand result = inst.result.accept(this);
         NasmRegister eax = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
 
-        var register = oper2 instanceof NasmConstant
+        var register = operand2 instanceof NasmConstant
                 ? nasm.newRegister()
-                : oper2;
-        nasm.ajouteInst(new NasmMov(getLabel(inst), eax, oper1, ""));
-        if (oper2 instanceof NasmConstant) {
-            nasm.ajouteInst(new NasmMov(getLabel(inst), register, oper2, ""));
+                : operand2;
+        nasm.ajouteInst(new NasmMov(getLabel(inst), eax, operand1, ""));
+        if (operand2 instanceof NasmConstant) {
+            nasm.ajouteInst(new NasmMov(getLabel(inst), register, operand2, ""));
             nasm.ajouteInst(new NasmDiv(null, register, ""));
         }
         else {
-            nasm.ajouteInst(new NasmDiv(null, oper2, ""));
+            nasm.ajouteInst(new NasmDiv(null, operand2, ""));
         }
-        nasm.ajouteInst(new NasmMov(null, dest, eax, ""));
-
+        nasm.ajouteInst(new NasmMov(null, result, eax, ""));
         return null;
     }
 
+    /**
+     * Créer le code pré-nasm pour une constante
+     * @param oper l'opérande à visiter
+     */
     @Override
     public NasmOperand visit(C3aConstant oper) {
         return new NasmConstant(oper.val);
     }
 
+    /**
+     * Créer le code pré-nasm pour un label
+     * @param oper l'opérande à visiter
+     */
     @Override
     public NasmOperand visit(C3aLabel oper) {
         return new NasmLabel(oper.toString());
     }
 
+    /**
+     * Créer le code pré-nasm pour une temporaire
+     * @param oper l'opérande à visiter
+     */
     @Override
     public NasmOperand visit(C3aTemp oper) {
         return new NasmRegister(oper.num);
     }
 
+    /**
+     * Créer le code pré-nasm pour une variable
+     * @param oper l'opérande à visiter
+     */
     @Override
     public NasmOperand visit(C3aVar oper) {
         var base = oper.item.portee == tableGlobale
@@ -236,11 +323,19 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         return new NasmAddress(base, direction, offset);
     }
 
+    /**
+     * Créer le code pré-nasm pour une fonction
+     * @param oper l'opérande à visiter
+     */
     @Override
     public NasmOperand visit(C3aFunction oper) {
         return new NasmLabel(oper.toString());
     }
 
+    /**
+     * Créer le code pré-nasm pour une instruction
+     * @param inst l'instruction à visiter
+     */
     @Override
     public NasmOperand visit(C3aInst inst) {
         return null;
