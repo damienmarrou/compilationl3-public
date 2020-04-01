@@ -1,30 +1,51 @@
 package sa;
-import java.util.*;
-import ts.*;
+import ts.Ts;
+import ts.TsItemFct;
 
-public class SaEval extends SaDepthFirstVisitor <Integer> {
-    private Ts tableGlobale;
-    private SaEnvironment curEnv;
-    private int[] varGlob;
-    
-    public SaEval(SaNode root, Ts tableGlobale){
-	this.tableGlobale = tableGlobale;
-	curEnv = null;
-	varGlob = new int[tableGlobale.nbVar()];
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 
-	SaAppel appelMain = new SaAppel("main", null);
-	appelMain.tsItem = tableGlobale.getFct("main");
-	
-	appelMain.accept(this);
-    }
-    
-    public void defaultIn(SaNode node)
-    {
-    }
+public class SaEval extends SaDepthFirstVisitor<Integer> {
+	private Ts tableGlobale;
+	private SaEnvironment curEnv;
+	private int[] varGlob;
+	private ArrayList<String> programOutput = new ArrayList<String>();
 
-    public void defaultOut(SaNode node)
-    {
-    }
+	public SaEval(SaNode root, Ts tableGlobale) {
+		this.tableGlobale = tableGlobale;
+		curEnv = null;
+		varGlob = new int[tableGlobale.nbVar()];
+
+		SaAppel appelMain = new SaAppel("main", null);
+		appelMain.tsItem = tableGlobale.getFct("main");
+
+		appelMain.accept(this);
+	}
+
+	public void affiche(String baseFileName) {
+		String fileName;
+		PrintStream out = System.out;
+
+		if (baseFileName != null) {
+			try {
+				baseFileName = baseFileName;
+				fileName = baseFileName + ".saout";
+				out = new PrintStream(fileName);
+			} catch (IOException e) {
+				System.err.println("Error: " + e.getMessage());
+			}
+		}
+		for (String line : programOutput)
+			out.println(line);
+	}
+
+
+	public void defaultIn(SaNode node) {
+	}
+
+	public void defaultOut(SaNode node) {
+	}
 
     // P -> LDEC LDEC 
     public Integer visit(SaProg node)
@@ -67,14 +88,13 @@ public class SaEval extends SaDepthFirstVisitor <Integer> {
 	return val;
     }
     
-    public Integer visit(SaInstEcriture node)
-    {
-	defaultIn(node);
-	int arg = node.getArg().accept(this);
-	System.out.println(arg);
-	defaultOut(node);
-	return 1;
-    }
+    public Integer visit(SaInstEcriture node) {
+		defaultIn(node);
+		int arg = node.getArg().accept(this);
+		programOutput.add(String.valueOf(arg));
+		defaultOut(node);
+		return 1;
+	}
     
     public Integer visit(SaInstTantQue node)
     {
@@ -245,14 +265,13 @@ public class SaEval extends SaDepthFirstVisitor <Integer> {
     }
 
     // EXP -> div EXP EXP
-    public Integer visit(SaExpDiv node)
-    {
-	defaultIn(node);
-	int op1 = node.getOp1().accept(this);
-	int op2 = node.getOp2().accept(this);
-	defaultOut(node);
-	return (int)(op1 / op2);
-    }
+    public Integer visit(SaExpDiv node) {
+		defaultIn(node);
+		int op1 = node.getOp1().accept(this);
+		int op2 = node.getOp2().accept(this);
+		defaultOut(node);
+		return op1 / op2;
+	}
     
     // EXP -> inf EXP EXP
     public Integer visit(SaExpInf node)
