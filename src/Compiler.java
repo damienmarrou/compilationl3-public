@@ -63,7 +63,7 @@ public class Compiler {
             saEval.affiche(baseName);
 
             System.out.print("[BUILD C3A] ");
-            C3a c3a = new Sa2c3a(saRoot).getC3a();
+            C3a c3a = new Sa2c3a(saRoot, table).getC3a();
 
             System.out.print("[PRINT C3A] ");
             c3a.affiche(baseName);
@@ -90,7 +90,7 @@ public class Compiler {
             Ig ig = new Ig(fgSolution);
 
             System.out.print("[PRINT IG] ");
-            ig.affiche(baseName);
+            ig.print(baseName);
 
             System.out.println("[ALLOCATE REGISTERS]");
             ig.allocateRegisters();
