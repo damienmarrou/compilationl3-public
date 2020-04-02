@@ -17,14 +17,18 @@ public class Fg implements NasmVisitor<Void> {
     Map<Node, NasmInst> node2Inst;
     Map<String, NasmInst> label2Inst;
 
-    public Fg(Nasm nasm) {
+    public Fg(Nasm nasm) {//todo check if it's work
         this.nasm = nasm;
         this.inst2Node = new HashMap<NasmInst, Node>();
         this.node2Inst = new HashMap<Node, NasmInst>();
         this.label2Inst = new HashMap<String, NasmInst>();
         this.graph = new Graph();
-        nasm.listeInst.forEach(this::init);
-        nasm.listeInst.forEach(inst -> inst.accept(this));
+        for (NasmInst inst : nasm.listeInst) {
+            init(inst);
+            inst.accept(this);
+        }
+        //nasm.listeInst.forEach(this::init);
+        //nasm.listeInst.forEach(inst -> inst.accept(this));
     }
 
     private void init(NasmInst inst) {
@@ -34,7 +38,7 @@ public class Fg implements NasmVisitor<Void> {
         node2Inst.put(node, inst);
     }
 
-    public void affiche(String baseFileName) {
+    public void print(String baseFileName) {
         String fileName;
         PrintStream out = System.out;
 
@@ -169,7 +173,6 @@ public class Fg implements NasmVisitor<Void> {
     }
 
     public Void visit(NasmJmp inst) {
-        // addArcToNextNode(inst);
         addLabelToArcNode(inst, (NasmLabel) inst.address);
         return null;
     }
@@ -209,6 +212,4 @@ public class Fg implements NasmVisitor<Void> {
     public Void visit(NasmRegister operand) {
         return null;
     }
-
-
 }

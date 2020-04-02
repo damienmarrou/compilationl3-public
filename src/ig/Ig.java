@@ -48,6 +48,11 @@ public class Ig {
         }
     }
 
+    /**
+     * get a pre-color for each Temp Register
+     *
+     * @return an array of colors
+     */
     public int[] getPreColoredTemporaries() {
         int[] colors = new int[nasm.getTempCounter()];
 
@@ -55,10 +60,15 @@ public class Ig {
             extractColor(inst.source, colors);
             extractColor(inst.destination, colors);
         }
-
         return colors;
     }
 
+    /**
+     * extract the color of operand from colors
+     *
+     * @param operand the operand we wanted to know color
+     * @param colors  contain colors of each operand
+     */
     private void extractColor(NasmOperand operand, int[] colors) {
         if (operand == null) return;
         if (operand.isGeneralRegister())
@@ -73,7 +83,10 @@ public class Ig {
         }
     }
 
-    // @FIXME :: hardcoded K value
+    /**
+     * Create a ColorGraph and set color of all instructions
+     * here we set K to 4 because we don't have any way to set it dynamically
+     */
     public void allocateRegisters() {
         ColorGraph cg = new ColorGraph(graph, 4, getPreColoredTemporaries());
         int[] colors = cg.color;

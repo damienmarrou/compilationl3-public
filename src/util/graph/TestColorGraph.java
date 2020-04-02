@@ -43,7 +43,6 @@ public class TestColorGraph
         g.show(System.out);
         int[] phi = new int[]{-3, -3, -3, 0, -3, 2, 1, -3, -3, -3};
         ColorGraph cg = new ColorGraph(g, 3, phi);
-        //cg.color();
         cg.print();
     }
 }

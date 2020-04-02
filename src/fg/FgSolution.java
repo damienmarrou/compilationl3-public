@@ -63,13 +63,10 @@ public class FgSolution {
         do {
             isStable = true;
             nbIteration++;
-
             for (Node node : nodes) {
                 NasmInst currentInst = fg.node2Inst.get(node);
-
                 IntSet in = this.in.get(currentInst).copy();
                 IntSet out = this.out.get(currentInst).copy();
-
                 this.in.replace(currentInst, use.get(currentInst).copy().union(this.out.get(currentInst).copy().minus(def.get(currentInst))));
 
                 if (node.succ() != null)
@@ -83,7 +80,7 @@ public class FgSolution {
     }
 
 
-    public void affiche(String baseFileName) {
+    public void print(String baseFileName) {
         String fileName;
         PrintStream out = System.out;
 
