@@ -24,17 +24,17 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     /**
-     * Vérifie si la déclaration d'une variable simple est unique
-     * @param node le noeud à visiter
+     * Check if the declaration of a simple variable is unique
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaDecVar node) {
         TsItemVar itemVar = location.getVar(node.getNom());
         if (itemVar != null)
             if (isLocalTable())
-                throw new TsException(node.getNom() + "Variable déjà définie en local");
+                throw new TsException(node.getNom() + "Simple variable already defined in local");
             else
-                throw  new TsException(node.getNom() + "Variable déjà définie en global");
+                throw  new TsException(node.getNom() + "Simple variable already defined in global");
 
         node.tsItem = isParam
                 ? location.addParam(node.getNom())
@@ -43,24 +43,24 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     /**
-     * Vérifie si la déclaration d'un tableau est au bon endroit et unique
-     * @param node le noeud à visiter
+     * Check if the declaration of an array is in the right place and unique
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaDecTab node) {
-        if (isLocalTable()) throw new TsException("Ne pas définir un tableau en local");
-        if (tableGlobale.getVar(node.getNom()) != null) throw new RuntimeException("Déjà défini dans la table globale");
+        if (isLocalTable()) throw new TsException("You can't defined an array in local");
+        if (tableGlobale.getVar(node.getNom()) != null) throw new RuntimeException("Array already defined in global");
         node.tsItem = location.addVar(node.getNom(), node.getTaille());
         return null;
     }
 
     /**
-     * Vérifie si la déclaration de fonction est unique
-     * @param node le noeud à visiter
+     * Check if the function declaration is unique
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaDecFonc node) {
-        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction déjà déclaré");
+        if (tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Function already defined");
         node.tsItem = tableGlobale.addFct(
                 node.getNom(),
                 node.getParametres() != null ? node.getParametres().length() : 0,
@@ -78,38 +78,38 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     /**
-     * Vérifie si la variable simple est bien définie et qu'elle n'est pas indicée
-     * @param node le noeud à visiter
+     * Check if the simple variable is well defined and that it is not an array
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaVarSimple node) {
         if(isLocalTable() && location.variables.containsKey(node.getNom())) node.tsItem = location.variables.get(node.getNom());
         else node.tsItem = tableGlobale.getVar(node.getNom());
-        if(node.tsItem == null) throw new TsException("Variable non définie");
-        if(node.tsItem.getTaille() > 1) throw  new TsException("Entier indicé alors qu'il ne faut pas");
+        if(node.tsItem == null) throw new TsException("Simple variable not defined");
+        if(node.tsItem.getTaille() > 1) throw  new TsException("You can't have an indexed simple variable");
         return null;
     }
 
     /**
-     * Vérifie si la variable tableau est bien définie et que le tableau est bien indicé
-     * @param node le noeud à visiter
+     * Check if the array variable is well defined and the array is well indexed
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaVarIndicee node) {
        if(isLocalTable() && location.variables.containsKey(node.getNom())) node.tsItem = location.variables.get(node.getNom());
        else node.tsItem = tableGlobale.getVar(node.getNom());
-       if(node.tsItem == null) throw  new TsException("Variable indicée non définie");
-       if(node.tsItem.getTaille() < 1) throw  new TsException("Tableau sans indice");
+       if(node.tsItem == null) throw  new TsException("Indexed variable not defined");
+       if(node.tsItem.getTaille() < 1) throw  new TsException("Array without index");
        return null;
     }
 
     /**
-     * Vérifie que la fonction appelée est bien déclarée et qu'elle est appelée avec le bon nombre d'arguments
-     * @param node le noeud à visiter
+     * Check that the called function is declared and that it is called with the right number of arguments
+     * @param node the node to visit
      */
     @Override
     public Void visit(SaAppel node) {
-        if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Fonction non declarée");
+        if (!tableGlobale.fonctions.containsKey(node.getNom())) throw new TsException("Function not defined");
         else node.tsItem = tableGlobale.getFct(node.getNom());
         int length;
         if (node.getArguments() != null) {
@@ -122,13 +122,13 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
         }
         if (length != node.tsItem.nbArgs) {
 
-            throw new TsException("Pas le bon nombre d'argument pour la fonction");
+            throw new TsException("You don't have the right number of arguments for this function");
         }
         return null;
     }
 
     /**
-     * Définition d'une exception spéciale pour cette classe là
+     * Definition of a special exception for this class
      */
     static class TsException extends RuntimeException {
         TsException(String message) {
@@ -137,11 +137,11 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     }
 
     /**
-     * Vérifie que le main existe et qu'il est défini correctement (sans arguments)
+     * Check that the main function exists and that it is defined correctly (without arguments)
      */
     private void checkMainExists() {
         if (!tableGlobale.fonctions.containsKey("main"))
-            throw new TsException("Absence de la fonction main");
-        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("La fonction main doit avoir aucun argument");
+            throw new TsException("Missing function main");
+        if (tableGlobale.fonctions.get("main").getNbArgs() != 0) throw new TsException("Function main should not have arguments");
     }
 }
