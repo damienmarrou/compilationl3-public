@@ -29,8 +29,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Permet de visiter tout le code
-     * @param node le noeud à visiter
+     * Visit all nodes
+     * @param node the node to visit
      */
     public C3aOperand visit(SaProg node) {
         return super.visit(node);
@@ -53,8 +53,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
 
     /**
-     * Créer le code 3 adresses pour la délaration de fonction
-     * @param node le noeud à visiter
+     * Create the c3a for the function declaration
+     * @param node the node to visit
      */
     public C3aOperand visit(SaDecFonc node) {
         c3a.ajouteInst(new C3aInstFBegin(node.tsItem, "entree fonction"));
@@ -71,8 +71,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'expression d'entier
-     * @param node le noeud à visiter
+     * Create the c3a for int expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpInt node) {
@@ -80,8 +80,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'expression d'une variable
-     * @param node le noeud à visiter
+     * Create the c3a for variable expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpVar node) {
@@ -89,8 +89,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction d'écriture
-     * @param node le noeud à visiter
+     * Create the c3a for the writing instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstEcriture node) {
@@ -100,8 +100,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction de retour
-     * @param node le noeud à visiter
+     * Create the c3a for the return instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstRetour node) {
@@ -110,8 +110,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction de lecture
-     * @param node le noeud à visiter
+     * Create the c3a to read expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpLire node) {
@@ -121,8 +121,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction tant que
-     * @param node le noeud à visiter
+     * Create the c3a for the while instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstTantQue node) {
@@ -140,8 +140,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction d'affectation
-     * @param node le noeud à visiter
+     * Create the c3a for the affectation instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstAffect node) {
@@ -153,8 +153,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la déclaration de variable simple
-     * @param node le noeud à visiter
+     * Create the c3a for the simple variable
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaVarSimple node) {
@@ -162,8 +162,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la déclaration de variable indicée
-     * @param node le noeud à visiter
+     * Create the c3a for the indexed variable
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaVarIndicee node) {
@@ -171,8 +171,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'instruction d'appel
-     * @param node le noeud à visiter
+     * Create the c3a for the call instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaAppel node) {
@@ -183,8 +183,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'appel d'expression
-     * @param node le noeud à visiter
+     * Create the c3a for the expression call
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpAppel node) {
@@ -199,8 +199,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour l'addition d'expression
-     * @param node le noeud à visiter
+     * Create the c3a to add expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpAdd node) {
@@ -213,8 +213,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la soustraction d'expression
-     * @param node le noeud à visiter
+     * Create the c3a to sub expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpSub node) {
@@ -227,8 +227,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la multiplication d'expression
-     * @param node le noeud à visiter
+     * Create the c3a to mult expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpMult node) {
@@ -242,8 +242,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la division d'expression
-     * @param node le noeud à visiter
+     * Create the c3a to div expression
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpDiv node) {
@@ -257,8 +257,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition d'infériorité
-     * @param node le noeud à visiter
+     * Create the c3a for the inf condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpInf node) {
@@ -276,8 +276,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition d'égalité
-     * @param node le noeud à visiter
+     * Create the c3a for the equal condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpEqual node) {
@@ -296,8 +296,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition "et"
-     * @param node le noeud à visiter
+     * Create the c3a for the and condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpAnd node) {
@@ -319,8 +319,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition "ou"
-     * @param node le noeud à visiter
+     * Create the c3a for the or condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpOr node) {
@@ -345,8 +345,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition "non"
-     * @param node le noeud à visiter
+     * Create the c3a for the not condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaExpNot node) {
@@ -363,8 +363,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour la condition "si"
-     * @param node le noeud à visiter
+     * Create the c3a for the if condition
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstSi node) {
@@ -392,8 +392,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Créer le code 3 adresses pour les listes d'expression et continue le parcours
-     * @param node le noeud à visiter
+     * Create the c3a for the expression list
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaLExp node) {
@@ -404,8 +404,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Permet de visiter les noeuds de la liste d'instruction
-     * @param node le noeud à visiteretourr
+     * Create the c3a for the instruction list
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaLInst node) {
@@ -413,8 +413,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Permet de visiter les noeuds de la liste de déclaration
-     * @param node le noeud à visiteretourr
+     * Create the c3a for the declaration list
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaLDec node) {
@@ -422,8 +422,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     }
 
     /**
-     * Permet de visiter les noeuds des instructions du bloc
-     * @param node le noeud à visiteretourr
+     * Create the c3a for the bloc instruction
+     * @param node the node to visit
      */
     @Override
     public C3aOperand visit(SaInstBloc node) {
