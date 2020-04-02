@@ -13,7 +13,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
         this.tableGlobale = table;
         this.nasm = new Nasm(table);
         nasm.setTempCounter(c3a.getTempCounter());
-        //Création des registres
+        //Create registers
         NasmRegister eax = nasm.newRegister();
         NasmRegister ebx = nasm.newRegister();
         eax.colorRegister(Nasm.REG_EAX);
@@ -40,8 +40,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de début de fonction
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the begin instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstFBegin inst) {
@@ -54,8 +54,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de fin de fonction
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the end instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstFEnd inst) {
@@ -67,8 +67,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction d'écriture
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the write instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstWrite inst) {
@@ -82,8 +82,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de lecture
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the read instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstRead inst) {
@@ -100,8 +100,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction d'appel
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the call instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstCall inst) {
@@ -115,8 +115,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction d'affectation
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the affect instruction
+     * @param inst the inst to visit
      */
     public NasmOperand visit(C3aInstAffect inst) {
         NasmOperand op1 = inst.op1.accept(this);
@@ -126,8 +126,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de paramêtre
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the param instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstParam inst) {
@@ -137,8 +137,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de retour
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the return instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstReturn inst) {
@@ -148,8 +148,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de saut
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the jump instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstJump inst) {
@@ -159,8 +159,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de saut si égalité
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the jump if equal instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstJumpIfEqual inst) {
@@ -170,8 +170,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de saut si non égalité
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the jump if not equal instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstJumpIfNotEqual inst) {
@@ -181,8 +181,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de saut si infériorité
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the jump if less instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstJumpIfLess inst) {
@@ -192,8 +192,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction d'addition
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the add instruction
+     * @param inst the inst to visit
      */
     public NasmOperand visit(C3aInstAdd inst) {
         NasmOperand oper1 = inst.op1.accept(this);
@@ -206,8 +206,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de soustraction
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the sub instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstSub inst) {
@@ -221,8 +221,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de multiplication
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the mult instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstMult inst) {
@@ -236,8 +236,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour l'instruction de division
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for the div instruction
+     * @param inst the inst to visit
      */
     @Override
     public NasmOperand visit(C3aInstDiv inst) {
@@ -264,8 +264,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour une constante
-     * @param oper l'opérande à visiter
+     * Create the pre-nasm code for a constant
+     * @param oper the inst to visit
      */
     @Override
     public NasmOperand visit(C3aConstant oper) {
@@ -273,8 +273,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour un label
-     * @param oper l'opérande à visiter
+     * Create the pre-nasm code for a label
+     * @param oper the operand to visit
      */
     @Override
     public NasmOperand visit(C3aLabel oper) {
@@ -282,8 +282,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour une temporaire
-     * @param oper l'opérande à visiter
+     * Create the pre-nasm code for a temporary
+     * @param oper the operand to visit
      */
     @Override
     public NasmOperand visit(C3aTemp oper) {
@@ -291,8 +291,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour une variable
-     * @param oper l'opérande à visiter
+     * Create the pre-nasm code for a variable
+     * @param oper the operand to visit
      */
     @Override
     public NasmOperand visit(C3aVar oper) {
@@ -317,8 +317,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour une fonction
-     * @param oper l'opérande à visiter
+     * Create the pre-nasm code for a function
+     * @param oper the operand to visit
      */
     @Override
     public NasmOperand visit(C3aFunction oper) {
@@ -326,8 +326,8 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     }
 
     /**
-     * Créer le code pré-nasm pour une instruction
-     * @param inst l'instruction à visiter
+     * Create the pre-nasm code for an instruction
+     * @param inst the operand to visit
      */
     @Override
     public NasmOperand visit(C3aInst inst) {
