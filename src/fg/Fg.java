@@ -17,7 +17,7 @@ public class Fg implements NasmVisitor<Void> {
     Map<Node, NasmInst> node2Inst;
     Map<String, NasmInst> label2Inst;
 
-    public Fg(Nasm nasm) {//todo check if it's work
+    public Fg(Nasm nasm) {
         this.nasm = nasm;
         this.inst2Node = new HashMap<NasmInst, Node>();
         this.node2Inst = new HashMap<Node, NasmInst>();
