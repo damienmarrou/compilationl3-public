@@ -1,0 +1,7 @@
+Binôme TEOULLE Pauline et MARROU Damien
+
+Les parties du code d'autres personnes :
+
+- La méthode apply de sc2sa nous a été donné par Nicolas BOURRAS afin de réduire le nombre de lignes de la class
+- Pour Fg, FgSolution, Ig, et ColorGraph nous l'avons fait avec Thomas MOUTIER afin d'allé plus vite pour débugger.
+  Ainsi, chacun testé ses propres méthodes et dès que l'un d'entre nous trouvé il le partagait avec les autres.
