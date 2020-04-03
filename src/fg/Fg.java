@@ -23,12 +23,8 @@ public class Fg implements NasmVisitor<Void> {
         this.node2Inst = new HashMap<Node, NasmInst>();
         this.label2Inst = new HashMap<String, NasmInst>();
         this.graph = new Graph();
-        for (NasmInst inst : nasm.listeInst) {
-            init(inst);
-            inst.accept(this);
-        }
-        //nasm.listeInst.forEach(this::init);
-        //nasm.listeInst.forEach(inst -> inst.accept(this));
+        nasm.listeInst.forEach(this::init);
+        nasm.listeInst.forEach(inst -> inst.accept(this));
     }
 
     private void init(NasmInst inst) {
