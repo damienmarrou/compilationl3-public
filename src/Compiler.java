@@ -80,11 +80,11 @@ public class Compiler {
             System.out.print("[BUILD FG] ");
             Fg fg = new Fg(nasm);
             System.out.print("[PRINT FG] ");
-            fg.affiche(baseName);
+            fg.print(baseName);
 
             System.out.println("[SOLVE FG]");
             FgSolution fgSolution = new FgSolution(nasm, fg);
-            fgSolution.affiche(baseName);
+            fgSolution.print(baseName);
 
             System.out.print("[BUILD IG] ");
             Ig ig = new Ig(fgSolution);

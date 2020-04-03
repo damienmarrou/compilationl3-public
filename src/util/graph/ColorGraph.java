@@ -3,6 +3,7 @@ package util.graph;
 import util.intset.IntSet;
 
 import java.util.Stack;
+import java.util.stream.IntStream;
 
 public class ColorGraph {
     static int NOCOLOR = -1;
@@ -98,9 +99,9 @@ public class ColorGraph {
 
 
     public void color() {
-        int nbColored = 0;
-        for (int col : color) {
-            if (col != NOCOLOR) {
+        int nbColored =0;
+        for(int col : color){
+            if(col != NOCOLOR){
                 nbColored++;
             }
         }
