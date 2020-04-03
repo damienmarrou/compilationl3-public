@@ -5,4 +5,4 @@ Les parties du code d'autres personnes :
 - La méthode apply de sc2sa nous a été donnée par Nicolas BOURRAS afin de réduire le nombre de lignes de la classe.
 - Pour Sa2ts, Thomas MOUTIER nous a aidé pour optimiser le code et pour réduire celui que nous avions. Il nous a aussi aidé à débugger.
 - Pour Fg, FgSolution, Ig, et ColorGraph nous l'avons fait avec Thomas MOUTIER afin d'aller plus vite pour débugger.
-  Ainsi, chacun testait ses propres méthodes et dès que l'un d'entre nous trouvait, il le partagait avec les autres.
+  Ainsi, chacun testait ses propres méthodes et dès que l'un d'entre nous trouvait, il le partageait avec les autres.
