@@ -99,8 +99,13 @@ public class ColorGraph {
 
 
     public void color() {
-        R = R - (int) IntStream.of(color).filter(c -> c != NOCOLOR).count();//todo refactor
-
+        int nbColored =0;
+        for(int col : color){
+            if(col != NOCOLOR){
+                nbColored++;
+            }
+        }
+        R = R - nbColored;
         this.simplify();
         this.overflow();
         this.selection();
